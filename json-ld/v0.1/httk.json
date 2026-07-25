@@ -1,0 +1,16 @@
+{
+    "@context": {
+        "id": "@id",
+        "type": "@type",
+        "data": "@graph",
+        "attributes": "@nest",
+        "spacegroup": {
+            "@id": "https://schemas.httk.org/json-ld/v0.1/nodetypes/httk/spacegroups",
+            "@context": "https://schemas.httk.org/json-ld/v0.1/nodetypes/httk/spacegroups.json"
+        },
+        "pointgroup": {
+            "@id": "https://schemas.httk.org/json-ld/v0.1/nodetypes/httk/pointgroups",
+            "@context": "https://schemas.httk.org/json-ld/v0.1/nodetypes/httk/pointgroups.json"
+        }
+    }
+}
