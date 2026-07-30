@@ -289,6 +289,7 @@ In `transformations_hm_entry.json.gz`, items are keyed for lookup by the compani
                 "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
                 "x-optimade-unit": "inapplicable",
                 "enum": [
+                    null,
                     "triclinic",
                     "monoclinic",
                     "orthorhombic",
@@ -7526,6 +7527,7 @@ In `transformations_hm_entry.json.gz`, items are keyed for lookup by the compani
                             "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
                             "x-optimade-unit": "inapplicable",
                             "enum": [
+                                null,
                                 "triclinic",
                                 "monoclinic",
                                 "orthorhombic",

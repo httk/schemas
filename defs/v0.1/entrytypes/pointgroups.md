@@ -1059,6 +1059,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
             "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
             "x-optimade-unit": "inapplicable",
             "enum": [
+                null,
                 "triclinic",
                 "monoclinic",
                 "orthorhombic",

@@ -132,6 +132,7 @@ Each listed representative carries `compatible_systems`, which states the crysta
                 "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
                 "x-optimade-unit": "inapplicable",
                 "enum": [
+                    null,
                     "triclinic",
                     "monoclinic",
                     "orthorhombic",

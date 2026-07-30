@@ -2022,6 +2022,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
             "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.",
             "x-optimade-unit": "inapplicable",
             "enum": [
+                null,
                 "P",
                 "A",
                 "B",
@@ -2064,6 +2065,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
             "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
             "x-optimade-unit": "inapplicable",
             "enum": [
+                null,
                 "triclinic",
                 "monoclinic",
                 "orthorhombic",

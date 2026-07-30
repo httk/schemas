@@ -1116,6 +1116,7 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                 "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.",
                 "x-optimade-unit": "inapplicable",
                 "enum": [
+                    null,
                     "P",
                     "A",
                     "B",
@@ -1158,6 +1159,7 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                 "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
                 "x-optimade-unit": "inapplicable",
                 "enum": [
+                    null,
                     "triclinic",
                     "monoclinic",
                     "orthorhombic",

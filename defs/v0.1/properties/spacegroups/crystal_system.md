@@ -43,6 +43,7 @@ Values use the conventional crystallographic system names.
     "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
     "x-optimade-unit": "inapplicable",
     "enum": [
+        null,
         "triclinic",
         "monoclinic",
         "orthorhombic",
