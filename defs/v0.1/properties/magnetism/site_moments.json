@@ -1,0 +1,115 @@
+{
+    "$id": "https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments",
+    "$schema": "https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json",
+    "title": "Site magnetic moments",
+    "x-optimade-type": "list",
+    "x-optimade-definition": {
+        "kind": "property",
+        "version": "0.1.0",
+        "format": "1.3",
+        "name": "site_moments",
+        "label": "site_moments_magnetism"
+    },
+    "x-optimade-unit": "inapplicable",
+    "x-optimade-unit-definitions": [
+        {
+            "$id": "https://schemas.optimade.org/defs/v1.2/units/codata/1969/electromagnetic/bohrmagneton",
+            "title": "Bohr magneton",
+            "symbol": "bohrmagneton",
+            "display-symbol": "\\(\\mu_B\\)",
+            "description": "A unit expressing the magnetic moment of an electron caused by its orbital or spin angular momentum defined as part of CODATA 1969.\n\n\"The magneton moment of the free electron in units of the Bohr magneton \\(\\mu_B=e\\hbar/2m_e\\)\" [B. N. Taylor, W. H. Parker, and D. N. Langenberg, Rev. Mod. Phys. 41(3), 375-496 (1969)]",
+            "resources": [
+                {
+                    "relation": "Defining paper: B. N. Taylor, W. H. Parker, and D. N. Langenberg, Rev. Mod. Phys. 41(3), 375-496 (1969)",
+                    "resource-id": "https://doi.org/10.1103/RevModPhys.41.375"
+                },
+                {
+                    "relation": "Wikipedia article describing the unit",
+                    "resource-id": "https://en.wikipedia.org/wiki/Bohr_magneton"
+                }
+            ],
+            "approximate-relations": [
+                {
+                    "base-units": [
+                        {
+                            "symbol": "bohrmagneton",
+                            "id": "https://schemas.optimade.org/defs/v1.2/constants/codata/2018/electromagnetic/bohrmagneton"
+                        }
+                    ],
+                    "base-units-expression": "bohrmagneton"
+                }
+            ],
+            "standard": {
+                "name": "codata",
+                "year": 1969,
+                "category": "electromagnetic",
+                "symbol": "\\(\\mu_B\\)"
+            },
+            "x-optimade-definition": {
+                "label": "bohrmagneton_codata_1969_electromagnetic",
+                "kind": "unit",
+                "format": "1.2",
+                "version": "1.2.0",
+                "name": "bohrmagneton"
+            }
+        }
+    ],
+    "type": [
+        "array",
+        "null"
+    ],
+    "description": "The magnetic moment vector of each site, in Cartesian coordinates and Bohr magnetons.\n\n**Requirements/Conventions**:\n\n- The outer list MUST have the same length and order as the sites of the structure,\n  i.e., one inner list per member of `cartesian_site_positions`.\n- Each inner list is the magnetic moment vector of the corresponding site, given as\n  three Cartesian components in Bohr magnetons.\n- The Cartesian frame MUST be the same frame in which `lattice_vectors` and\n  `cartesian_site_positions` are expressed.\n- A site with no ordered magnetic moment MUST be given as the zero vector.\n- The value MUST be `null` where moments are unknown, and where only collinear moment\n  magnitudes without a global axis are recorded, since no Cartesian direction can then\n  be stated.",
+    "items": {
+        "x-optimade-type": "list",
+        "x-optimade-unit": "inapplicable",
+        "type": [
+            "array"
+        ],
+        "x-optimade-dimensions": {
+            "names": [
+                "dim_cartesian"
+            ],
+            "sizes": [
+                3
+            ]
+        },
+        "items": {
+            "x-optimade-type": "float",
+            "x-optimade-unit": "bohrmagneton",
+            "type": [
+                "number"
+            ]
+        }
+    },
+    "examples": [
+        [
+            [
+                0.0,
+                0.0,
+                2.0
+            ],
+            [
+                0.0,
+                0.0,
+                -2.0
+            ]
+        ],
+        [
+            [
+                1.2,
+                0.0,
+                0.0
+            ],
+            [
+                -1.2,
+                0.0,
+                0.0
+            ],
+            [
+                0.0,
+                0.0,
+                0.0
+            ]
+        ]
+    ]
+}

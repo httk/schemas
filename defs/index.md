@@ -47,6 +47,11 @@
                 
                 Strings with alternate markup and/or encoding for display rendering.
 
+        * **magnetism**
+            * **[Site magnetic moments](v0.1/properties/magnetism/site_moments.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments`](https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments.md)
+                
+                The magnetic moment vector of each site, in Cartesian coordinates and Bohr magnetons.
+
         * **pointgroups**
             * **[Complex character table](v0.1/properties/pointgroups/character_table_complex.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex.md)
                 
