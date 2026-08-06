@@ -1,0 +1,15 @@
+{
+    "$id": "https://schemas.httk.org/defs/v0.1/units/si/general/gigapascal",
+    "$schema": "https://schemas.optimade.org/meta/v1.2/optimade/physical_unit_definition.json",
+    "title": "gigapascal",
+    "symbol": "GPa",
+    "display-symbol": "GPa",
+    "description": "A unit of pressure and stress equal to 10^9 pascals.",
+    "x-optimade-definition": {
+        "label": "gigapascal_si_general",
+        "kind": "unit",
+        "format": "1.2",
+        "version": "0.1.0",
+        "name": "gigapascal"
+    }
+}
