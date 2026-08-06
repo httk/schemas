@@ -23,6 +23,16 @@
         * **[httk point group symmetry fields](v0.1/entrytypes/pointgroups.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups`](https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups.md)
             
 
+        * **[httk records entry type](v0.1/entrytypes/records.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/records`](https://schemas.httk.org/defs/v0.1/entrytypes/records.md)
+            
+            A records entry carries the value of one formally declared property (a computed or measured quantity) as its own entry, so that multiple parallel determinations of the same quantity for the same system can coexist as separate entries linked via provenance relationships.
+            The value properties served on this entry type are declared per provider through property definitions and are not enumerated here.
+
+        * **[httk runs entry type](v0.1/entrytypes/runs.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/runs`](https://schemas.httk.org/defs/v0.1/entrytypes/runs.md)
+            
+            A runs entry represents one specific, individual execution of a workflow or process that consumed and/or produced other entries.
+            Provenance edges (inputs, artifacts, outputs) are expressed as relationships, not properties.
+
         * **[httk space group symmetry fields](v0.1/entrytypes/spacegroups.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups`](https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups.md)
             
 
@@ -63,6 +73,18 @@
             * **[String markups](v0.1/properties/core/string_markups.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/string_markups`](https://schemas.httk.org/defs/v0.1/properties/core/string_markups.md)
                 
                 Strings with alternate markup and/or encoding for display rendering.
+
+            * **[Total energy](v0.1/properties/core/total_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/total_energy`](https://schemas.httk.org/defs/v0.1/properties/core/total_energy.md)
+                
+                The total energy of a computed system as produced by a calculation, in electronvolt.
+                The reference/zero of the total energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+
+            * **[Workflow declaration URI](v0.1/properties/core/workflow_declaration_uri.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/workflow_declaration_uri`](https://schemas.httk.org/defs/v0.1/properties/core/workflow_declaration_uri.md)
+                
+                A URI identifying the workflow declaration (the reusable process definition, as opposed to a specific execution) behind a runs entry.
+                No particular URI scheme, resolvability, or formalism is mandated.
+                Providers wanting two runs recognized as executions of the same declaration MUST use an identical URI.
+                Null is expected for ad-hoc scripts, interactive executions, and legacy data with no formal workflow identifier.
 
         * **magnetism**
             * **[Site magnetic moments](v0.1/properties/magnetism/site_moments.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments`](https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments.md)
@@ -541,4 +563,11 @@
         * **[httk definition provider standard](v0.1/standards/httk.md)** (standard) - [`https://schemas.httk.org/defs/v0.1/standards/httk`](https://schemas.httk.org/defs/v0.1/standards/httk.md)
             
             The httk definition provider standard, comprising the spacegroups, pointgroups, and transformations entry types for crystallographic symmetry data.
+
+    * **workflows**
+        * **[VASP structure relaxation](v0.1/workflows/vasp-relax.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/workflows/vasp-relax`](https://schemas.httk.org/defs/v0.1/workflows/vasp-relax.md)
+            
+            This workflow declaration defines the httk vasp-relax workflow: it relaxes the geometry of a crystal structure with VASP.
+            It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure to relax.
+            Output role relaxed_structure is a structures entry containing the relaxed geometry, and output role total_energy is a records entry containing the final total energy of the relaxed structure.
 
