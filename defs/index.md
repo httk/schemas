@@ -30,6 +30,23 @@
             
 
     * **properties**
+        * **chemistry**
+            * **[Species constituent charges](v0.1/properties/chemistry/species_charges.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges`](https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges.md)
+                
+                The explicitly assigned charge of each constituent of a species, as a dimensionless charge number, i.e., the charge in units of the elementary charge.
+
+            * **[Species constituent labels](v0.1/properties/chemistry/species_labels.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/species_labels`](https://schemas.httk.org/defs/v0.1/properties/chemistry/species_labels.md)
+                
+                A free-form label attached to each constituent of a species.
+
+            * **[Species constituent spins](v0.1/properties/chemistry/species_spins.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/species_spins`](https://schemas.httk.org/defs/v0.1/properties/chemistry/species_spins.md)
+                
+                The idealized spin assigned to each constituent of a species, as a dimensionless signed number.
+
+            * **[Structure charge](v0.1/properties/chemistry/structure_charge.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/structure_charge`](https://schemas.httk.org/defs/v0.1/properties/chemistry/structure_charge.md)
+                
+                The explicitly assigned net charge of the whole structure, as a dimensionless charge number, i.e., the charge in units of the elementary charge.
+
         * **core**
             * **[Fraction](v0.1/properties/core/fraction.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/fraction`](https://schemas.httk.org/defs/v0.1/properties/core/fraction.md)
                 
