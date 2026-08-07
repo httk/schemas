@@ -14,7 +14,7 @@ VASP structure relaxation
         "name": "vasp-relax",
         "label": "vasp_relax_workflow_httk"
     },
-    "parameters": [
+    "inputs": [
         {
             "name": "initial_structure",
             "entry_type": "structures",
@@ -22,7 +22,7 @@ VASP structure relaxation
             "description": "The structure to relax."
         }
     ],
-    "output_types": [
+    "outputs": [
         {
             "name": "relaxed_structure",
             "entry_type": "structures",

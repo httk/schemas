@@ -14,7 +14,7 @@ VASP relaxation and static calculation
         "name": "vasp-relax-static",
         "label": "vasp_relax_static_workflow_httk"
     },
-    "parameters": [
+    "inputs": [
         {
             "name": "initial_structure",
             "entry_type": "structures",
@@ -22,7 +22,7 @@ VASP relaxation and static calculation
             "description": "The structure to relax."
         }
     ],
-    "output_types": [
+    "outputs": [
         {
             "name": "relaxed_structure",
             "entry_type": "structures",

@@ -9,7 +9,7 @@
         "name": "vasp-relax-static",
         "label": "vasp_relax_static_workflow_httk"
     },
-    "parameters": [
+    "inputs": [
         {
             "name": "initial_structure",
             "entry_type": "structures",
@@ -17,7 +17,7 @@
             "description": "The structure to relax."
         }
     ],
-    "output_types": [
+    "outputs": [
         {
             "name": "relaxed_structure",
             "entry_type": "structures",

@@ -14,7 +14,7 @@ VASP static calculation
         "name": "vasp-static",
         "label": "vasp_static_workflow_httk"
     },
-    "parameters": [
+    "inputs": [
         {
             "name": "initial_structure",
             "entry_type": "structures",
@@ -22,7 +22,7 @@ VASP static calculation
             "description": "The structure to evaluate."
         }
     ],
-    "output_types": [
+    "outputs": [
         {
             "name": "total_energy",
             "entry_type": "records",
