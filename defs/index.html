@@ -199,8 +199,25 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
 </ul>
 </li>
 <li>
+<p><strong>electronic</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/electronic/dft_band_gap">DFT band gap</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap</code></a></p>
+<p>The Kohn-Sham band gap of a material from a density-functional-theory (DFT) calculation, given in electronvolts. Its value depends on the computational method and exchange-correlation functional used.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>magnetism</strong></p>
 <ul>
+<li>
+<p><strong><a href="v0.1/properties/magnetism/magndata_ids">MAGNDATA identifiers</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/magnetism/magndata_ids"><code>https://schemas.httk.org/defs/v0.1/properties/magnetism/magndata_ids</code></a></p>
+<p>The identifiers of MAGNDATA magnetic-structure entries associated with a material.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/magnetism/magnetic_space_group_bns">Magnetic space group (BNS)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/magnetism/magnetic_space_group_bns"><code>https://schemas.httk.org/defs/v0.1/properties/magnetism/magnetic_space_group_bns</code></a></p>
+<p>The magnetic space group of a material in Belov-Neronova-Smirnova (BNS) notation.</p>
+</li>
 <li>
 <p><strong><a href="v0.1/properties/magnetism/site_moments">Site magnetic moments</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments"><code>https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments</code></a></p>
 <p>The magnetic moment vector of each site, in Cartesian coordinates and Bohr magnetons.</p>
@@ -575,6 +592,33 @@ The plain string value is stored in the corresponding unsuffixed property; this 
 </ul>
 </li>
 <li>
+<p><strong>trajectories</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/trajectories/frame_stresses">Frame stresses</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_stresses"><code>https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_stresses</code></a></p>
+<p>The stress tensor of each frame of a trajectory, aligned with the trajectory frame axis (<code>dim_frames</code>).
+Each tensor is given in Voigt order [xx, yy, zz, yz, xz, xy], with tensile stress positive, in gigapascal (GPa; 1 GPa = 10^9 Pa).
+A <code>null</code> value indicates that the stress tensor of the corresponding frame is unknown.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/trajectories/frame_temperatures">Frame temperatures</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_temperatures"><code>https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_temperatures</code></a></p>
+<p>The instantaneous temperature of each frame of a trajectory, in kelvin, aligned with the trajectory frame axis (<code>dim_frames</code>).
+A <code>null</code> value indicates that the temperature of the corresponding frame is unknown.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/trajectories/frame_total_energies">Frame total energies</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_total_energies"><code>https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_total_energies</code></a></p>
+<p>The total energy of each frame of a trajectory, in electronvolt, aligned with the trajectory frame axis (<code>dim_frames</code>).
+A <code>null</code> value indicates that the energy of the corresponding frame is unknown.
+The reference/zero of the total energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/trajectories/time_step">Time step</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/trajectories/time_step"><code>https://schemas.httk.org/defs/v0.1/properties/trajectories/time_step</code></a></p>
+<p>The molecular-dynamics integration time step between consecutive frames, in femtosecond (fs; 1 fs = 10^-15 s).
+A <code>null</code> value indicates that the time step is unknown.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>transformations</strong></p>
 <ul>
 <li>
@@ -703,6 +747,27 @@ The plain string value is stored in the corresponding unsuffixed property; this 
 </ul>
 </li>
 <li>
+<p><strong>units</strong></p>
+<ul>
+<li><strong>si</strong><ul>
+<li>
+<p><strong>general</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/units/si/general/femtosecond">femtosecond</a></strong> (unit) - <a href="https://schemas.httk.org/defs/v0.1/units/si/general/femtosecond"><code>https://schemas.httk.org/defs/v0.1/units/si/general/femtosecond</code></a></p>
+<p>A unit of time equal to 10^-15 seconds.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/units/si/general/gigapascal">gigapascal</a></strong> (unit) - <a href="https://schemas.httk.org/defs/v0.1/units/si/general/gigapascal"><code>https://schemas.httk.org/defs/v0.1/units/si/general/gigapascal</code></a></p>
+<p>A unit of pressure and stress equal to 10^9 pascals.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>workflows</strong></p>
 <ul>
 <li>
@@ -710,6 +775,18 @@ The plain string value is stored in the corresponding unsuffixed property; this 
 <p>This workflow declaration defines the httk vasp-relax workflow: it relaxes the geometry of a crystal structure with VASP.
 It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure to relax.
 Output role relaxed_structure is a structures entry containing the relaxed geometry, and output role total_energy is a records entry containing the final total energy of the relaxed structure.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/workflows/vasp-relax-static">VASP relaxation and static calculation</a></strong> (<em>[unknown]</em>) - <a href="https://schemas.httk.org/defs/v0.1/workflows/vasp-relax-static"><code>https://schemas.httk.org/defs/v0.1/workflows/vasp-relax-static</code></a></p>
+<p>This workflow declaration defines the httk vasp-relax-static workflow: it relaxes the geometry, then evaluates the relaxed structure with a final static calculation.
+It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure to relax.
+Output role relaxed_structure is a structures entry containing the relaxed geometry, and output role total_energy is a records entry containing the total energy of the relaxed structure from the final static calculation.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/workflows/vasp-static">VASP static calculation</a></strong> (<em>[unknown]</em>) - <a href="https://schemas.httk.org/defs/v0.1/workflows/vasp-static"><code>https://schemas.httk.org/defs/v0.1/workflows/vasp-static</code></a></p>
+<p>This workflow declaration defines the httk vasp-static workflow: it performs a single-point total-energy evaluation of a fixed structure with VASP.
+It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure to evaluate.
+Output role total_energy is a records entry containing the total energy of the structure.</p>
 </li>
 </ul>
 </li>

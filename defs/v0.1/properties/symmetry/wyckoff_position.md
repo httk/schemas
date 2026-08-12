@@ -69,77 +69,51 @@ The property is a dictionary containing information about the multiplicity, orie
     "description": "Information related to a Wyckoff position in a space-group setting.\n\nWyckoff positions represent symmetry-equivalent sites partitioned by multiplicity and site symmetry in a given space group.\nThe property is a dictionary containing information about the multiplicity, oriented site-symmetry symbol, representative coordinate, full orbit, and orbit factorized modulo centering translations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **letter**: REQUIRED; String.\n      Wyckoff letter for this position in the setting.\n\n    - **multiplicity**: REQUIRED; Integer.\n      Multiplicity of the Wyckoff position in the conventional cell.\n      It MUST equal the length of `orbit`.\n\n    - **sitesym**: REQUIRED; String.\n      Oriented site-symmetry symbol.\n\n    - **hasfreedom**: REQUIRED; List of booleans.\n      Flags indicating whether each fractional coordinate has a free parameter.\n\n    - **first\\_orbit**: REQUIRED; String.\n      First representative coordinate expression used by the generator.\n      It MUST equal the `xyz` field of `orbit[0]`.\n\n    - **orbit**: REQUIRED; List.\n      Full orbit as a list of affine transformations from Wyckoff-position parameters to fractional coordinates.\n      The first item is the canonical representative whose degrees of freedom can be chosen to place it inside the asymmetric unit.\n\n    - **orbit\\_mod\\_centering**: REQUIRED; List.\n      Orbit representatives modulo centering translations, represented in the same form as `orbit`.",
     "properties": {
         "letter": {
-            "$id": "https://schemas.optimade.org/defs/v1.3/properties/optimade/structures/wyckoff_positions",
-            "title": "Wyckoff positions",
-            "x-optimade-type": "list",
+            "$id": "https://schemas.optimade.org/defs/v1.3/properties/optimade/common/wyckoff_position",
+            "title": "Wyckoff position",
+            "x-optimade-type": "string",
             "x-optimade-definition": {
-                "label": "wyckoff_positions_optimade_structures",
+                "label": "wyckoff_position_optimade_common",
                 "kind": "property",
                 "version": "1.3.0",
                 "format": "1.2",
-                "name": "wyckoff_positions"
+                "name": "wyckoff_position"
             },
-            "x-optimade-dimensions": {
-                "names": [
-                    "dim_sites"
-                ],
-                "sizes": [
-                    null
-                ]
-            },
-            "type": [
-                "array",
-                "null"
-            ],
-            "description": "A list of Wyckoff symbols of sites (where values for sites are specified with the same order of the property `cartesian_site_positions` and/or `fractional_site_positions`).\n\n**Requirements/Conventions**:\n\n- MUST have length equal to the number of sites in the structure (first dimension of the list properties `cartesian_site_positions` and/or `fractional_site_positions`).\n- If provided, MUST list a single letter (`a`-`z` or `\u03b1`) Wyckoff position for each site in the structure according to the International Tables for Crystallography vol. A (IUCr, 2016).\n\n**Bibliographic References**:\n\n- IUCr (2016). International Tables for Crystallography vol. A. Space-group Symmetry, Ed. M. I. Aroyo, 6-th edition. Chichester, John Wiley & Sons.",
+            "description": "The Wyckoff symbol for a site.",
             "x-optimade-unit": "inapplicable",
-            "items": {
-                "$id": "https://schemas.optimade.org/defs/v1.3/properties/optimade/common/wyckoff_position",
-                "title": "Wyckoff position",
-                "x-optimade-type": "string",
-                "x-optimade-definition": {
-                    "label": "wyckoff_position_optimade_common",
-                    "kind": "property",
-                    "version": "1.3.0",
-                    "format": "1.2",
-                    "name": "wyckoff_position"
-                },
-                "description": "The Wyckoff symbol for a site.",
-                "x-optimade-unit": "inapplicable",
-                "type": [
-                    "string"
-                ],
-                "maxLength": 1,
-                "enum": [
-                    "a",
-                    "b",
-                    "c",
-                    "d",
-                    "e",
-                    "f",
-                    "g",
-                    "h",
-                    "i",
-                    "j",
-                    "k",
-                    "l",
-                    "m",
-                    "n",
-                    "o",
-                    "p",
-                    "q",
-                    "r",
-                    "s",
-                    "t",
-                    "u",
-                    "v",
-                    "w",
-                    "x",
-                    "y",
-                    "z",
-                    "\u03b1"
-                ]
-            }
+            "type": [
+                "string"
+            ],
+            "maxLength": 1,
+            "enum": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+                "l",
+                "m",
+                "n",
+                "o",
+                "p",
+                "q",
+                "r",
+                "s",
+                "t",
+                "u",
+                "v",
+                "w",
+                "x",
+                "y",
+                "z",
+                "\u03b1"
+            ]
         },
         "multiplicity": {
             "x-optimade-type": "integer",
