@@ -160,6 +160,16 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
 <li><strong>Response:</strong> MUST be included by default in the response.</li>
 </ul>
 </li>
+<li>
+<p><strong><a href="../properties/core/source_id">source ID (source_id)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/source_id"><code>https://schemas.httk.org/defs/v0.1/properties/core/source_id</code></a><br>
+  The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.</p>
+<p><strong>Requirements/Conventions:</strong>  </p>
+<ul>
+<li><strong>Support:</strong> OPTIONAL support in implementations, i.e., MAY be <code>null</code>.</li>
+<li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
+<li><strong>Response:</strong> MAY be included by default in the response.</li>
+</ul>
+</li>
 </ul>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -319,6 +329,30 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
 <span class="w">                </span><span class="s2">&quot;https://github.com/httk-workflows/vasp-relax/releases/tag/v1.0.0&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="s2">&quot;https://schemas.httk.org/workflows/vasp-relax/v1.0&quot;</span>
 <span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;source_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/source_id&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;x-optimade-requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;support&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;may&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;sortable&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;query-support&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;all mandatory&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;response-level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;may&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;source ID&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;source_id&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;source_id_property_httk&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The run&#39;s identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form &lt;workspace_id&gt;:&lt;job_id&gt;. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.&quot;</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>

@@ -70,6 +70,10 @@
                 
                 The absolute precision of a stated length, in ångström.
 
+            * **[source ID](v0.1/properties/core/source_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/source_id`](https://schemas.httk.org/defs/v0.1/properties/core/source_id.md)
+                
+                The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.
+
             * **[String markups](v0.1/properties/core/string_markups.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/string_markups`](https://schemas.httk.org/defs/v0.1/properties/core/string_markups.md)
                 
                 Strings with alternate markup and/or encoding for display rendering.
