@@ -60,7 +60,7 @@
     "x-optimade-requirements": {
         "support": "may",
         "sortable": false,
-        "query-support": "none"
+        "query-support": "all mandatory"
     },
     "type": [
         "number",

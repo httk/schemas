@@ -12,7 +12,7 @@ The reference/zero of the total energy scale is method- and code-specific, so va
 **Implementation requirements:**  
 - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.  
 
-- **Query:** Support for queries on this property is OPTIONAL.  
+- **Query:** MUST be a queryable property with support for all mandatory filter features.  
 
 
 
@@ -87,7 +87,7 @@ The reference/zero of the total energy scale is method- and code-specific, so va
     "x-optimade-requirements": {
         "support": "may",
         "sortable": false,
-        "query-support": "none"
+        "query-support": "all mandatory"
     },
     "type": [
         "number",
