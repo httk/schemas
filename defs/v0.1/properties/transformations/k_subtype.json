@@ -18,7 +18,8 @@
     "x-optimade-unit": "inapplicable",
     "enum": [
         "loss_of_centering_translation",
-        "enlarged_unit_cell"
+        "enlarged_unit_cell",
+        null
     ],
     "examples": [
         "enlarged_unit_cell",

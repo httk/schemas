@@ -289,7 +289,8 @@ The order of this list is authoritative for operation indices in `conjugacy_clas
                     "4",
                     "-4",
                     "6",
-                    "-6"
+                    "-6",
+                    null
                 ]
             },
             "axis": {
@@ -328,7 +329,8 @@ The order of this list is authoritative for operation indices in `conjugacy_clas
                 "enum": [
                     -1,
                     0,
-                    1
+                    1,
+                    null
                 ]
             },
             "screw_glide": {

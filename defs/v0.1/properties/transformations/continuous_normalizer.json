@@ -84,7 +84,8 @@
             ],
             "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
             "enum": [
-                "fractional"
+                "fractional",
+                null
             ]
         },
         "representation": {

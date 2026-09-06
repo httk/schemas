@@ -53,7 +53,8 @@ Null denotes unavailable classification, not an additional crystal system.
         "tetragonal",
         "trigonal",
         "hexagonal",
-        "cubic"
+        "cubic",
+        null
     ],
     "examples": [
         "triclinic",

@@ -96,7 +96,8 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
             ],
             "description": "Kind label for this normalizer contribution.",
             "enum": [
-                "euclidean"
+                "euclidean",
+                null
             ]
         },
         "n_centering_translations": {
@@ -136,7 +137,7 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
                 "integer",
                 "null"
             ],
-            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
+            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 1,
@@ -436,7 +437,8 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
                             "4",
                             "-4",
                             "6",
-                            "-6"
+                            "-6",
+                            null
                         ]
                     },
                     "axis": {
@@ -475,7 +477,8 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
                         "enum": [
                             -1,
                             0,
-                            1
+                            1,
+                            null
                         ]
                     },
                     "screw_glide": {
@@ -869,7 +872,8 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
                             "4",
                             "-4",
                             "6",
-                            "-6"
+                            "-6",
+                            null
                         ]
                     },
                     "axis": {
@@ -908,7 +912,8 @@ Its length is therefore `n_symops` divided by the length of that outer list and 
                         "enum": [
                             -1,
                             0,
-                            1
+                            1,
+                            null
                         ]
                     },
                     "screw_glide": {

@@ -492,7 +492,9 @@ This entrytype defines the following properties:
     
     The forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.
     Each transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.
-    Assign the subgroup orbits to their ordered split roles before evaluating the equations on their published three-component representative coordinates.
+    Assign the subgroup orbits to their ordered split roles, defined by the `wyckoff_splitting` of the corresponding `baernighausen` transform, before evaluating the equations on their published three-component representative coordinates.
+    Backward-lift transform records carry `index`, `affine_transformation`, and `criteria`; the splitting itself and the t/k metadata are stored in the `baernighausen` table.
+    The example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding, where parent `n` splits into `s` and `t` whose x and z coordinates differ by 1/2 modulo 1.
     Integer translation of any role coordinate leaves the equations unchanged.
     The tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.
 
@@ -658,7 +660,8 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     The value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.
-    The field is omitted when the enclosing record is not a maximal subgroup relation.
+    The field is omitted for identity embeddings, for general subgroups that lose both translations and point symmetry, and for records that are not subgroup embeddings.
+    Its presence does not by itself certify maximality; the relation table containing the record supplies that information.
     
     A translationengleiche subgroup retains the complete translation lattice and loses point symmetry: `i_T = 1`, `i_P > 1`.
     A klassengleiche subgroup retains the point group and loses translations: `i_P = 1`, `i_T > 1`.
@@ -1102,7 +1105,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                 "tetragonal",
                 "trigonal",
                 "hexagonal",
-                "cubic"
+                "cubic",
+                null
             ],
             "examples": [
                 "triclinic",
@@ -1249,7 +1253,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Kind label for this normalizer contribution.",
                     "enum": [
-                        "euclidean"
+                        "euclidean",
+                        null
                     ]
                 },
                 "n_centering_translations": {
@@ -1289,7 +1294,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "integer",
                         "null"
                     ],
-                    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
+                    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
                     "x-optimade-unit": "inapplicable",
                     "examples": [
                         1,
@@ -1589,7 +1594,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "4",
                                     "-4",
                                     "6",
-                                    "-6"
+                                    "-6",
+                                    null
                                 ]
                             },
                             "axis": {
@@ -1628,7 +1634,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "enum": [
                                     -1,
                                     0,
-                                    1
+                                    1,
+                                    null
                                 ]
                             },
                             "screw_glide": {
@@ -2022,7 +2029,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "4",
                                     "-4",
                                     "6",
-                                    "-6"
+                                    "-6",
+                                    null
                                 ]
                             },
                             "axis": {
@@ -2061,7 +2069,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "enum": [
                                     -1,
                                     0,
-                                    1
+                                    1,
+                                    null
                                 ]
                             },
                             "screw_glide": {
@@ -2824,7 +2833,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Kind label for this normalizer contribution.",
                     "enum": [
-                        "orthogonal_affine"
+                        "orthogonal_affine",
+                        null
                     ]
                 },
                 "representation": {
@@ -2836,7 +2846,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Representation label for the listed normalizer data.",
                     "enum": [
-                        "orthogonal_coset_representatives"
+                        "orthogonal_coset_representatives",
+                        null
                     ]
                 },
                 "candidate_set": {
@@ -2848,7 +2859,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Name of the finite linear candidate set used for generation.",
                     "enum": [
-                        "signed_permutation_matrices"
+                        "signed_permutation_matrices",
+                        null
                     ]
                 },
                 "n_symops": {
@@ -3202,7 +3214,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                 "enum": [
                                     "loss_of_centering_translation",
-                                    "enlarged_unit_cell"
+                                    "enlarged_unit_cell",
+                                    null
                                 ]
                             },
                             "compatible_systems": {
@@ -3445,7 +3458,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "array",
                                     "null"
                                 ],
-                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                 "items": {
                                     "x-optimade-type": "dictionary",
                                     "x-optimade-unit": "inapplicable",
@@ -3617,13 +3630,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "examples": [
                             {
                                 "index": 2,
+                                "subgroup_type": "k",
+                                "k_subtype": "loss_of_centering_translation",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z"
+                                },
                                 "wyckoff_splitting": [
                                     {
                                         "parent": "a",
                                         "splits": [
                                             {
                                                 "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "xyz": "0,0,0",
                                                 "affine": [
                                                     [
                                                         "1",
@@ -3640,31 +3680,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "1",
                                                         "0"
                                                     ]
                                                 ]
                                             },
                                             {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "letter": "d",
+                                                "xyz": "1/2,1/2,1/2",
                                                 "affine": [
                                                     [
                                                         "1",
                                                         "0",
                                                         "0",
-                                                        "0"
+                                                        "1/2"
                                                     ],
                                                     [
                                                         "0",
                                                         "1",
                                                         "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1",
+                                                        "1/2"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "parent": "n",
+                                        "splits": [
+                                            {
+                                                "letter": "s",
+                                                "xyz": "x,0,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
                                                         "0"
                                                     ],
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "-1",
+                                                        "0"
+                                                    ]
+                                                ]
+                                            },
+                                            {
+                                                "letter": "t",
+                                                "xyz": "x,1/2,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "-1",
                                                         "1/2"
                                                     ]
                                                 ]
@@ -3675,16 +3768,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "criteria": [
                                     {
                                         "parent": "a",
+                                        "constraints": []
+                                    },
+                                    {
+                                        "parent": "n",
                                         "constraints": [
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
+                                                        "letter": "t",
+                                                        "index": 0
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -3710,43 +3807,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
-                                                    }
-                                                ],
-                                                "coeffs": [
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ],
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "-1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                ],
-                                                "target": [
-                                                    "0"
-                                                ]
-                                            },
-                                            {
-                                                "roles": [
-                                                    {
-                                                        "letter": "a",
+                                                        "letter": "t",
                                                         "index": 0
-                                                    },
-                                                    {
-                                                        "letter": "a",
-                                                        "index": 1
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -3766,41 +3832,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     ]
                                                 ],
                                                 "target": [
-                                                    "0"
+                                                    "1/2"
                                                 ]
                                             }
                                         ]
                                     }
-                                ],
-                                "affine_transformation": {
-                                    "matrix": [
-                                        [
-                                            "1",
-                                            "0",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "1",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "0",
-                                            "2"
-                                        ]
-                                    ],
-                                    "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
-                                    ],
-                                    "xyz": "x,y,2z",
-                                    "det": 2,
-                                    "is_orthogonal": false
-                                },
-                                "subgroup_type": "k",
-                                "k_subtype": "enlarged_unit_cell"
+                                ]
                             },
                             {
                                 "affine_transformation": {
@@ -3935,7 +3972,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Kind label for this normalizer contribution.",
                     "enum": [
-                        "affine"
+                        "affine",
+                        null
                     ]
                 },
                 "representation": {
@@ -3947,7 +3985,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Representation label for the listed normalizer data.",
                     "enum": [
-                        "coset_representatives"
+                        "coset_representatives",
+                        null
                     ]
                 },
                 "candidate_set": {
@@ -3959,7 +3998,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Name of the finite linear candidate set used for generation.",
                     "enum": [
-                        "bounded_unimodular_integer_matrices"
+                        "bounded_unimodular_integer_matrices",
+                        null
                     ]
                 },
                 "n_symops": {
@@ -4313,7 +4353,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                 "enum": [
                                     "loss_of_centering_translation",
-                                    "enlarged_unit_cell"
+                                    "enlarged_unit_cell",
+                                    null
                                 ]
                             },
                             "compatible_systems": {
@@ -4556,7 +4597,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "array",
                                     "null"
                                 ],
-                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                 "items": {
                                     "x-optimade-type": "dictionary",
                                     "x-optimade-unit": "inapplicable",
@@ -4728,13 +4769,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "examples": [
                             {
                                 "index": 2,
+                                "subgroup_type": "k",
+                                "k_subtype": "loss_of_centering_translation",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z"
+                                },
                                 "wyckoff_splitting": [
                                     {
                                         "parent": "a",
                                         "splits": [
                                             {
                                                 "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "xyz": "0,0,0",
                                                 "affine": [
                                                     [
                                                         "1",
@@ -4751,31 +4819,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "1",
                                                         "0"
                                                     ]
                                                 ]
                                             },
                                             {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "letter": "d",
+                                                "xyz": "1/2,1/2,1/2",
                                                 "affine": [
                                                     [
                                                         "1",
                                                         "0",
                                                         "0",
-                                                        "0"
+                                                        "1/2"
                                                     ],
                                                     [
                                                         "0",
                                                         "1",
                                                         "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1",
+                                                        "1/2"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "parent": "n",
+                                        "splits": [
+                                            {
+                                                "letter": "s",
+                                                "xyz": "x,0,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
                                                         "0"
                                                     ],
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "-1",
+                                                        "0"
+                                                    ]
+                                                ]
+                                            },
+                                            {
+                                                "letter": "t",
+                                                "xyz": "x,1/2,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "-1",
                                                         "1/2"
                                                     ]
                                                 ]
@@ -4786,16 +4907,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "criteria": [
                                     {
                                         "parent": "a",
+                                        "constraints": []
+                                    },
+                                    {
+                                        "parent": "n",
                                         "constraints": [
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
+                                                        "letter": "t",
+                                                        "index": 0
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -4821,43 +4946,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
-                                                    }
-                                                ],
-                                                "coeffs": [
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ],
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "-1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                ],
-                                                "target": [
-                                                    "0"
-                                                ]
-                                            },
-                                            {
-                                                "roles": [
-                                                    {
-                                                        "letter": "a",
+                                                        "letter": "t",
                                                         "index": 0
-                                                    },
-                                                    {
-                                                        "letter": "a",
-                                                        "index": 1
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -4877,41 +4971,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     ]
                                                 ],
                                                 "target": [
-                                                    "0"
+                                                    "1/2"
                                                 ]
                                             }
                                         ]
                                     }
-                                ],
-                                "affine_transformation": {
-                                    "matrix": [
-                                        [
-                                            "1",
-                                            "0",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "1",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "0",
-                                            "2"
-                                        ]
-                                    ],
-                                    "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
-                                    ],
-                                    "xyz": "x,y,2z",
-                                    "det": 2,
-                                    "is_orthogonal": false
-                                },
-                                "subgroup_type": "k",
-                                "k_subtype": "enlarged_unit_cell"
+                                ]
                             },
                             {
                                 "affine_transformation": {
@@ -5104,7 +5169,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                     ],
                     "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
                     "enum": [
-                        "fractional"
+                        "fractional",
+                        null
                     ]
                 },
                 "representation": {
@@ -5416,7 +5482,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                 "enum": [
                                     "loss_of_centering_translation",
-                                    "enlarged_unit_cell"
+                                    "enlarged_unit_cell",
+                                    null
                                 ]
                             },
                             "compatible_systems": {
@@ -5659,7 +5726,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "array",
                                     "null"
                                 ],
-                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                 "items": {
                                     "x-optimade-type": "dictionary",
                                     "x-optimade-unit": "inapplicable",
@@ -5831,13 +5898,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "examples": [
                             {
                                 "index": 2,
+                                "subgroup_type": "k",
+                                "k_subtype": "loss_of_centering_translation",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z"
+                                },
                                 "wyckoff_splitting": [
                                     {
                                         "parent": "a",
                                         "splits": [
                                             {
                                                 "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "xyz": "0,0,0",
                                                 "affine": [
                                                     [
                                                         "1",
@@ -5854,31 +5948,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "1",
                                                         "0"
                                                     ]
                                                 ]
                                             },
                                             {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "letter": "d",
+                                                "xyz": "1/2,1/2,1/2",
                                                 "affine": [
                                                     [
                                                         "1",
                                                         "0",
                                                         "0",
-                                                        "0"
+                                                        "1/2"
                                                     ],
                                                     [
                                                         "0",
                                                         "1",
                                                         "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1",
+                                                        "1/2"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "parent": "n",
+                                        "splits": [
+                                            {
+                                                "letter": "s",
+                                                "xyz": "x,0,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
                                                         "0"
                                                     ],
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "-1",
+                                                        "0"
+                                                    ]
+                                                ]
+                                            },
+                                            {
+                                                "letter": "t",
+                                                "xyz": "x,1/2,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "-1",
                                                         "1/2"
                                                     ]
                                                 ]
@@ -5889,16 +6036,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "criteria": [
                                     {
                                         "parent": "a",
+                                        "constraints": []
+                                    },
+                                    {
+                                        "parent": "n",
                                         "constraints": [
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
+                                                        "letter": "t",
+                                                        "index": 0
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -5924,43 +6075,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
-                                                    }
-                                                ],
-                                                "coeffs": [
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ],
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "-1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                ],
-                                                "target": [
-                                                    "0"
-                                                ]
-                                            },
-                                            {
-                                                "roles": [
-                                                    {
-                                                        "letter": "a",
+                                                        "letter": "t",
                                                         "index": 0
-                                                    },
-                                                    {
-                                                        "letter": "a",
-                                                        "index": 1
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -5980,41 +6100,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     ]
                                                 ],
                                                 "target": [
-                                                    "0"
+                                                    "1/2"
                                                 ]
                                             }
                                         ]
                                     }
-                                ],
-                                "affine_transformation": {
-                                    "matrix": [
-                                        [
-                                            "1",
-                                            "0",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "1",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "0",
-                                            "2"
-                                        ]
-                                    ],
-                                    "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
-                                    ],
-                                    "xyz": "x,y,2z",
-                                    "det": 2,
-                                    "is_orthogonal": false
-                                },
-                                "subgroup_type": "k",
-                                "k_subtype": "enlarged_unit_cell"
+                                ]
                             },
                             {
                                 "affine_transformation": {
@@ -6450,7 +6541,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -6693,7 +6785,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -6865,13 +6957,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -6888,31 +7007,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -6923,16 +7095,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -6958,43 +7134,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -7014,41 +7159,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -7154,7 +7270,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                 "array",
                 "null"
             ],
-            "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles before evaluating the equations on their published three-component representative coordinates.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
+            "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles, defined by the `wyckoff_splitting` of the corresponding `baernighausen` transform, before evaluating the equations on their published three-component representative coordinates.\nBackward-lift transform records carry `index`, `affine_transformation`, and `criteria`; the splitting itself and the t/k metadata are stored in the `baernighausen` table.\nThe example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding, where parent `n` splits into `s` and `t` whose x and z coordinates differ by 1/2 modulo 1.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
             "items": {
                 "x-optimade-type": "dictionary",
                 "x-optimade-unit": "inapplicable",
@@ -7425,7 +7541,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -7668,7 +7785,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -7840,13 +7957,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -7863,31 +8007,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -7898,16 +8095,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -7933,43 +8134,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -7989,41 +8159,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -8072,78 +8213,52 @@ This is not the number of all linear matrices tested: candidates whose affine no
             "examples": [
                 [
                     {
-                        "target_it_number": 1,
+                        "target_it_number": 123,
                         "transforms": [
                             {
                                 "index": 2,
-                                "wyckoff_splitting": [
-                                    {
-                                        "parent": "a",
-                                        "splits": [
-                                            {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
-                                                "affine": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "1/2",
-                                                        "0"
-                                                    ]
-                                                ]
-                                            },
-                                            {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
-                                                "affine": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "1/2",
-                                                        "1/2"
-                                                    ]
-                                                ]
-                                            }
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
                                         ]
-                                    }
-                                ],
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z"
+                                },
                                 "criteria": [
                                     {
                                         "parent": "a",
+                                        "constraints": []
+                                    },
+                                    {
+                                        "parent": "n",
                                         "constraints": [
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
+                                                        "letter": "t",
+                                                        "index": 0
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -8169,43 +8284,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
-                                                    }
-                                                ],
-                                                "coeffs": [
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ],
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "-1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                ],
-                                                "target": [
-                                                    "0"
-                                                ]
-                                            },
-                                            {
-                                                "roles": [
-                                                    {
-                                                        "letter": "a",
+                                                        "letter": "t",
                                                         "index": 0
-                                                    },
-                                                    {
-                                                        "letter": "a",
-                                                        "index": 1
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -8225,38 +8309,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     ]
                                                 ],
                                                 "target": [
-                                                    "0"
+                                                    "1/2"
                                                 ]
                                             }
                                         ]
                                     }
-                                ],
-                                "affine_transformation": {
-                                    "matrix": [
-                                        [
-                                            "1",
-                                            "0",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "1",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "0",
-                                            "2"
-                                        ]
-                                    ],
-                                    "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
-                                    ]
-                                },
-                                "subgroup_type": "k",
-                                "k_subtype": "enlarged_unit_cell"
+                                ]
                             }
                         ]
                     }
@@ -8585,7 +8643,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                 "enum": [
                                     "loss_of_centering_translation",
-                                    "enlarged_unit_cell"
+                                    "enlarged_unit_cell",
+                                    null
                                 ]
                             },
                             "compatible_systems": {
@@ -8828,7 +8887,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "array",
                                     "null"
                                 ],
-                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                 "items": {
                                     "x-optimade-type": "dictionary",
                                     "x-optimade-unit": "inapplicable",
@@ -9000,13 +9059,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "examples": [
                             {
                                 "index": 2,
+                                "subgroup_type": "k",
+                                "k_subtype": "loss_of_centering_translation",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z"
+                                },
                                 "wyckoff_splitting": [
                                     {
                                         "parent": "a",
                                         "splits": [
                                             {
                                                 "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "xyz": "0,0,0",
                                                 "affine": [
                                                     [
                                                         "1",
@@ -9023,31 +9109,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "1",
                                                         "0"
                                                     ]
                                                 ]
                                             },
                                             {
-                                                "letter": "a",
-                                                "xyz": "x,y,z",
+                                                "letter": "d",
+                                                "xyz": "1/2,1/2,1/2",
                                                 "affine": [
                                                     [
                                                         "1",
                                                         "0",
                                                         "0",
-                                                        "0"
+                                                        "1/2"
                                                     ],
                                                     [
                                                         "0",
                                                         "1",
                                                         "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1",
+                                                        "1/2"
+                                                    ]
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "parent": "n",
+                                        "splits": [
+                                            {
+                                                "letter": "s",
+                                                "xyz": "x,0,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
                                                         "0"
                                                     ],
                                                     [
                                                         "0",
                                                         "0",
-                                                        "1/2",
+                                                        "-1",
+                                                        "0"
+                                                    ]
+                                                ]
+                                            },
+                                            {
+                                                "letter": "t",
+                                                "xyz": "x,1/2,z",
+                                                "affine": [
+                                                    [
+                                                        "0",
+                                                        "-1",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "-1",
+                                                        "0",
+                                                        "0",
+                                                        "1/2"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "-1",
                                                         "1/2"
                                                     ]
                                                 ]
@@ -9058,16 +9197,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 "criteria": [
                                     {
                                         "parent": "a",
+                                        "constraints": []
+                                    },
+                                    {
+                                        "parent": "n",
                                         "constraints": [
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
+                                                        "letter": "t",
+                                                        "index": 0
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -9093,43 +9236,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             {
                                                 "roles": [
                                                     {
-                                                        "letter": "a",
+                                                        "letter": "s",
                                                         "index": 0
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "index": 1
-                                                    }
-                                                ],
-                                                "coeffs": [
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ],
-                                                    [
-                                                        [
-                                                            "0",
-                                                            "-1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                ],
-                                                "target": [
-                                                    "0"
-                                                ]
-                                            },
-                                            {
-                                                "roles": [
-                                                    {
-                                                        "letter": "a",
+                                                        "letter": "t",
                                                         "index": 0
-                                                    },
-                                                    {
-                                                        "letter": "a",
-                                                        "index": 1
                                                     }
                                                 ],
                                                 "coeffs": [
@@ -9149,41 +9261,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     ]
                                                 ],
                                                 "target": [
-                                                    "0"
+                                                    "1/2"
                                                 ]
                                             }
                                         ]
                                     }
-                                ],
-                                "affine_transformation": {
-                                    "matrix": [
-                                        [
-                                            "1",
-                                            "0",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "1",
-                                            "0"
-                                        ],
-                                        [
-                                            "0",
-                                            "0",
-                                            "2"
-                                        ]
-                                    ],
-                                    "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
-                                    ],
-                                    "xyz": "x,y,2z",
-                                    "det": 2,
-                                    "is_orthogonal": false
-                                },
-                                "subgroup_type": "k",
-                                "k_subtype": "enlarged_unit_cell"
+                                ]
                             },
                             {
                                 "affine_transformation": {
@@ -9369,7 +9452,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "tetragonal",
                             "trigonal",
                             "hexagonal",
-                            "cubic"
+                            "cubic",
+                            null
                         ],
                         "examples": [
                             "triclinic",
@@ -9636,7 +9720,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -9879,7 +9964,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -10051,13 +10136,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -10074,31 +10186,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -10109,16 +10274,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -10144,43 +10313,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -10200,41 +10338,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -10571,7 +10680,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -10814,7 +10924,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -10986,13 +11096,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -11009,31 +11146,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -11044,16 +11234,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -11079,43 +11273,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -11135,41 +11298,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -11802,7 +11936,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                         "enum": [
                             "loss_of_centering_translation",
-                            "enlarged_unit_cell"
+                            "enlarged_unit_cell",
+                            null
                         ]
                     },
                     "compatible_systems": {
@@ -12045,7 +12180,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "array",
                             "null"
                         ],
-                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                         "items": {
                             "x-optimade-type": "dictionary",
                             "x-optimade-unit": "inapplicable",
@@ -12217,13 +12352,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                 "examples": [
                     {
                         "index": 2,
+                        "subgroup_type": "k",
+                        "k_subtype": "loss_of_centering_translation",
+                        "affine_transformation": {
+                            "matrix": [
+                                [
+                                    "1",
+                                    "0",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "1",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "0",
+                                    "1"
+                                ]
+                            ],
+                            "vector": [
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            "xyz": "x,y,z"
+                        },
                         "wyckoff_splitting": [
                             {
                                 "parent": "a",
                                 "splits": [
                                     {
                                         "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "xyz": "0,0,0",
                                         "affine": [
                                             [
                                                 "1",
@@ -12240,31 +12402,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "1",
                                                 "0"
                                             ]
                                         ]
                                     },
                                     {
-                                        "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "letter": "d",
+                                        "xyz": "1/2,1/2,1/2",
                                         "affine": [
                                             [
                                                 "1",
                                                 "0",
                                                 "0",
-                                                "0"
+                                                "1/2"
                                             ],
                                             [
                                                 "0",
                                                 "1",
                                                 "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1",
+                                                "1/2"
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "parent": "n",
+                                "splits": [
+                                    {
+                                        "letter": "s",
+                                        "xyz": "x,0,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
                                                 "0"
                                             ],
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "-1",
+                                                "0"
+                                            ]
+                                        ]
+                                    },
+                                    {
+                                        "letter": "t",
+                                        "xyz": "x,1/2,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "-1",
                                                 "1/2"
                                             ]
                                         ]
@@ -12275,16 +12490,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "criteria": [
                             {
                                 "parent": "a",
+                                "constraints": []
+                            },
+                            {
+                                "parent": "n",
                                 "constraints": [
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
+                                                "letter": "t",
+                                                "index": 0
                                             }
                                         ],
                                         "coeffs": [
@@ -12310,43 +12529,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
-                                            }
-                                        ],
-                                        "coeffs": [
-                                            [
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ]
-                                            ],
-                                            [
-                                                [
-                                                    "0",
-                                                    "-1",
-                                                    "0"
-                                                ]
-                                            ]
-                                        ],
-                                        "target": [
-                                            "0"
-                                        ]
-                                    },
-                                    {
-                                        "roles": [
-                                            {
-                                                "letter": "a",
+                                                "letter": "t",
                                                 "index": 0
-                                            },
-                                            {
-                                                "letter": "a",
-                                                "index": 1
                                             }
                                         ],
                                         "coeffs": [
@@ -12366,41 +12554,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             ]
                                         ],
                                         "target": [
-                                            "0"
+                                            "1/2"
                                         ]
                                     }
                                 ]
                             }
-                        ],
-                        "affine_transformation": {
-                            "matrix": [
-                                [
-                                    "1",
-                                    "0",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "1",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "0",
-                                    "2"
-                                ]
-                            ],
-                            "vector": [
-                                "0",
-                                "0",
-                                "0"
-                            ],
-                            "xyz": "x,y,2z",
-                            "det": 2,
-                            "is_orthogonal": false
-                        },
-                        "subgroup_type": "k",
-                        "k_subtype": "enlarged_unit_cell"
+                        ]
                     },
                     {
                         "affine_transformation": {
@@ -12743,7 +12902,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                         "enum": [
                             "loss_of_centering_translation",
-                            "enlarged_unit_cell"
+                            "enlarged_unit_cell",
+                            null
                         ]
                     },
                     "compatible_systems": {
@@ -12986,7 +13146,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "array",
                             "null"
                         ],
-                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                         "items": {
                             "x-optimade-type": "dictionary",
                             "x-optimade-unit": "inapplicable",
@@ -13158,13 +13318,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                 "examples": [
                     {
                         "index": 2,
+                        "subgroup_type": "k",
+                        "k_subtype": "loss_of_centering_translation",
+                        "affine_transformation": {
+                            "matrix": [
+                                [
+                                    "1",
+                                    "0",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "1",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "0",
+                                    "1"
+                                ]
+                            ],
+                            "vector": [
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            "xyz": "x,y,z"
+                        },
                         "wyckoff_splitting": [
                             {
                                 "parent": "a",
                                 "splits": [
                                     {
                                         "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "xyz": "0,0,0",
                                         "affine": [
                                             [
                                                 "1",
@@ -13181,31 +13368,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "1",
                                                 "0"
                                             ]
                                         ]
                                     },
                                     {
-                                        "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "letter": "d",
+                                        "xyz": "1/2,1/2,1/2",
                                         "affine": [
                                             [
                                                 "1",
                                                 "0",
                                                 "0",
-                                                "0"
+                                                "1/2"
                                             ],
                                             [
                                                 "0",
                                                 "1",
                                                 "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1",
+                                                "1/2"
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "parent": "n",
+                                "splits": [
+                                    {
+                                        "letter": "s",
+                                        "xyz": "x,0,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
                                                 "0"
                                             ],
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "-1",
+                                                "0"
+                                            ]
+                                        ]
+                                    },
+                                    {
+                                        "letter": "t",
+                                        "xyz": "x,1/2,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "-1",
                                                 "1/2"
                                             ]
                                         ]
@@ -13216,16 +13456,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "criteria": [
                             {
                                 "parent": "a",
+                                "constraints": []
+                            },
+                            {
+                                "parent": "n",
                                 "constraints": [
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
+                                                "letter": "t",
+                                                "index": 0
                                             }
                                         ],
                                         "coeffs": [
@@ -13251,43 +13495,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
-                                            }
-                                        ],
-                                        "coeffs": [
-                                            [
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ]
-                                            ],
-                                            [
-                                                [
-                                                    "0",
-                                                    "-1",
-                                                    "0"
-                                                ]
-                                            ]
-                                        ],
-                                        "target": [
-                                            "0"
-                                        ]
-                                    },
-                                    {
-                                        "roles": [
-                                            {
-                                                "letter": "a",
+                                                "letter": "t",
                                                 "index": 0
-                                            },
-                                            {
-                                                "letter": "a",
-                                                "index": 1
                                             }
                                         ],
                                         "coeffs": [
@@ -13307,41 +13520,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             ]
                                         ],
                                         "target": [
-                                            "0"
+                                            "1/2"
                                         ]
                                     }
                                 ]
                             }
-                        ],
-                        "affine_transformation": {
-                            "matrix": [
-                                [
-                                    "1",
-                                    "0",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "1",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "0",
-                                    "2"
-                                ]
-                            ],
-                            "vector": [
-                                "0",
-                                "0",
-                                "0"
-                            ],
-                            "xyz": "x,y,2z",
-                            "det": 2,
-                            "is_orthogonal": false
-                        },
-                        "subgroup_type": "k",
-                        "k_subtype": "enlarged_unit_cell"
+                        ]
                     },
                     {
                         "affine_transformation": {
@@ -13806,7 +13990,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                         "enum": [
                             "loss_of_centering_translation",
-                            "enlarged_unit_cell"
+                            "enlarged_unit_cell",
+                            null
                         ]
                     },
                     "compatible_systems": {
@@ -14049,7 +14234,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "array",
                             "null"
                         ],
-                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                         "items": {
                             "x-optimade-type": "dictionary",
                             "x-optimade-unit": "inapplicable",
@@ -14221,13 +14406,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                 "examples": [
                     {
                         "index": 2,
+                        "subgroup_type": "k",
+                        "k_subtype": "loss_of_centering_translation",
+                        "affine_transformation": {
+                            "matrix": [
+                                [
+                                    "1",
+                                    "0",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "1",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "0",
+                                    "1"
+                                ]
+                            ],
+                            "vector": [
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            "xyz": "x,y,z"
+                        },
                         "wyckoff_splitting": [
                             {
                                 "parent": "a",
                                 "splits": [
                                     {
                                         "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "xyz": "0,0,0",
                                         "affine": [
                                             [
                                                 "1",
@@ -14244,31 +14456,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "1",
                                                 "0"
                                             ]
                                         ]
                                     },
                                     {
-                                        "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "letter": "d",
+                                        "xyz": "1/2,1/2,1/2",
                                         "affine": [
                                             [
                                                 "1",
                                                 "0",
                                                 "0",
-                                                "0"
+                                                "1/2"
                                             ],
                                             [
                                                 "0",
                                                 "1",
                                                 "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1",
+                                                "1/2"
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "parent": "n",
+                                "splits": [
+                                    {
+                                        "letter": "s",
+                                        "xyz": "x,0,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
                                                 "0"
                                             ],
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "-1",
+                                                "0"
+                                            ]
+                                        ]
+                                    },
+                                    {
+                                        "letter": "t",
+                                        "xyz": "x,1/2,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "-1",
                                                 "1/2"
                                             ]
                                         ]
@@ -14279,16 +14544,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "criteria": [
                             {
                                 "parent": "a",
+                                "constraints": []
+                            },
+                            {
+                                "parent": "n",
                                 "constraints": [
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
+                                                "letter": "t",
+                                                "index": 0
                                             }
                                         ],
                                         "coeffs": [
@@ -14314,43 +14583,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
-                                            }
-                                        ],
-                                        "coeffs": [
-                                            [
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ]
-                                            ],
-                                            [
-                                                [
-                                                    "0",
-                                                    "-1",
-                                                    "0"
-                                                ]
-                                            ]
-                                        ],
-                                        "target": [
-                                            "0"
-                                        ]
-                                    },
-                                    {
-                                        "roles": [
-                                            {
-                                                "letter": "a",
+                                                "letter": "t",
                                                 "index": 0
-                                            },
-                                            {
-                                                "letter": "a",
-                                                "index": 1
                                             }
                                         ],
                                         "coeffs": [
@@ -14370,41 +14608,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             ]
                                         ],
                                         "target": [
-                                            "0"
+                                            "1/2"
                                         ]
                                     }
                                 ]
                             }
-                        ],
-                        "affine_transformation": {
-                            "matrix": [
-                                [
-                                    "1",
-                                    "0",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "1",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "0",
-                                    "2"
-                                ]
-                            ],
-                            "vector": [
-                                "0",
-                                "0",
-                                "0"
-                            ],
-                            "xyz": "x,y,2z",
-                            "det": 2,
-                            "is_orthogonal": false
-                        },
-                        "subgroup_type": "k",
-                        "k_subtype": "enlarged_unit_cell"
+                        ]
                     },
                     {
                         "affine_transformation": {
@@ -14526,7 +14735,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
             "type": [
                 "string"
             ],
-            "description": "International Tables maximal subgroup class.\n\nThe value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.\nThe field is omitted when the enclosing record is not a maximal subgroup relation.\n\nA translationengleiche subgroup retains the complete translation lattice and loses point symmetry: `i_T = 1`, `i_P > 1`.\nA klassengleiche subgroup retains the point group and loses translations: `i_P = 1`, `i_T > 1`.\nFor a maximal proper subgroup these are the alternatives; a subgroup losing both is not represented by either value.\nThe underlying t/k classification describes what symmetry is lost and does not by itself prove that an embedding is maximal.",
+            "description": "International Tables maximal subgroup class.\n\nThe value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.\nThe field is omitted for identity embeddings, for general subgroups that lose both translations and point symmetry, and for records that are not subgroup embeddings.\nIts presence does not by itself certify maximality; the relation table containing the record supplies that information.\n\nA translationengleiche subgroup retains the complete translation lattice and loses point symmetry: `i_T = 1`, `i_P > 1`.\nA klassengleiche subgroup retains the point group and loses translations: `i_P = 1`, `i_T > 1`.\nFor a maximal proper subgroup these are the alternatives; a subgroup losing both is not represented by either value.\nThe underlying t/k classification describes what symmetry is lost and does not by itself prove that an embedding is maximal.",
             "enum": [
                 "t",
                 "k"
@@ -14562,7 +14771,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
             "x-optimade-unit": "inapplicable",
             "enum": [
                 "loss_of_centering_translation",
-                "enlarged_unit_cell"
+                "enlarged_unit_cell",
+                null
             ],
             "examples": [
                 "enlarged_unit_cell",
@@ -15060,7 +15270,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Kind label for this normalizer contribution.",
                                 "enum": [
-                                    "euclidean"
+                                    "euclidean",
+                                    null
                                 ]
                             },
                             "n_centering_translations": {
@@ -15100,7 +15311,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
+                                "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
                                 "x-optimade-unit": "inapplicable",
                                 "examples": [
                                     1,
@@ -15400,7 +15611,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "4",
                                                 "-4",
                                                 "6",
-                                                "-6"
+                                                "-6",
+                                                null
                                             ]
                                         },
                                         "axis": {
@@ -15439,7 +15651,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "enum": [
                                                 -1,
                                                 0,
-                                                1
+                                                1,
+                                                null
                                             ]
                                         },
                                         "screw_glide": {
@@ -15833,7 +16046,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "4",
                                                 "-4",
                                                 "6",
-                                                "-6"
+                                                "-6",
+                                                null
                                             ]
                                         },
                                         "axis": {
@@ -15872,7 +16086,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "enum": [
                                                 -1,
                                                 0,
-                                                1
+                                                1,
+                                                null
                                             ]
                                         },
                                         "screw_glide": {
@@ -16623,7 +16838,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Kind label for this normalizer contribution.",
                                 "enum": [
-                                    "orthogonal_affine"
+                                    "orthogonal_affine",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -16635,7 +16851,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Representation label for the listed normalizer data.",
                                 "enum": [
-                                    "orthogonal_coset_representatives"
+                                    "orthogonal_coset_representatives",
+                                    null
                                 ]
                             },
                             "candidate_set": {
@@ -16647,7 +16864,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Name of the finite linear candidate set used for generation.",
                                 "enum": [
-                                    "signed_permutation_matrices"
+                                    "signed_permutation_matrices",
+                                    null
                                 ]
                             },
                             "n_symops": {
@@ -17001,7 +17219,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -17244,7 +17463,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -17416,13 +17635,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -17439,31 +17685,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -17474,16 +17773,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -17509,43 +17812,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -17565,41 +17837,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -17728,7 +17971,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Kind label for this normalizer contribution.",
                                 "enum": [
-                                    "affine"
+                                    "affine",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -17740,7 +17984,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Representation label for the listed normalizer data.",
                                 "enum": [
-                                    "coset_representatives"
+                                    "coset_representatives",
+                                    null
                                 ]
                             },
                             "candidate_set": {
@@ -17752,7 +17997,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Name of the finite linear candidate set used for generation.",
                                 "enum": [
-                                    "bounded_unimodular_integer_matrices"
+                                    "bounded_unimodular_integer_matrices",
+                                    null
                                 ]
                             },
                             "n_symops": {
@@ -18106,7 +18352,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -18349,7 +18596,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -18521,13 +18768,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -18544,31 +18818,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -18579,16 +18906,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -18614,43 +18945,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -18670,41 +18970,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -18891,7 +19162,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
                                 "enum": [
-                                    "fractional"
+                                    "fractional",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -19197,7 +19469,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -19440,7 +19713,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -19612,13 +19885,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -19635,31 +19935,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -19670,16 +20023,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -19705,43 +20062,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -19761,41 +20087,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -20225,7 +20522,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                                 "enum": [
                                                     "loss_of_centering_translation",
-                                                    "enlarged_unit_cell"
+                                                    "enlarged_unit_cell",
+                                                    null
                                                 ]
                                             },
                                             "compatible_systems": {
@@ -20468,7 +20766,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                                 "items": {
                                                     "x-optimade-type": "dictionary",
                                                     "x-optimade-unit": "inapplicable",
@@ -20640,13 +20938,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "examples": [
                                             {
                                                 "index": 2,
+                                                "subgroup_type": "k",
+                                                "k_subtype": "loss_of_centering_translation",
+                                                "affine_transformation": {
+                                                    "matrix": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1"
+                                                        ]
+                                                    ],
+                                                    "vector": [
+                                                        "0",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    "xyz": "x,y,z"
+                                                },
                                                 "wyckoff_splitting": [
                                                     {
                                                         "parent": "a",
                                                         "splits": [
                                                             {
                                                                 "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "xyz": "0,0,0",
                                                                 "affine": [
                                                                     [
                                                                         "1",
@@ -20663,31 +20988,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "1",
                                                                         "0"
                                                                     ]
                                                                 ]
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "letter": "d",
+                                                                "xyz": "1/2,1/2,1/2",
                                                                 "affine": [
                                                                     [
                                                                         "1",
                                                                         "0",
                                                                         "0",
-                                                                        "0"
+                                                                        "1/2"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "1",
                                                                         "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "1",
+                                                                        "1/2"
+                                                                    ]
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "parent": "n",
+                                                        "splits": [
+                                                            {
+                                                                "letter": "s",
+                                                                "xyz": "x,0,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
                                                                         "0"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "-1",
+                                                                        "0"
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            {
+                                                                "letter": "t",
+                                                                "xyz": "x,1/2,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "-1",
                                                                         "1/2"
                                                                     ]
                                                                 ]
@@ -20698,16 +21076,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "criteria": [
                                                     {
                                                         "parent": "a",
+                                                        "constraints": []
+                                                    },
+                                                    {
+                                                        "parent": "n",
                                                         "constraints": [
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
+                                                                        "letter": "t",
+                                                                        "index": 0
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -20733,43 +21115,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
-                                                                    }
-                                                                ],
-                                                                "coeffs": [
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "1",
-                                                                            "0"
-                                                                        ]
-                                                                    ],
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "-1",
-                                                                            "0"
-                                                                        ]
-                                                                    ]
-                                                                ],
-                                                                "target": [
-                                                                    "0"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "roles": [
-                                                                    {
-                                                                        "letter": "a",
+                                                                        "letter": "t",
                                                                         "index": 0
-                                                                    },
-                                                                    {
-                                                                        "letter": "a",
-                                                                        "index": 1
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -20789,41 +21140,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     ]
                                                                 ],
                                                                 "target": [
-                                                                    "0"
+                                                                    "1/2"
                                                                 ]
                                                             }
                                                         ]
                                                     }
-                                                ],
-                                                "affine_transformation": {
-                                                    "matrix": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "2"
-                                                        ]
-                                                    ],
-                                                    "vector": [
-                                                        "0",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    "xyz": "x,y,2z",
-                                                    "det": 2,
-                                                    "is_orthogonal": false
-                                                },
-                                                "subgroup_type": "k",
-                                                "k_subtype": "enlarged_unit_cell"
+                                                ]
                                             },
                                             {
                                                 "affine_transformation": {
@@ -21281,7 +21603,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                                 "enum": [
                                                     "loss_of_centering_translation",
-                                                    "enlarged_unit_cell"
+                                                    "enlarged_unit_cell",
+                                                    null
                                                 ]
                                             },
                                             "compatible_systems": {
@@ -21524,7 +21847,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                                 "items": {
                                                     "x-optimade-type": "dictionary",
                                                     "x-optimade-unit": "inapplicable",
@@ -21696,13 +22019,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "examples": [
                                             {
                                                 "index": 2,
+                                                "subgroup_type": "k",
+                                                "k_subtype": "loss_of_centering_translation",
+                                                "affine_transformation": {
+                                                    "matrix": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1"
+                                                        ]
+                                                    ],
+                                                    "vector": [
+                                                        "0",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    "xyz": "x,y,z"
+                                                },
                                                 "wyckoff_splitting": [
                                                     {
                                                         "parent": "a",
                                                         "splits": [
                                                             {
                                                                 "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "xyz": "0,0,0",
                                                                 "affine": [
                                                                     [
                                                                         "1",
@@ -21719,31 +22069,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "1",
                                                                         "0"
                                                                     ]
                                                                 ]
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "letter": "d",
+                                                                "xyz": "1/2,1/2,1/2",
                                                                 "affine": [
                                                                     [
                                                                         "1",
                                                                         "0",
                                                                         "0",
-                                                                        "0"
+                                                                        "1/2"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "1",
                                                                         "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "1",
+                                                                        "1/2"
+                                                                    ]
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "parent": "n",
+                                                        "splits": [
+                                                            {
+                                                                "letter": "s",
+                                                                "xyz": "x,0,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
                                                                         "0"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "-1",
+                                                                        "0"
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            {
+                                                                "letter": "t",
+                                                                "xyz": "x,1/2,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "-1",
                                                                         "1/2"
                                                                     ]
                                                                 ]
@@ -21754,16 +22157,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "criteria": [
                                                     {
                                                         "parent": "a",
+                                                        "constraints": []
+                                                    },
+                                                    {
+                                                        "parent": "n",
                                                         "constraints": [
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
+                                                                        "letter": "t",
+                                                                        "index": 0
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -21789,43 +22196,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
-                                                                    }
-                                                                ],
-                                                                "coeffs": [
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "1",
-                                                                            "0"
-                                                                        ]
-                                                                    ],
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "-1",
-                                                                            "0"
-                                                                        ]
-                                                                    ]
-                                                                ],
-                                                                "target": [
-                                                                    "0"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "roles": [
-                                                                    {
-                                                                        "letter": "a",
+                                                                        "letter": "t",
                                                                         "index": 0
-                                                                    },
-                                                                    {
-                                                                        "letter": "a",
-                                                                        "index": 1
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -21845,41 +22221,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     ]
                                                                 ],
                                                                 "target": [
-                                                                    "0"
+                                                                    "1/2"
                                                                 ]
                                                             }
                                                         ]
                                                     }
-                                                ],
-                                                "affine_transformation": {
-                                                    "matrix": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "2"
-                                                        ]
-                                                    ],
-                                                    "vector": [
-                                                        "0",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    "xyz": "x,y,2z",
-                                                    "det": 2,
-                                                    "is_orthogonal": false
-                                                },
-                                                "subgroup_type": "k",
-                                                "k_subtype": "enlarged_unit_cell"
+                                                ]
                                             },
                                             {
                                                 "affine_transformation": {
@@ -21979,7 +22326,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                             "array",
                             "null"
                         ],
-                        "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles before evaluating the equations on their published three-component representative coordinates.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
+                        "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles, defined by the `wyckoff_splitting` of the corresponding `baernighausen` transform, before evaluating the equations on their published three-component representative coordinates.\nBackward-lift transform records carry `index`, `affine_transformation`, and `criteria`; the splitting itself and the t/k metadata are stored in the `baernighausen` table.\nThe example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding, where parent `n` splits into `s` and `t` whose x and z coordinates differ by 1/2 modulo 1.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
                         "items": {
                             "x-optimade-type": "dictionary",
                             "x-optimade-unit": "inapplicable",
@@ -22250,7 +22597,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                                 "enum": [
                                                     "loss_of_centering_translation",
-                                                    "enlarged_unit_cell"
+                                                    "enlarged_unit_cell",
+                                                    null
                                                 ]
                                             },
                                             "compatible_systems": {
@@ -22493,7 +22841,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                                "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                                 "items": {
                                                     "x-optimade-type": "dictionary",
                                                     "x-optimade-unit": "inapplicable",
@@ -22665,13 +23013,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                         "examples": [
                                             {
                                                 "index": 2,
+                                                "subgroup_type": "k",
+                                                "k_subtype": "loss_of_centering_translation",
+                                                "affine_transformation": {
+                                                    "matrix": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1"
+                                                        ]
+                                                    ],
+                                                    "vector": [
+                                                        "0",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    "xyz": "x,y,z"
+                                                },
                                                 "wyckoff_splitting": [
                                                     {
                                                         "parent": "a",
                                                         "splits": [
                                                             {
                                                                 "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "xyz": "0,0,0",
                                                                 "affine": [
                                                                     [
                                                                         "1",
@@ -22688,31 +23063,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "1",
                                                                         "0"
                                                                     ]
                                                                 ]
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "xyz": "x,y,z",
+                                                                "letter": "d",
+                                                                "xyz": "1/2,1/2,1/2",
                                                                 "affine": [
                                                                     [
                                                                         "1",
                                                                         "0",
                                                                         "0",
-                                                                        "0"
+                                                                        "1/2"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "1",
                                                                         "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "1",
+                                                                        "1/2"
+                                                                    ]
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "parent": "n",
+                                                        "splits": [
+                                                            {
+                                                                "letter": "s",
+                                                                "xyz": "x,0,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
                                                                         "0"
                                                                     ],
                                                                     [
                                                                         "0",
                                                                         "0",
-                                                                        "1/2",
+                                                                        "-1",
+                                                                        "0"
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            {
+                                                                "letter": "t",
+                                                                "xyz": "x,1/2,z",
+                                                                "affine": [
+                                                                    [
+                                                                        "0",
+                                                                        "-1",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "-1",
+                                                                        "0",
+                                                                        "0",
+                                                                        "1/2"
+                                                                    ],
+                                                                    [
+                                                                        "0",
+                                                                        "0",
+                                                                        "-1",
                                                                         "1/2"
                                                                     ]
                                                                 ]
@@ -22723,16 +23151,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "criteria": [
                                                     {
                                                         "parent": "a",
+                                                        "constraints": []
+                                                    },
+                                                    {
+                                                        "parent": "n",
                                                         "constraints": [
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
+                                                                        "letter": "t",
+                                                                        "index": 0
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -22758,43 +23190,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                             {
                                                                 "roles": [
                                                                     {
-                                                                        "letter": "a",
+                                                                        "letter": "s",
                                                                         "index": 0
                                                                     },
                                                                     {
-                                                                        "letter": "a",
-                                                                        "index": 1
-                                                                    }
-                                                                ],
-                                                                "coeffs": [
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "1",
-                                                                            "0"
-                                                                        ]
-                                                                    ],
-                                                                    [
-                                                                        [
-                                                                            "0",
-                                                                            "-1",
-                                                                            "0"
-                                                                        ]
-                                                                    ]
-                                                                ],
-                                                                "target": [
-                                                                    "0"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "roles": [
-                                                                    {
-                                                                        "letter": "a",
+                                                                        "letter": "t",
                                                                         "index": 0
-                                                                    },
-                                                                    {
-                                                                        "letter": "a",
-                                                                        "index": 1
                                                                     }
                                                                 ],
                                                                 "coeffs": [
@@ -22814,41 +23215,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                     ]
                                                                 ],
                                                                 "target": [
-                                                                    "0"
+                                                                    "1/2"
                                                                 ]
                                                             }
                                                         ]
                                                     }
-                                                ],
-                                                "affine_transformation": {
-                                                    "matrix": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "2"
-                                                        ]
-                                                    ],
-                                                    "vector": [
-                                                        "0",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    "xyz": "x,y,2z",
-                                                    "det": 2,
-                                                    "is_orthogonal": false
-                                                },
-                                                "subgroup_type": "k",
-                                                "k_subtype": "enlarged_unit_cell"
+                                                ]
                                             },
                                             {
                                                 "affine_transformation": {
@@ -22897,78 +23269,52 @@ This is not the number of all linear matrices tested: candidates whose affine no
                         "examples": [
                             [
                                 {
-                                    "target_it_number": 1,
+                                    "target_it_number": 123,
                                     "transforms": [
                                         {
                                             "index": 2,
-                                            "wyckoff_splitting": [
-                                                {
-                                                    "parent": "a",
-                                                    "splits": [
-                                                        {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
-                                                            "affine": [
-                                                                [
-                                                                    "1",
-                                                                    "0",
-                                                                    "0",
-                                                                    "0"
-                                                                ],
-                                                                [
-                                                                    "0",
-                                                                    "1",
-                                                                    "0",
-                                                                    "0"
-                                                                ],
-                                                                [
-                                                                    "0",
-                                                                    "0",
-                                                                    "1/2",
-                                                                    "0"
-                                                                ]
-                                                            ]
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
-                                                            "affine": [
-                                                                [
-                                                                    "1",
-                                                                    "0",
-                                                                    "0",
-                                                                    "0"
-                                                                ],
-                                                                [
-                                                                    "0",
-                                                                    "1",
-                                                                    "0",
-                                                                    "0"
-                                                                ],
-                                                                [
-                                                                    "0",
-                                                                    "0",
-                                                                    "1/2",
-                                                                    "1/2"
-                                                                ]
-                                                            ]
-                                                        }
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
                                                     ]
-                                                }
-                                            ],
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -22994,43 +23340,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -23050,38 +23365,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ]
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         }
                                     ]
                                 }
@@ -23357,7 +23646,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -23600,7 +23890,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -23772,13 +24062,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -23795,31 +24112,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -23830,16 +24200,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -23865,43 +24239,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -23921,41 +24264,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -24405,7 +24719,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -24648,7 +24963,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -24820,13 +25135,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -24843,31 +25185,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -24878,16 +25273,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -24913,43 +25312,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -24969,41 +25337,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -25168,7 +25507,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
                                 "enum": [
-                                    "fractional"
+                                    "fractional",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -25232,7 +25572,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Kind label for this normalizer contribution.",
                                 "enum": [
-                                    "orthogonal_affine"
+                                    "orthogonal_affine",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -25244,7 +25585,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Representation label for the listed normalizer data.",
                                 "enum": [
-                                    "orthogonal_coset_representatives"
+                                    "orthogonal_coset_representatives",
+                                    null
                                 ]
                             },
                             "candidate_set": {
@@ -25256,7 +25598,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Name of the finite linear candidate set used for generation.",
                                 "enum": [
-                                    "signed_permutation_matrices"
+                                    "signed_permutation_matrices",
+                                    null
                                 ]
                             },
                             "n_symops": {
@@ -25610,7 +25953,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -25853,7 +26197,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -26025,13 +26369,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -26048,31 +26419,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -26083,16 +26507,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -26118,43 +26546,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -26174,41 +26571,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {
@@ -26337,7 +26705,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Kind label for this normalizer contribution.",
                                 "enum": [
-                                    "affine"
+                                    "affine",
+                                    null
                                 ]
                             },
                             "representation": {
@@ -26349,7 +26718,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Representation label for the listed normalizer data.",
                                 "enum": [
-                                    "coset_representatives"
+                                    "coset_representatives",
+                                    null
                                 ]
                             },
                             "candidate_set": {
@@ -26361,7 +26731,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                 ],
                                 "description": "Name of the finite linear candidate set used for generation.",
                                 "enum": [
-                                    "bounded_unimodular_integer_matrices"
+                                    "bounded_unimodular_integer_matrices",
+                                    null
                                 ]
                             },
                             "n_symops": {
@@ -26715,7 +27086,8 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                             "enum": [
                                                 "loss_of_centering_translation",
-                                                "enlarged_unit_cell"
+                                                "enlarged_unit_cell",
+                                                null
                                             ]
                                         },
                                         "compatible_systems": {
@@ -26958,7 +27330,7 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                            "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                             "items": {
                                                 "x-optimade-type": "dictionary",
                                                 "x-optimade-unit": "inapplicable",
@@ -27130,13 +27502,40 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                     "examples": [
                                         {
                                             "index": 2,
+                                            "subgroup_type": "k",
+                                            "k_subtype": "loss_of_centering_translation",
+                                            "affine_transformation": {
+                                                "matrix": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1"
+                                                    ]
+                                                ],
+                                                "vector": [
+                                                    "0",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                "xyz": "x,y,z"
+                                            },
                                             "wyckoff_splitting": [
                                                 {
                                                     "parent": "a",
                                                     "splits": [
                                                         {
                                                             "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "xyz": "0,0,0",
                                                             "affine": [
                                                                 [
                                                                     "1",
@@ -27153,31 +27552,84 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "1",
                                                                     "0"
                                                                 ]
                                                             ]
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "xyz": "x,y,z",
+                                                            "letter": "d",
+                                                            "xyz": "1/2,1/2,1/2",
                                                             "affine": [
                                                                 [
                                                                     "1",
                                                                     "0",
                                                                     "0",
-                                                                    "0"
+                                                                    "1/2"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "1",
                                                                     "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1",
+                                                                    "1/2"
+                                                                ]
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "parent": "n",
+                                                    "splits": [
+                                                        {
+                                                            "letter": "s",
+                                                            "xyz": "x,0,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
                                                                     "0"
                                                                 ],
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1/2",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "t",
+                                                            "xyz": "x,1/2,z",
+                                                            "affine": [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1",
                                                                     "1/2"
                                                                 ]
                                                             ]
@@ -27188,16 +27640,20 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                             "criteria": [
                                                 {
                                                     "parent": "a",
+                                                    "constraints": []
+                                                },
+                                                {
+                                                    "parent": "n",
                                                     "constraints": [
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
+                                                                    "letter": "t",
+                                                                    "index": 0
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -27223,43 +27679,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                         {
                                                             "roles": [
                                                                 {
-                                                                    "letter": "a",
+                                                                    "letter": "s",
                                                                     "index": 0
                                                                 },
                                                                 {
-                                                                    "letter": "a",
-                                                                    "index": 1
-                                                                }
-                                                            ],
-                                                            "coeffs": [
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "1",
-                                                                        "0"
-                                                                    ]
-                                                                ],
-                                                                [
-                                                                    [
-                                                                        "0",
-                                                                        "-1",
-                                                                        "0"
-                                                                    ]
-                                                                ]
-                                                            ],
-                                                            "target": [
-                                                                "0"
-                                                            ]
-                                                        },
-                                                        {
-                                                            "roles": [
-                                                                {
-                                                                    "letter": "a",
+                                                                    "letter": "t",
                                                                     "index": 0
-                                                                },
-                                                                {
-                                                                    "letter": "a",
-                                                                    "index": 1
                                                                 }
                                                             ],
                                                             "coeffs": [
@@ -27279,41 +27704,12 @@ This is not the number of all linear matrices tested: candidates whose affine no
                                                                 ]
                                                             ],
                                                             "target": [
-                                                                "0"
+                                                                "1/2"
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            ],
-                                            "affine_transformation": {
-                                                "matrix": [
-                                                    [
-                                                        "1",
-                                                        "0",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "1",
-                                                        "0"
-                                                    ],
-                                                    [
-                                                        "0",
-                                                        "0",
-                                                        "2"
-                                                    ]
-                                                ],
-                                                "vector": [
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                "xyz": "x,y,2z",
-                                                "det": 2,
-                                                "is_orthogonal": false
-                                            },
-                                            "subgroup_type": "k",
-                                            "k_subtype": "enlarged_unit_cell"
+                                            ]
                                         },
                                         {
                                             "affine_transformation": {

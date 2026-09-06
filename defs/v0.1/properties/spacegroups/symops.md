@@ -284,7 +284,8 @@ Consequently `n_symops` is the general-position multiplicity in this cell, not t
                     "4",
                     "-4",
                     "6",
-                    "-6"
+                    "-6",
+                    null
                 ]
             },
             "axis": {
@@ -323,7 +324,8 @@ Consequently `n_symops` is the general-position multiplicity in this cell, not t
                 "enum": [
                     -1,
                     0,
-                    1
+                    1,
+                    null
                 ]
             },
             "screw_glide": {

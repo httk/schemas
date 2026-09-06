@@ -268,7 +268,8 @@
                         "x-optimade-type": "integer",
                         "enum": [
                             0,
-                            1
+                            1,
+                            null
                         ],
                         "type": [
                             "integer",
@@ -894,7 +895,8 @@
                             4,
                             -4,
                             6,
-                            -6
+                            -6,
+                            null
                         ],
                         "x-optimade-unit": "inapplicable"
                     },
@@ -1001,7 +1003,8 @@
                 "tetragonal",
                 "trigonal",
                 "hexagonal",
-                "cubic"
+                "cubic",
+                null
             ],
             "examples": [
                 "triclinic",
@@ -1063,7 +1066,8 @@
                 "m-3",
                 "432",
                 "-43m",
-                "m-3m"
+                "m-3m",
+                null
             ],
             "examples": [
                 "1",
@@ -1137,7 +1141,8 @@
                 "6/m",
                 "6/mmm",
                 "m-3",
-                "m-3m"
+                "m-3m",
+                null
             ],
             "examples": [
                 "-1",
@@ -1255,7 +1260,8 @@
                 "Th",
                 "O",
                 "Td",
-                "Oh"
+                "Oh",
+                null
             ],
             "examples": [
                 "C1",
@@ -1527,7 +1533,8 @@
                             "4",
                             "-4",
                             "6",
-                            "-6"
+                            "-6",
+                            null
                         ]
                     },
                     "axis": {
@@ -1566,7 +1573,8 @@
                         "enum": [
                             -1,
                             0,
-                            1
+                            1,
+                            null
                         ]
                     },
                     "screw_glide": {

@@ -173,7 +173,8 @@ In particular, the real two-dimensional span for a conjugate pair must not be in
                 "x-optimade-type": "integer",
                 "enum": [
                     0,
-                    1
+                    1,
+                    null
                 ],
                 "type": [
                     "integer",

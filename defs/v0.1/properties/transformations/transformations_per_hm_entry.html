@@ -316,7 +316,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kind label for this normalizer contribution.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;euclidean&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;n_centering_translations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -356,7 +357,7 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                            </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                            </span><span class="mi">1</span><span class="p">,</span>
@@ -656,7 +657,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                        </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -695,7 +697,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                        </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="mi">1</span>
+<span class="w">                                        </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1089,7 +1092,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                        </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1128,7 +1132,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                        </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                        </span><span class="mi">1</span>
+<span class="w">                                        </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1879,7 +1884,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kind label for this normalizer contribution.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;orthogonal_affine&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;orthogonal_affine&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;representation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1891,7 +1897,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Representation label for the listed normalizer data.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;orthogonal_coset_representatives&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;orthogonal_coset_representatives&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;candidate_set&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1903,7 +1910,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Name of the finite linear candidate set used for generation.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;signed_permutation_matrices&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;signed_permutation_matrices&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;n_symops&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2257,7 +2265,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;compatible_systems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2500,7 +2509,7 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -2672,13 +2681,40 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span>
+<span class="w">                                    </span><span class="p">},</span>
 <span class="w">                                    </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0,0,0&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -2695,31 +2731,84 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">},</span>
 <span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1/2,1/2,1/2&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">}</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,0,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">},</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,1/2,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
@@ -2730,16 +2819,20 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -2765,43 +2858,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                                                        </span><span class="p">}</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">],</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">]</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                    </span><span class="p">]</span>
-<span class="w">                                                </span><span class="p">},</span>
-<span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">                                                        </span><span class="p">},</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -2821,41 +2883,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">}</span>
 <span class="w">                                            </span><span class="p">]</span>
 <span class="w">                                        </span><span class="p">}</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;2&quot;</span>
-<span class="w">                                            </span><span class="p">]</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,2z&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2984,7 +3017,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kind label for this normalizer contribution.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;affine&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;affine&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;representation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2996,7 +3030,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Representation label for the listed normalizer data.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;coset_representatives&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;coset_representatives&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;candidate_set&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3008,7 +3043,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Name of the finite linear candidate set used for generation.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;bounded_unimodular_integer_matrices&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;bounded_unimodular_integer_matrices&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;n_symops&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3362,7 +3398,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;compatible_systems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3605,7 +3642,7 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -3777,13 +3814,40 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span>
+<span class="w">                                    </span><span class="p">},</span>
 <span class="w">                                    </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0,0,0&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -3800,31 +3864,84 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">},</span>
 <span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1/2,1/2,1/2&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">}</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,0,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">},</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,1/2,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
@@ -3835,16 +3952,20 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -3870,43 +3991,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                                                        </span><span class="p">}</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">],</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">]</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                    </span><span class="p">]</span>
-<span class="w">                                                </span><span class="p">},</span>
-<span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">                                                        </span><span class="p">},</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -3926,41 +4016,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">}</span>
 <span class="w">                                            </span><span class="p">]</span>
 <span class="w">                                        </span><span class="p">}</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;2&quot;</span>
-<span class="w">                                            </span><span class="p">]</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,2z&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4147,7 +4208,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coordinate system used for the parameter vectors; fractional components in the containing setting&#39;s cell.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;fractional&quot;</span>
+<span class="w">                            </span><span class="s2">&quot;fractional&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="kc">null</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;representation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4453,7 +4515,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                        </span><span class="s2">&quot;enlarged_unit_cell&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="kc">null</span>
 <span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;compatible_systems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4696,7 +4759,7 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -4868,13 +4931,40 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span>
+<span class="w">                                    </span><span class="p">},</span>
 <span class="w">                                    </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0,0,0&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -4891,31 +4981,84 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">},</span>
 <span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1/2,1/2,1/2&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">}</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,0,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">]</span>
+<span class="w">                                                </span><span class="p">},</span>
+<span class="w">                                                </span><span class="p">{</span>
+<span class="w">                                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,1/2,z&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                        </span><span class="p">],</span>
+<span class="w">                                                        </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">]</span>
@@ -4926,16 +5069,20 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                    </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -4961,43 +5108,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                        </span><span class="p">},</span>
 <span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                                                        </span><span class="p">}</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">],</span>
-<span class="w">                                                        </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">]</span>
-<span class="w">                                                    </span><span class="p">],</span>
-<span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                    </span><span class="p">]</span>
-<span class="w">                                                </span><span class="p">},</span>
-<span class="w">                                                </span><span class="p">{</span>
-<span class="w">                                                    </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
 <span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">                                                        </span><span class="p">},</span>
-<span class="w">                                                        </span><span class="p">{</span>
-<span class="w">                                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                            </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -5017,41 +5133,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">],</span>
 <span class="w">                                                    </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                        </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                    </span><span class="p">]</span>
 <span class="w">                                                </span><span class="p">}</span>
 <span class="w">                                            </span><span class="p">]</span>
 <span class="w">                                        </span><span class="p">}</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;2&quot;</span>
-<span class="w">                                            </span><span class="p">]</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,2z&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                    </span><span class="p">]</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="p">{</span>
 <span class="w">                                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -5481,7 +5568,8 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                            </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                            </span><span class="s2">&quot;enlarged_unit_cell&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="kc">null</span>
 <span class="w">                                        </span><span class="p">]</span>
 <span class="w">                                    </span><span class="p">},</span>
 <span class="w">                                    </span><span class="nt">&quot;compatible_systems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -5724,7 +5812,7 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                            </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -5896,13 +5984,40 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                    </span><span class="p">{</span>
 <span class="w">                                        </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">],</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">],</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span>
+<span class="w">                                        </span><span class="p">},</span>
 <span class="w">                                        </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                            </span><span class="p">{</span>
 <span class="w">                                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                                </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                    </span><span class="p">{</span>
 <span class="w">                                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0,0,0&quot;</span><span class="p">,</span>
 <span class="w">                                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -5919,31 +6034,84 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                            </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                            </span><span class="p">]</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">},</span>
 <span class="w">                                                    </span><span class="p">{</span>
-<span class="w">                                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;d&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1/2,1/2,1/2&quot;</span><span class="p">,</span>
 <span class="w">                                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                            </span><span class="p">],</span>
 <span class="w">                                                            </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                            </span><span class="p">],</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                            </span><span class="p">]</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">}</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">},</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="p">{</span>
+<span class="w">                                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,0,z&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="p">],</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
 <span class="w">                                                            </span><span class="p">],</span>
 <span class="w">                                                            </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="p">]</span>
+<span class="w">                                                        </span><span class="p">]</span>
+<span class="w">                                                    </span><span class="p">},</span>
+<span class="w">                                                    </span><span class="p">{</span>
+<span class="w">                                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,1/2,z&quot;</span><span class="p">,</span>
+<span class="w">                                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                            </span><span class="p">],</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                                            </span><span class="p">],</span>
+<span class="w">                                                            </span><span class="p">[</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                            </span><span class="p">]</span>
 <span class="w">                                                        </span><span class="p">]</span>
@@ -5954,16 +6122,20 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                        </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                            </span><span class="p">{</span>
 <span class="w">                                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                                            </span><span class="p">},</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
 <span class="w">                                                </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                    </span><span class="p">{</span>
 <span class="w">                                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                            </span><span class="p">},</span>
 <span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                            </span><span class="p">}</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -5989,43 +6161,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                    </span><span class="p">{</span>
 <span class="w">                                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">                                                            </span><span class="p">},</span>
 <span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">                                                            </span><span class="p">}</span>
-<span class="w">                                                        </span><span class="p">],</span>
-<span class="w">                                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="p">[</span>
-<span class="w">                                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                                    </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                                </span><span class="p">]</span>
-<span class="w">                                                            </span><span class="p">],</span>
-<span class="w">                                                            </span><span class="p">[</span>
-<span class="w">                                                                </span><span class="p">[</span>
-<span class="w">                                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                                                                    </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                                </span><span class="p">]</span>
-<span class="w">                                                            </span><span class="p">]</span>
-<span class="w">                                                        </span><span class="p">],</span>
-<span class="w">                                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                        </span><span class="p">]</span>
-<span class="w">                                                    </span><span class="p">},</span>
-<span class="w">                                                    </span><span class="p">{</span>
-<span class="w">                                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;t&quot;</span><span class="p">,</span>
 <span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">                                                            </span><span class="p">},</span>
-<span class="w">                                                            </span><span class="p">{</span>
-<span class="w">                                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">                                                            </span><span class="p">}</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -6045,41 +6186,12 @@ The <code>centering_translations</code> field gives the setting's centering tran
 <span class="w">                                                            </span><span class="p">]</span>
 <span class="w">                                                        </span><span class="p">],</span>
 <span class="w">                                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                        </span><span class="p">]</span>
 <span class="w">                                                    </span><span class="p">}</span>
 <span class="w">                                                </span><span class="p">]</span>
 <span class="w">                                            </span><span class="p">}</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                            </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;2&quot;</span>
-<span class="w">                                                </span><span class="p">]</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,2z&quot;</span><span class="p">,</span>
-<span class="w">                                            </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">                                            </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">                                        </span><span class="p">},</span>
-<span class="w">                                        </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
 <span class="w">                                    </span><span class="p">},</span>
 <span class="w">                                    </span><span class="p">{</span>
 <span class="w">                                        </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>

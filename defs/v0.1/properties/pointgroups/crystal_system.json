@@ -26,7 +26,8 @@
         "tetragonal",
         "trigonal",
         "hexagonal",
-        "cubic"
+        "cubic",
+        null
     ],
     "examples": [
         "triclinic",

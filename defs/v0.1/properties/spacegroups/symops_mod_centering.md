@@ -284,7 +284,8 @@ Combining each representative with every `centering_translations` vector and red
                     "4",
                     "-4",
                     "6",
-                    "-6"
+                    "-6",
+                    null
                 ]
             },
             "axis": {
@@ -323,7 +324,8 @@ Combining each representative with every `centering_translations` vector and red
                 "enum": [
                     -1,
                     0,
-                    1
+                    1,
+                    null
                 ]
             },
             "screw_glide": {

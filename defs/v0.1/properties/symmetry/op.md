@@ -300,7 +300,8 @@ The signed `sense` follows cctbx's rotation/rotoinversion convention about that 
                 "4",
                 "-4",
                 "6",
-                "-6"
+                "-6",
+                null
             ]
         },
         "axis": {
@@ -339,7 +340,8 @@ The signed `sense` follows cctbx's rotation/rotoinversion convention about that 
             "enum": [
                 -1,
                 0,
-                1
+                1,
+                null
             ]
         },
         "screw_glide": {

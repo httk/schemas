@@ -318,7 +318,8 @@ Each item contains point-group classification, finite point-group operations, co
                             "x-optimade-type": "integer",
                             "enum": [
                                 0,
-                                1
+                                1,
+                                null
                             ],
                             "type": [
                                 "integer",
@@ -944,7 +945,8 @@ Each item contains point-group classification, finite point-group operations, co
                                 4,
                                 -4,
                                 6,
-                                -6
+                                -6,
+                                null
                             ],
                             "x-optimade-unit": "inapplicable"
                         },
@@ -1051,7 +1053,8 @@ Each item contains point-group classification, finite point-group operations, co
                     "tetragonal",
                     "trigonal",
                     "hexagonal",
-                    "cubic"
+                    "cubic",
+                    null
                 ],
                 "examples": [
                     "triclinic",
@@ -1113,7 +1116,8 @@ Each item contains point-group classification, finite point-group operations, co
                     "m-3",
                     "432",
                     "-43m",
-                    "m-3m"
+                    "m-3m",
+                    null
                 ],
                 "examples": [
                     "1",
@@ -1187,7 +1191,8 @@ Each item contains point-group classification, finite point-group operations, co
                     "6/m",
                     "6/mmm",
                     "m-3",
-                    "m-3m"
+                    "m-3m",
+                    null
                 ],
                 "examples": [
                     "-1",
@@ -1305,7 +1310,8 @@ Each item contains point-group classification, finite point-group operations, co
                     "Th",
                     "O",
                     "Td",
-                    "Oh"
+                    "Oh",
+                    null
                 ],
                 "examples": [
                     "C1",
@@ -1577,7 +1583,8 @@ Each item contains point-group classification, finite point-group operations, co
                                 "4",
                                 "-4",
                                 "6",
-                                "-6"
+                                "-6",
+                                null
                             ]
                         },
                         "axis": {
@@ -1616,7 +1623,8 @@ Each item contains point-group classification, finite point-group operations, co
                             "enum": [
                                 -1,
                                 0,
-                                1
+                                1,
+                                null
                             ]
                         },
                         "screw_glide": {

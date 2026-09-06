@@ -284,7 +284,8 @@ Each list member is an operation on the format defined by the property definitio
                     "4",
                     "-4",
                     "6",
-                    "-6"
+                    "-6",
+                    null
                 ]
             },
             "axis": {
@@ -323,7 +324,8 @@ Each list member is an operation on the format defined by the property definitio
                 "enum": [
                     -1,
                     0,
-                    1
+                    1,
+                    null
                 ]
             },
             "screw_glide": {

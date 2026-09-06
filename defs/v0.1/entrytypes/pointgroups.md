@@ -518,7 +518,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                         "x-optimade-type": "integer",
                         "enum": [
                             0,
-                            1
+                            1,
+                            null
                         ],
                         "type": [
                             "integer",
@@ -1144,7 +1145,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             4,
                             -4,
                             6,
-                            -6
+                            -6,
+                            null
                         ],
                         "x-optimade-unit": "inapplicable"
                     },
@@ -1251,7 +1253,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "tetragonal",
                 "trigonal",
                 "hexagonal",
-                "cubic"
+                "cubic",
+                null
             ],
             "examples": [
                 "triclinic",
@@ -1313,7 +1316,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "m-3",
                 "432",
                 "-43m",
-                "m-3m"
+                "m-3m",
+                null
             ],
             "examples": [
                 "1",
@@ -1387,7 +1391,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "6/m",
                 "6/mmm",
                 "m-3",
-                "m-3m"
+                "m-3m",
+                null
             ],
             "examples": [
                 "-1",
@@ -1505,7 +1510,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "Th",
                 "O",
                 "Td",
-                "Oh"
+                "Oh",
+                null
             ],
             "examples": [
                 "C1",
@@ -1777,7 +1783,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "4",
                             "-4",
                             "6",
-                            "-6"
+                            "-6",
+                            null
                         ]
                     },
                     "axis": {
@@ -1816,7 +1823,8 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                         "enum": [
                             -1,
                             0,
-                            1
+                            1,
+                            null
                         ]
                     },
                     "screw_glide": {

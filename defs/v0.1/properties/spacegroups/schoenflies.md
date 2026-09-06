@@ -272,7 +272,8 @@ The ASCII form follows the CIF convention for `_space_group.name_Schoenflies`, u
         "Oh.7",
         "Oh.8",
         "Oh.9",
-        "Oh.10"
+        "Oh.10",
+        null
     ],
     "examples": [
         "C1.1",

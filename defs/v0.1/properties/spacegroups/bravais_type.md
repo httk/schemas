@@ -63,7 +63,8 @@ The retained `mI` alternative means the vocabulary has 15 symbols for 14 Bravais
         "hR",
         "cP",
         "cI",
-        "cF"
+        "cF",
+        null
     ],
     "examples": [
         "aP",

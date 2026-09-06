@@ -72,7 +72,8 @@ The value is one of the 32 crystallographic point-group symbols in Hermann-Maugu
         "m-3",
         "432",
         "-43m",
-        "m-3m"
+        "m-3m",
+        null
     ],
     "examples": [
         "1",

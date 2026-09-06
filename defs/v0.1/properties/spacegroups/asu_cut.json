@@ -27,7 +27,8 @@
             "description": "Kind of cut expression.",
             "enum": [
                 "cut",
-                "expr"
+                "expr",
+                null
             ]
         },
         "ascii": {
@@ -141,7 +142,8 @@
             "description": "Logical operator used when the expression combines two subexpressions.",
             "enum": [
                 "&",
-                "|"
+                "|",
+                null
             ]
         },
         "lhs": {

@@ -998,7 +998,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;hR&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;cP&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;cI&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;cF&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;cF&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;aP&quot;</span><span class="p">,</span>
@@ -1287,7 +1288,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;I&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;R&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;H&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;Rrev&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;Rrev&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;P&quot;</span><span class="p">,</span>
@@ -1327,7 +1329,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;tetragonal&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;trigonal&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;hexagonal&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;cubic&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;cubic&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;triclinic&quot;</span><span class="p">,</span>
@@ -2248,7 +2251,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;6/m&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;6/mmm&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;m-3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;m-3m&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;m-3m&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
@@ -2304,7 +2308,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
@@ -2397,7 +2401,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;m-3&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;432&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;-43m&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;m-3m&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;m-3m&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
@@ -2661,7 +2666,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;Oh.7&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;Oh.8&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;Oh.9&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;Oh.10&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;Oh.10&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;C1.1&quot;</span><span class="p">,</span>
@@ -3530,7 +3536,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -3569,7 +3576,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                            </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                </span><span class="mi">1</span>
+<span class="w">                                </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4017,7 +4025,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4056,7 +4065,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                            </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                </span><span class="mi">1</span>
+<span class="w">                                </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4504,7 +4514,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4543,7 +4554,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                            </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                </span><span class="mi">1</span>
+<span class="w">                                </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -4994,7 +5006,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                </span><span class="s2">&quot;4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;-4&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;6&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;-6&quot;</span>
+<span class="w">                                </span><span class="s2">&quot;-6&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;axis&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -5033,7 +5046,8 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                            </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="mi">-1</span><span class="p">,</span>
 <span class="w">                                </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                                </span><span class="mi">1</span>
+<span class="w">                                </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                                </span><span class="kc">null</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;screw_glide&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>

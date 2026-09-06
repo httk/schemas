@@ -79,7 +79,8 @@ The pointgroups table uses its own reference coordinate frame; equality of the s
         "m-3",
         "432",
         "-43m",
-        "m-3m"
+        "m-3m",
+        null
     ],
     "examples": [
         "1",

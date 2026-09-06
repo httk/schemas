@@ -152,7 +152,8 @@ The reported `op_axis` follows the same direct-lattice direction convention as `
                     4,
                     -4,
                     6,
-                    -6
+                    -6,
+                    null
                 ],
                 "x-optimade-unit": "inapplicable"
             },

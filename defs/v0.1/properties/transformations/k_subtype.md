@@ -46,7 +46,8 @@ The subtype is therefore a convention tied to the recorded cells, not an invaria
     "x-optimade-unit": "inapplicable",
     "enum": [
         "loss_of_centering_translation",
-        "enlarged_unit_cell"
+        "enlarged_unit_cell",
+        null
     ],
     "examples": [
         "enlarged_unit_cell",

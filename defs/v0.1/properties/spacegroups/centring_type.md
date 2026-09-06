@@ -56,7 +56,8 @@ Null denotes unavailable classification, not an additional centring type.
         "I",
         "R",
         "H",
-        "Rrev"
+        "Rrev",
+        null
     ],
     "examples": [
         "P",

@@ -73,7 +73,8 @@ The symbol `S6` is used for the point group also known as `C3i`.
         "Th",
         "O",
         "Td",
-        "Oh"
+        "Oh",
+        null
     ],
     "examples": [
         "C1",

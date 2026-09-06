@@ -107,7 +107,8 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
             ],
             "description": "Kind label for this normalizer contribution.",
             "enum": [
-                "affine"
+                "affine",
+                null
             ]
         },
         "representation": {
@@ -119,7 +120,8 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
             ],
             "description": "Representation label for the listed normalizer data.",
             "enum": [
-                "coset_representatives"
+                "coset_representatives",
+                null
             ]
         },
         "candidate_set": {
@@ -131,7 +133,8 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
             ],
             "description": "Name of the finite linear candidate set used for generation.",
             "enum": [
-                "bounded_unimodular_integer_matrices"
+                "bounded_unimodular_integer_matrices",
+                null
             ]
         },
         "n_symops": {
@@ -485,7 +488,8 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                         "enum": [
                             "loss_of_centering_translation",
-                            "enlarged_unit_cell"
+                            "enlarged_unit_cell",
+                            null
                         ]
                     },
                     "compatible_systems": {
@@ -728,7 +732,7 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                             "array",
                             "null"
                         ],
-                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                         "items": {
                             "x-optimade-type": "dictionary",
                             "x-optimade-unit": "inapplicable",
@@ -900,13 +904,40 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                 "examples": [
                     {
                         "index": 2,
+                        "subgroup_type": "k",
+                        "k_subtype": "loss_of_centering_translation",
+                        "affine_transformation": {
+                            "matrix": [
+                                [
+                                    "1",
+                                    "0",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "1",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "0",
+                                    "1"
+                                ]
+                            ],
+                            "vector": [
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            "xyz": "x,y,z"
+                        },
                         "wyckoff_splitting": [
                             {
                                 "parent": "a",
                                 "splits": [
                                     {
                                         "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "xyz": "0,0,0",
                                         "affine": [
                                             [
                                                 "1",
@@ -923,31 +954,84 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "1",
                                                 "0"
                                             ]
                                         ]
                                     },
                                     {
-                                        "letter": "a",
-                                        "xyz": "x,y,z",
+                                        "letter": "d",
+                                        "xyz": "1/2,1/2,1/2",
                                         "affine": [
                                             [
                                                 "1",
                                                 "0",
                                                 "0",
-                                                "0"
+                                                "1/2"
                                             ],
                                             [
                                                 "0",
                                                 "1",
                                                 "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1",
+                                                "1/2"
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "parent": "n",
+                                "splits": [
+                                    {
+                                        "letter": "s",
+                                        "xyz": "x,0,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
                                                 "0"
                                             ],
                                             [
                                                 "0",
                                                 "0",
-                                                "1/2",
+                                                "-1",
+                                                "0"
+                                            ]
+                                        ]
+                                    },
+                                    {
+                                        "letter": "t",
+                                        "xyz": "x,1/2,z",
+                                        "affine": [
+                                            [
+                                                "0",
+                                                "-1",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "-1",
+                                                "0",
+                                                "0",
+                                                "1/2"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "-1",
                                                 "1/2"
                                             ]
                                         ]
@@ -958,16 +1042,20 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                         "criteria": [
                             {
                                 "parent": "a",
+                                "constraints": []
+                            },
+                            {
+                                "parent": "n",
                                 "constraints": [
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
+                                                "letter": "t",
+                                                "index": 0
                                             }
                                         ],
                                         "coeffs": [
@@ -993,43 +1081,12 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                                     {
                                         "roles": [
                                             {
-                                                "letter": "a",
+                                                "letter": "s",
                                                 "index": 0
                                             },
                                             {
-                                                "letter": "a",
-                                                "index": 1
-                                            }
-                                        ],
-                                        "coeffs": [
-                                            [
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ]
-                                            ],
-                                            [
-                                                [
-                                                    "0",
-                                                    "-1",
-                                                    "0"
-                                                ]
-                                            ]
-                                        ],
-                                        "target": [
-                                            "0"
-                                        ]
-                                    },
-                                    {
-                                        "roles": [
-                                            {
-                                                "letter": "a",
+                                                "letter": "t",
                                                 "index": 0
-                                            },
-                                            {
-                                                "letter": "a",
-                                                "index": 1
                                             }
                                         ],
                                         "coeffs": [
@@ -1049,41 +1106,12 @@ The example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); 
                                             ]
                                         ],
                                         "target": [
-                                            "0"
+                                            "1/2"
                                         ]
                                     }
                                 ]
                             }
-                        ],
-                        "affine_transformation": {
-                            "matrix": [
-                                [
-                                    "1",
-                                    "0",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "1",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "0",
-                                    "2"
-                                ]
-                            ],
-                            "vector": [
-                                "0",
-                                "0",
-                                "0"
-                            ],
-                            "xyz": "x,y,2z",
-                            "det": 2,
-                            "is_orthogonal": false
-                        },
-                        "subgroup_type": "k",
-                        "k_subtype": "enlarged_unit_cell"
+                        ]
                     },
                     {
                         "affine_transformation": {

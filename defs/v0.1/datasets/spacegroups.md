@@ -913,7 +913,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "hR",
                     "cP",
                     "cI",
-                    "cF"
+                    "cF",
+                    null
                 ],
                 "examples": [
                     "aP",
@@ -1202,7 +1203,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "I",
                     "R",
                     "H",
-                    "Rrev"
+                    "Rrev",
+                    null
                 ],
                 "examples": [
                     "P",
@@ -1242,7 +1244,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "tetragonal",
                     "trigonal",
                     "hexagonal",
-                    "cubic"
+                    "cubic",
+                    null
                 ],
                 "examples": [
                     "triclinic",
@@ -2163,7 +2166,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "6/m",
                     "6/mmm",
                     "m-3",
-                    "m-3m"
+                    "m-3m",
+                    null
                 ],
                 "examples": [
                     "-1",
@@ -2219,7 +2223,7 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "integer",
                     "null"
                 ],
-                "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
+                "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
                 "x-optimade-unit": "inapplicable",
                 "examples": [
                     1,
@@ -2312,7 +2316,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "m-3",
                     "432",
                     "-43m",
-                    "m-3m"
+                    "m-3m",
+                    null
                 ],
                 "examples": [
                     "1",
@@ -2576,7 +2581,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                     "Oh.7",
                     "Oh.8",
                     "Oh.9",
-                    "Oh.10"
+                    "Oh.10",
+                    null
                 ],
                 "examples": [
                     "C1.1",
@@ -3445,7 +3451,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                                 "4",
                                 "-4",
                                 "6",
-                                "-6"
+                                "-6",
+                                null
                             ]
                         },
                         "axis": {
@@ -3484,7 +3491,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                             "enum": [
                                 -1,
                                 0,
-                                1
+                                1,
+                                null
                             ]
                         },
                         "screw_glide": {
@@ -3932,7 +3940,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                                 "4",
                                 "-4",
                                 "6",
-                                "-6"
+                                "-6",
+                                null
                             ]
                         },
                         "axis": {
@@ -3971,7 +3980,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                             "enum": [
                                 -1,
                                 0,
-                                1
+                                1,
+                                null
                             ]
                         },
                         "screw_glide": {
@@ -4419,7 +4429,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                                 "4",
                                 "-4",
                                 "6",
-                                "-6"
+                                "-6",
+                                null
                             ]
                         },
                         "axis": {
@@ -4458,7 +4469,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                             "enum": [
                                 -1,
                                 0,
-                                1
+                                1,
+                                null
                             ]
                         },
                         "screw_glide": {
@@ -4909,7 +4921,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                                 "4",
                                 "-4",
                                 "6",
-                                "-6"
+                                "-6",
+                                null
                             ]
                         },
                         "axis": {
@@ -4948,7 +4961,8 @@ The companion top-level `indicies.index_hall_entry_to_spacegroups` lookup maps n
                             "enum": [
                                 -1,
                                 0,
-                                1
+                                1,
+                                null
                             ]
                         },
                         "screw_glide": {

@@ -11,7 +11,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 For a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.
 
-For a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.
+Point-group entries do not carry this field; their operation count is `order`.
 For a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.
 Inversion and other improper point operations are included.
 
@@ -41,7 +41,7 @@ Inversion and other improper point operations are included.
         "integer",
         "null"
     ],
-    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
+    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nPoint-group entries do not carry this field; their operation count is `order`.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         1,

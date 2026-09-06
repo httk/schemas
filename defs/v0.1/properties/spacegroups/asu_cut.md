@@ -86,7 +86,8 @@ Cut objects may recursively refer to other cut objects through `condition`, `lhs
             "description": "Kind of cut expression.",
             "enum": [
                 "cut",
-                "expr"
+                "expr",
+                null
             ]
         },
         "ascii": {
@@ -200,7 +201,8 @@ Cut objects may recursively refer to other cut objects through `condition`, `lhs
             "description": "Logical operator used when the expression combines two subexpressions.",
             "enum": [
                 "&",
-                "|"
+                "|",
+                null
             ]
         },
         "lhs": {

@@ -56,7 +56,8 @@ Its use as diffraction symmetry invokes the usual Friedel-pair equivalence; anom
         "6/m",
         "6/mmm",
         "m-3",
-        "m-3m"
+        "m-3m",
+        null
     ],
     "examples": [
         "-1",

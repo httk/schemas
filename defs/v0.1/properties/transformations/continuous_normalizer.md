@@ -130,7 +130,8 @@ This property describes continuous translations only, not arbitrary continuous r
             ],
             "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
             "enum": [
-                "fractional"
+                "fractional",
+                null
             ]
         },
         "representation": {

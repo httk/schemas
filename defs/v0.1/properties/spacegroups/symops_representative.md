@@ -282,7 +282,8 @@ It is not cctbx's internal list additionally factored by inversion.
                     "4",
                     "-4",
                     "6",
-                    "-6"
+                    "-6",
+                    null
                 ]
             },
             "axis": {
@@ -321,7 +322,8 @@ It is not cctbx's internal list additionally factored by inversion.
                 "enum": [
                     -1,
                     0,
-                    1
+                    1,
+                    null
                 ]
             },
             "screw_glide": {

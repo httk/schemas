@@ -377,7 +377,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                         "enum": [
                                             "loss_of_centering_translation",
-                                            "enlarged_unit_cell"
+                                            "enlarged_unit_cell",
+                                            null
                                         ]
                                     },
                                     "compatible_systems": {
@@ -620,7 +621,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                             "array",
                                             "null"
                                         ],
-                                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                         "items": {
                                             "x-optimade-type": "dictionary",
                                             "x-optimade-unit": "inapplicable",
@@ -792,13 +793,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                 "examples": [
                                     {
                                         "index": 2,
+                                        "subgroup_type": "k",
+                                        "k_subtype": "loss_of_centering_translation",
+                                        "affine_transformation": {
+                                            "matrix": [
+                                                [
+                                                    "1",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                [
+                                                    "0",
+                                                    "1",
+                                                    "0"
+                                                ],
+                                                [
+                                                    "0",
+                                                    "0",
+                                                    "1"
+                                                ]
+                                            ],
+                                            "vector": [
+                                                "0",
+                                                "0",
+                                                "0"
+                                            ],
+                                            "xyz": "x,y,z"
+                                        },
                                         "wyckoff_splitting": [
                                             {
                                                 "parent": "a",
                                                 "splits": [
                                                     {
                                                         "letter": "a",
-                                                        "xyz": "x,y,z",
+                                                        "xyz": "0,0,0",
                                                         "affine": [
                                                             [
                                                                 "1",
@@ -815,31 +843,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1/2",
+                                                                "1",
                                                                 "0"
                                                             ]
                                                         ]
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "xyz": "x,y,z",
+                                                        "letter": "d",
+                                                        "xyz": "1/2,1/2,1/2",
                                                         "affine": [
                                                             [
                                                                 "1",
                                                                 "0",
                                                                 "0",
-                                                                "0"
+                                                                "1/2"
                                                             ],
                                                             [
                                                                 "0",
                                                                 "1",
                                                                 "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1",
+                                                                "1/2"
+                                                            ]
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "parent": "n",
+                                                "splits": [
+                                                    {
+                                                        "letter": "s",
+                                                        "xyz": "x,0,z",
+                                                        "affine": [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0",
                                                                 "0"
                                                             ],
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1/2",
+                                                                "-1",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "t",
+                                                        "xyz": "x,1/2,z",
+                                                        "affine": [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "-1",
                                                                 "1/2"
                                                             ]
                                                         ]
@@ -850,16 +931,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "criteria": [
                                             {
                                                 "parent": "a",
+                                                "constraints": []
+                                            },
+                                            {
+                                                "parent": "n",
                                                 "constraints": [
                                                     {
                                                         "roles": [
                                                             {
-                                                                "letter": "a",
+                                                                "letter": "s",
                                                                 "index": 0
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "index": 1
+                                                                "letter": "t",
+                                                                "index": 0
                                                             }
                                                         ],
                                                         "coeffs": [
@@ -885,43 +970,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                     {
                                                         "roles": [
                                                             {
-                                                                "letter": "a",
+                                                                "letter": "s",
                                                                 "index": 0
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "index": 1
-                                                            }
-                                                        ],
-                                                        "coeffs": [
-                                                            [
-                                                                [
-                                                                    "0",
-                                                                    "1",
-                                                                    "0"
-                                                                ]
-                                                            ],
-                                                            [
-                                                                [
-                                                                    "0",
-                                                                    "-1",
-                                                                    "0"
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        "target": [
-                                                            "0"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "roles": [
-                                                            {
-                                                                "letter": "a",
+                                                                "letter": "t",
                                                                 "index": 0
-                                                            },
-                                                            {
-                                                                "letter": "a",
-                                                                "index": 1
                                                             }
                                                         ],
                                                         "coeffs": [
@@ -941,41 +995,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                             ]
                                                         ],
                                                         "target": [
-                                                            "0"
+                                                            "1/2"
                                                         ]
                                                     }
                                                 ]
                                             }
-                                        ],
-                                        "affine_transformation": {
-                                            "matrix": [
-                                                [
-                                                    "1",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "0",
-                                                    "2"
-                                                ]
-                                            ],
-                                            "vector": [
-                                                "0",
-                                                "0",
-                                                "0"
-                                            ],
-                                            "xyz": "x,y,2z",
-                                            "det": 2,
-                                            "is_orthogonal": false
-                                        },
-                                        "subgroup_type": "k",
-                                        "k_subtype": "enlarged_unit_cell"
+                                        ]
                                     },
                                     {
                                         "affine_transformation": {
@@ -1075,7 +1100,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                     "array",
                     "null"
                 ],
-                "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles before evaluating the equations on their published three-component representative coordinates.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
+                "description": "Criteria table for one supergroup IT number used to lift occupied Wyckoff data from a subgroup back to that supergroup along a chosen B\u00e4rnighausen transform.\n\nEach list item groups transform records for one target subgroup IT number.\nThe target subgroup IT number is stored in `target_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `target_it_number`, the subgroup IT number.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records carrying backward-lift criteria.\n\nThe forward embedding still uses `x_G = P*x_H + p`; the word backward describes the inference from subgroup coordinates to a possible parent orbit, not a reversal of that stored matrix convention.\nEach transform's `criteria` field groups exact modular equations by parent Wyckoff letter, in the format documented by `/defs/v0.1/properties/symmetry/basis_transform`.\nAssign the subgroup orbits to their ordered split roles, defined by the `wyckoff_splitting` of the corresponding `baernighausen` transform, before evaluating the equations on their published three-component representative coordinates.\nBackward-lift transform records carry `index`, `affine_transformation`, and `criteria`; the splitting itself and the t/k metadata are stored in the `baernighausen` table.\nThe example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding, where parent `n` splits into `s` and `t` whose x and z coordinates differ by 1/2 modulo 1.\nInteger translation of any role coordinate leaves the equations unchanged.\nThe tests supplement membership of the declared child Wyckoff branches; they do not validate species, occupancies, tolerance-based matching, or every alternative embedding absent from the bounded table.",
                 "items": {
                     "x-optimade-type": "dictionary",
                     "x-optimade-unit": "inapplicable",
@@ -1346,7 +1371,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                         "enum": [
                                             "loss_of_centering_translation",
-                                            "enlarged_unit_cell"
+                                            "enlarged_unit_cell",
+                                            null
                                         ]
                                     },
                                     "compatible_systems": {
@@ -1589,7 +1615,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                             "array",
                                             "null"
                                         ],
-                                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                         "items": {
                                             "x-optimade-type": "dictionary",
                                             "x-optimade-unit": "inapplicable",
@@ -1761,13 +1787,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                 "examples": [
                                     {
                                         "index": 2,
+                                        "subgroup_type": "k",
+                                        "k_subtype": "loss_of_centering_translation",
+                                        "affine_transformation": {
+                                            "matrix": [
+                                                [
+                                                    "1",
+                                                    "0",
+                                                    "0"
+                                                ],
+                                                [
+                                                    "0",
+                                                    "1",
+                                                    "0"
+                                                ],
+                                                [
+                                                    "0",
+                                                    "0",
+                                                    "1"
+                                                ]
+                                            ],
+                                            "vector": [
+                                                "0",
+                                                "0",
+                                                "0"
+                                            ],
+                                            "xyz": "x,y,z"
+                                        },
                                         "wyckoff_splitting": [
                                             {
                                                 "parent": "a",
                                                 "splits": [
                                                     {
                                                         "letter": "a",
-                                                        "xyz": "x,y,z",
+                                                        "xyz": "0,0,0",
                                                         "affine": [
                                                             [
                                                                 "1",
@@ -1784,31 +1837,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1/2",
+                                                                "1",
                                                                 "0"
                                                             ]
                                                         ]
                                                     },
                                                     {
-                                                        "letter": "a",
-                                                        "xyz": "x,y,z",
+                                                        "letter": "d",
+                                                        "xyz": "1/2,1/2,1/2",
                                                         "affine": [
                                                             [
                                                                 "1",
                                                                 "0",
                                                                 "0",
-                                                                "0"
+                                                                "1/2"
                                                             ],
                                                             [
                                                                 "0",
                                                                 "1",
                                                                 "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1",
+                                                                "1/2"
+                                                            ]
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "parent": "n",
+                                                "splits": [
+                                                    {
+                                                        "letter": "s",
+                                                        "xyz": "x,0,z",
+                                                        "affine": [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0",
                                                                 "0"
                                                             ],
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1/2",
+                                                                "-1",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "t",
+                                                        "xyz": "x,1/2,z",
+                                                        "affine": [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0",
+                                                                "1/2"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "-1",
                                                                 "1/2"
                                                             ]
                                                         ]
@@ -1819,16 +1925,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "criteria": [
                                             {
                                                 "parent": "a",
+                                                "constraints": []
+                                            },
+                                            {
+                                                "parent": "n",
                                                 "constraints": [
                                                     {
                                                         "roles": [
                                                             {
-                                                                "letter": "a",
+                                                                "letter": "s",
                                                                 "index": 0
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "index": 1
+                                                                "letter": "t",
+                                                                "index": 0
                                                             }
                                                         ],
                                                         "coeffs": [
@@ -1854,43 +1964,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                     {
                                                         "roles": [
                                                             {
-                                                                "letter": "a",
+                                                                "letter": "s",
                                                                 "index": 0
                                                             },
                                                             {
-                                                                "letter": "a",
-                                                                "index": 1
-                                                            }
-                                                        ],
-                                                        "coeffs": [
-                                                            [
-                                                                [
-                                                                    "0",
-                                                                    "1",
-                                                                    "0"
-                                                                ]
-                                                            ],
-                                                            [
-                                                                [
-                                                                    "0",
-                                                                    "-1",
-                                                                    "0"
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        "target": [
-                                                            "0"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "roles": [
-                                                            {
-                                                                "letter": "a",
+                                                                "letter": "t",
                                                                 "index": 0
-                                                            },
-                                                            {
-                                                                "letter": "a",
-                                                                "index": 1
                                                             }
                                                         ],
                                                         "coeffs": [
@@ -1910,41 +1989,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                             ]
                                                         ],
                                                         "target": [
-                                                            "0"
+                                                            "1/2"
                                                         ]
                                                     }
                                                 ]
                                             }
-                                        ],
-                                        "affine_transformation": {
-                                            "matrix": [
-                                                [
-                                                    "1",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "0",
-                                                    "2"
-                                                ]
-                                            ],
-                                            "vector": [
-                                                "0",
-                                                "0",
-                                                "0"
-                                            ],
-                                            "xyz": "x,y,2z",
-                                            "det": 2,
-                                            "is_orthogonal": false
-                                        },
-                                        "subgroup_type": "k",
-                                        "k_subtype": "enlarged_unit_cell"
+                                        ]
                                     },
                                     {
                                         "affine_transformation": {
@@ -1993,78 +2043,52 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                 "examples": [
                     [
                         {
-                            "target_it_number": 1,
+                            "target_it_number": 123,
                             "transforms": [
                                 {
                                     "index": 2,
-                                    "wyckoff_splitting": [
-                                        {
-                                            "parent": "a",
-                                            "splits": [
-                                                {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
-                                                    "affine": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "1/2",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
-                                                    "affine": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "1/2",
-                                                            "1/2"
-                                                        ]
-                                                    ]
-                                                }
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
                                             ]
-                                        }
-                                    ],
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -2090,43 +2114,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -2146,38 +2139,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ]
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 }
                             ]
                         }
@@ -2453,7 +2420,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -2696,7 +2664,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -2868,13 +2836,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -2891,31 +2886,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -2926,16 +2974,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -2961,43 +3013,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -3017,41 +3038,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -3501,7 +3493,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -3744,7 +3737,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -3916,13 +3909,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -3939,31 +3959,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -3974,16 +4047,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -4009,43 +4086,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -4065,41 +4111,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -4264,7 +4281,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
                         "enum": [
-                            "fractional"
+                            "fractional",
+                            null
                         ]
                     },
                     "representation": {
@@ -4328,7 +4346,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Kind label for this normalizer contribution.",
                         "enum": [
-                            "orthogonal_affine"
+                            "orthogonal_affine",
+                            null
                         ]
                     },
                     "representation": {
@@ -4340,7 +4359,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Representation label for the listed normalizer data.",
                         "enum": [
-                            "orthogonal_coset_representatives"
+                            "orthogonal_coset_representatives",
+                            null
                         ]
                     },
                     "candidate_set": {
@@ -4352,7 +4372,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Name of the finite linear candidate set used for generation.",
                         "enum": [
-                            "signed_permutation_matrices"
+                            "signed_permutation_matrices",
+                            null
                         ]
                     },
                     "n_symops": {
@@ -4706,7 +4727,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -4949,7 +4971,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -5121,13 +5143,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -5144,31 +5193,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -5179,16 +5281,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -5214,43 +5320,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -5270,41 +5345,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
@@ -5433,7 +5479,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Kind label for this normalizer contribution.",
                         "enum": [
-                            "affine"
+                            "affine",
+                            null
                         ]
                     },
                     "representation": {
@@ -5445,7 +5492,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Representation label for the listed normalizer data.",
                         "enum": [
-                            "coset_representatives"
+                            "coset_representatives",
+                            null
                         ]
                     },
                     "candidate_set": {
@@ -5457,7 +5505,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                         ],
                         "description": "Name of the finite linear candidate set used for generation.",
                         "enum": [
-                            "bounded_unimodular_integer_matrices"
+                            "bounded_unimodular_integer_matrices",
+                            null
                         ]
                     },
                     "n_symops": {
@@ -5811,7 +5860,8 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
                                     "enum": [
                                         "loss_of_centering_translation",
-                                        "enlarged_unit_cell"
+                                        "enlarged_unit_cell",
+                                        null
                                     ]
                                 },
                                 "compatible_systems": {
@@ -6054,7 +6104,7 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.\nThe first example is the generated I4/mmm (139) to P4/mmm (123) index-2 embedding: parent `a` splits into `a` and `d` with no equations, and parent `n` splits into `s` and `t` whose x and z coordinates must differ by 1/2 modulo 1.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -6226,13 +6276,40 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                             "examples": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "k",
+                                    "k_subtype": "loss_of_centering_translation",
+                                    "affine_transformation": {
+                                        "matrix": [
+                                            [
+                                                "1",
+                                                "0",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "1",
+                                                "0"
+                                            ],
+                                            [
+                                                "0",
+                                                "0",
+                                                "1"
+                                            ]
+                                        ],
+                                        "vector": [
+                                            "0",
+                                            "0",
+                                            "0"
+                                        ],
+                                        "xyz": "x,y,z"
+                                    },
                                     "wyckoff_splitting": [
                                         {
                                             "parent": "a",
                                             "splits": [
                                                 {
                                                     "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "xyz": "0,0,0",
                                                     "affine": [
                                                         [
                                                             "1",
@@ -6249,31 +6326,84 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "1",
                                                             "0"
                                                         ]
                                                     ]
                                                 },
                                                 {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
+                                                    "letter": "d",
+                                                    "xyz": "1/2,1/2,1/2",
                                                     "affine": [
                                                         [
                                                             "1",
                                                             "0",
                                                             "0",
-                                                            "0"
+                                                            "1/2"
                                                         ],
                                                         [
                                                             "0",
                                                             "1",
                                                             "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "parent": "n",
+                                            "splits": [
+                                                {
+                                                    "letter": "s",
+                                                    "xyz": "x,0,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
                                                             "0"
                                                         ],
                                                         [
                                                             "0",
                                                             "0",
-                                                            "1/2",
+                                                            "-1",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "t",
+                                                    "xyz": "x,1/2,z",
+                                                    "affine": [
+                                                        [
+                                                            "0",
+                                                            "-1",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "-1",
+                                                            "0",
+                                                            "0",
+                                                            "1/2"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "-1",
                                                             "1/2"
                                                         ]
                                                     ]
@@ -6284,16 +6414,20 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                     "criteria": [
                                         {
                                             "parent": "a",
+                                            "constraints": []
+                                        },
+                                        {
+                                            "parent": "n",
                                             "constraints": [
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
+                                                            "letter": "t",
+                                                            "index": 0
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -6319,43 +6453,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                 {
                                                     "roles": [
                                                         {
-                                                            "letter": "a",
+                                                            "letter": "s",
                                                             "index": 0
                                                         },
                                                         {
-                                                            "letter": "a",
-                                                            "index": 1
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ],
-                                                        [
-                                                            [
-                                                                "0",
-                                                                "-1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                },
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
+                                                            "letter": "t",
                                                             "index": 0
-                                                        },
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 1
                                                         }
                                                     ],
                                                     "coeffs": [
@@ -6375,41 +6478,12 @@ This representation avoids using IT numbers as JSON dictionary keys in the OPTIM
                                                         ]
                                                     ],
                                                     "target": [
-                                                        "0"
+                                                        "1/2"
                                                     ]
                                                 }
                                             ]
                                         }
-                                    ],
-                                    "affine_transformation": {
-                                        "matrix": [
-                                            [
-                                                "1",
-                                                "0",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "1",
-                                                "0"
-                                            ],
-                                            [
-                                                "0",
-                                                "0",
-                                                "2"
-                                            ]
-                                        ],
-                                        "vector": [
-                                            "0",
-                                            "0",
-                                            "0"
-                                        ],
-                                        "xyz": "x,y,2z",
-                                        "det": 2,
-                                        "is_orthogonal": false
-                                    },
-                                    "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell"
+                                    ]
                                 },
                                 {
                                     "affine_transformation": {
