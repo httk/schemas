@@ -6,7 +6,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `symops_representative`
 
 **Property name:** Representative symmetry operations  
-**Description:** Representative symmetry-operation descriptors modulo centering translations.  
+**Description:** Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.  
 **Type:** list  
 
 Each list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op
@@ -37,7 +37,7 @@ Each list member is an operation on the format defined by the property definitio
         "array",
         "null"
     ],
-    "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+    "description": "Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
     "items": {
         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
         "title": "Operation",
@@ -217,7 +217,7 @@ Each list member is an operation on the format defined by the property definitio
                             "boolean",
                             "null"
                         ],
-                        "description": "Whether the matrix part is orthogonal."
+                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                     }
                 },
                 "examples": [

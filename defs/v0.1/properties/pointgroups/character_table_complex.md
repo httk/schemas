@@ -174,14 +174,14 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                     "array",
                     "null"
                 ],
-                "description": "Linear basis functions transforming as this representation.",
+                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One basis function.",
+                    "description": "One basis polynomial in Cartesian x, y, z with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"
@@ -192,14 +192,14 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                     "array",
                     "null"
                 ],
-                "description": "Rotational basis functions transforming as this representation.",
+                "description": "Axial-vector (rotation) basis polynomials spanning the isotypic component of this representation, in the same Cartesian frame as `basis_linear`, e.g. `Rz`, `Rx+Ry`.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One rotational basis function.",
+                    "description": "One basis polynomial in Rx, Ry, Rz with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"
@@ -210,14 +210,14 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                     "array",
                     "null"
                 ],
-                "description": "Quadratic basis functions transforming as this representation.",
+                "description": "Quadratic basis polynomials spanning the isotypic component of this representation in the space of homogeneous quadratic functions, in the same Cartesian frame as `basis_linear`, e.g. `x^2+y^2`, `x^2-y^2`, `xz`.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One quadratic basis function.",
+                    "description": "One quadratic basis polynomial in x^2, y^2, z^2, xy, xz, yz with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"

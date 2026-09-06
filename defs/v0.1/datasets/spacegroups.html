@@ -3386,7 +3386,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                </span><span class="p">}</span>
 <span class="w">                            </span><span class="p">},</span>
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -3857,7 +3857,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                </span><span class="p">}</span>
 <span class="w">                            </span><span class="p">},</span>
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -4328,7 +4328,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                </span><span class="p">}</span>
 <span class="w">                            </span><span class="p">},</span>
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -4619,7 +4619,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/symmetry/op&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Operation&quot;</span><span class="p">,</span>
@@ -4799,7 +4799,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                </span><span class="p">}</span>
 <span class="w">                            </span><span class="p">},</span>
 <span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -5392,7 +5392,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                            </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                    </span><span class="p">}</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -5595,7 +5595,7 @@ The companion top-level <code>indicies.index_hall_entry_to_spacegroups</code> lo
 <span class="w">                                            </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is orthogonal.&quot;</span>
+<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                                    </span><span class="p">}</span>
 <span class="w">                                </span><span class="p">},</span>
 <span class="w">                                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>

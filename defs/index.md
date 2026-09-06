@@ -428,7 +428,7 @@
 
             * **[Representative symmetry operations](v0.1/properties/spacegroups/symops_representative.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_representative`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_representative.md)
                 
-                Representative symmetry-operation descriptors modulo centering translations.
+                Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.
 
             * **[Wyckoff positions](v0.1/properties/spacegroups/wyckoff.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff.md)
                 

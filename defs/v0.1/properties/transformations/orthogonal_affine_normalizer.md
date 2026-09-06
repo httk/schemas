@@ -399,7 +399,7 @@ and `affine_normalizer` holds the bounded table generated from unimodular intege
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -469,7 +469,7 @@ and `affine_normalizer` holds the bounded table generated from unimodular intege
                             "array",
                             "null"
                         ],
-                        "description": "Crystal metric systems compatible with the transform.",
+                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                         "items": {
                             "x-optimade-type": "string",
                             "x-optimade-unit": "inapplicable",

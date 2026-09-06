@@ -364,7 +364,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -781,7 +781,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [

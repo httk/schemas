@@ -14,8 +14,9 @@ Characters of the real table are exact integers and are therefore stored as plai
 
 **Examples:**
 
-- `[{"label": "A", "dimension": 1, "characters": [1], "basis_linear": ["x", "y"], "basis_rotation": ["Rx", "Ry"], "basis_quadratic": ["x^2", "y^2"], "label_markup": {"latex": "A", "unicode": "A"}}]`
-- `[{"label": "Ag", "dimension": 1, "characters": [1, 1], "basis_rotation": ["Rx", "Ry"], "basis_quadratic": ["x^2", "y^2"], "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "basis_linear": ["x", "y"], "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]`
+- `[{"label": "A", "dimension": 1, "characters": [1], "basis_linear": ["x", "y", "z"], "basis_rotation": ["Rx", "Ry", "Rz"], "basis_quadratic": ["x^2", "y^2", "z^2", "xy", "xz", "yz"], "label_markup": {"latex": "A", "unicode": "A"}}]`
+- `[{"label": "Ag", "dimension": 1, "characters": [1, 1], "basis_rotation": ["Rx", "Ry", "Rz"], "basis_quadratic": ["x^2", "y^2", "z^2", "xy", "xz", "yz"], "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "basis_linear": ["x", "y", "z"], "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]`
+- `[{"label": "A1", "dimension": 1, "characters": [1, 1, 1, 1, 1], "basis_linear": ["z"], "basis_quadratic": ["x^2+y^2", "z^2"], "label_markup": {"latex": "A_{1}", "unicode": "A\u2081"}}, {"label": "B1", "dimension": 1, "characters": [1, 1, -1, 1, -1], "basis_quadratic": ["x^2-y^2"], "label_markup": {"latex": "B_{1}", "unicode": "B\u2081"}}]`
 
 **Formats:** [[JSON](character_table_real.json)] [[MD](character_table_real.md)]
 
@@ -154,14 +155,14 @@ Characters of the real table are exact integers and are therefore stored as plai
                     "array",
                     "null"
                 ],
-                "description": "Linear basis functions transforming as this representation.",
+                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One basis function.",
+                    "description": "One basis polynomial in Cartesian x, y, z with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"
@@ -172,14 +173,14 @@ Characters of the real table are exact integers and are therefore stored as plai
                     "array",
                     "null"
                 ],
-                "description": "Rotational basis functions transforming as this representation.",
+                "description": "Axial-vector (rotation) basis polynomials spanning the isotypic component of this representation, in the same Cartesian frame as `basis_linear`, e.g. `Rz`, `Rx+Ry`.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One rotational basis function.",
+                    "description": "One basis polynomial in Rx, Ry, Rz with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"
@@ -190,14 +191,14 @@ Characters of the real table are exact integers and are therefore stored as plai
                     "array",
                     "null"
                 ],
-                "description": "Quadratic basis functions transforming as this representation.",
+                "description": "Quadratic basis polynomials spanning the isotypic component of this representation in the space of homogeneous quadratic functions, in the same Cartesian frame as `basis_linear`, e.g. `x^2+y^2`, `x^2-y^2`, `xz`.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
                         "string",
                         "null"
                     ],
-                    "description": "One quadratic basis function.",
+                    "description": "One quadratic basis polynomial in x^2, y^2, z^2, xy, xz, yz with rational coefficients.",
                     "x-optimade-unit": "inapplicable"
                 },
                 "x-optimade-unit": "inapplicable"
@@ -215,15 +216,21 @@ Characters of the real table are exact integers and are therefore stored as plai
                 ],
                 "basis_linear": [
                     "x",
-                    "y"
+                    "y",
+                    "z"
                 ],
                 "basis_rotation": [
                     "Rx",
-                    "Ry"
+                    "Ry",
+                    "Rz"
                 ],
                 "basis_quadratic": [
                     "x^2",
-                    "y^2"
+                    "y^2",
+                    "z^2",
+                    "xy",
+                    "xz",
+                    "yz"
                 ],
                 "label_markup": {
                     "latex": "A",
@@ -241,11 +248,16 @@ Characters of the real table are exact integers and are therefore stored as plai
                 ],
                 "basis_rotation": [
                     "Rx",
-                    "Ry"
+                    "Ry",
+                    "Rz"
                 ],
                 "basis_quadratic": [
                     "x^2",
-                    "y^2"
+                    "y^2",
+                    "z^2",
+                    "xy",
+                    "xz",
+                    "yz"
                 ],
                 "label_markup": {
                     "latex": "A_{g}",
@@ -261,11 +273,54 @@ Characters of the real table are exact integers and are therefore stored as plai
                 ],
                 "basis_linear": [
                     "x",
-                    "y"
+                    "y",
+                    "z"
                 ],
                 "label_markup": {
                     "latex": "A_{u}",
                     "unicode": "Au"
+                }
+            }
+        ],
+        [
+            {
+                "label": "A1",
+                "dimension": 1,
+                "characters": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "basis_linear": [
+                    "z"
+                ],
+                "basis_quadratic": [
+                    "x^2+y^2",
+                    "z^2"
+                ],
+                "label_markup": {
+                    "latex": "A_{1}",
+                    "unicode": "A\u2081"
+                }
+            },
+            {
+                "label": "B1",
+                "dimension": 1,
+                "characters": [
+                    1,
+                    1,
+                    -1,
+                    1,
+                    -1
+                ],
+                "basis_quadratic": [
+                    "x^2-y^2"
+                ],
+                "label_markup": {
+                    "latex": "B_{1}",
+                    "unicode": "B\u2081"
                 }
             }
         ]

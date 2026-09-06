@@ -101,8 +101,9 @@ overflow-wrap: break-word;
 Characters of the real table are exact integers and are therefore stored as plain integers, unlike the <code>re</code>/<code>im</code> fraction-string pairs of <code>character_table_complex</code>.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>[{"label": "A", "dimension": 1, "characters": [1], "basis_linear": ["x", "y"], "basis_rotation": ["Rx", "Ry"], "basis_quadratic": ["x^2", "y^2"], "label_markup": {"latex": "A", "unicode": "A"}}]</code></li>
-<li><code>[{"label": "Ag", "dimension": 1, "characters": [1, 1], "basis_rotation": ["Rx", "Ry"], "basis_quadratic": ["x^2", "y^2"], "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "basis_linear": ["x", "y"], "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]</code></li>
+<li><code>[{"label": "A", "dimension": 1, "characters": [1], "basis_linear": ["x", "y", "z"], "basis_rotation": ["Rx", "Ry", "Rz"], "basis_quadratic": ["x^2", "y^2", "z^2", "xy", "xz", "yz"], "label_markup": {"latex": "A", "unicode": "A"}}]</code></li>
+<li><code>[{"label": "Ag", "dimension": 1, "characters": [1, 1], "basis_rotation": ["Rx", "Ry", "Rz"], "basis_quadratic": ["x^2", "y^2", "z^2", "xy", "xz", "yz"], "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "basis_linear": ["x", "y", "z"], "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]</code></li>
+<li><code>[{"label": "A1", "dimension": 1, "characters": [1, 1, 1, 1, 1], "basis_linear": ["z"], "basis_quadratic": ["x^2+y^2", "z^2"], "label_markup": {"latex": "A_{1}", "unicode": "A\u2081"}}, {"label": "B1", "dimension": 1, "characters": [1, 1, -1, 1, -1], "basis_quadratic": ["x^2-y^2"], "label_markup": {"latex": "B_{1}", "unicode": "B\u2081"}}]</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="character_table_real.json">JSON</a>] [<a href="character_table_real.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -238,14 +239,14 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear basis functions transforming as this representation.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One basis function.&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One basis polynomial in Cartesian x, y, z with rational coefficients.&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
@@ -256,14 +257,14 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Rotational basis functions transforming as this representation.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Axial-vector (rotation) basis polynomials spanning the isotypic component of this representation, in the same Cartesian frame as `basis_linear`, e.g. `Rz`, `Rx+Ry`.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One rotational basis function.&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One basis polynomial in Rx, Ry, Rz with rational coefficients.&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
@@ -274,14 +275,14 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quadratic basis functions transforming as this representation.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quadratic basis polynomials spanning the isotypic component of this representation in the space of homogeneous quadratic functions, in the same Cartesian frame as `basis_linear`, e.g. `x^2+y^2`, `x^2-y^2`, `xz`.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One quadratic basis function.&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One quadratic basis polynomial in x^2, y^2, z^2, xy, xz, yz with rational coefficients.&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
@@ -299,15 +300,21 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;y&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;z&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;Rx&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;Ry&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;Ry&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;Rz&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_quadratic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;x^2&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;y^2&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;y^2&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;z^2&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;xy&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;xz&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;yz&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
@@ -325,11 +332,16 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;Rx&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;Ry&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;Ry&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;Rz&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_quadratic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;x^2&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;y^2&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;y^2&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;z^2&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;xy&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;xz&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;yz&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{g}&quot;</span><span class="p">,</span>
@@ -345,11 +357,54 @@ Characters of the real table are exact integers and are therefore stored as plai
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;basis_linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;y&quot;</span>
+<span class="w">                    </span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;z&quot;</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{u}&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Au&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;basis_linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">&quot;z&quot;</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;basis_quadratic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">&quot;x^2+y^2&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">&quot;z^2&quot;</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{1}&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A\u2081&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">-1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">-1</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;basis_quadratic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">&quot;x^2-y^2&quot;</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B_{1}&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B\u2081&quot;</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">]</span>

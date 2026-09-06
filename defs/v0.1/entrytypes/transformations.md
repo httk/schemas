@@ -330,7 +330,7 @@ This entrytype defines the following properties:
         - **symops**: REQUIRED; List of dictionaries.
           Listed affine normalizer coset representatives.
           Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.
-          Each item MUST carry `compatible_systems`, the list of crystal systems for which the representative's linear part is compatible with a crystallographic metric.
+          Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.
 
 
 * **[Continuous normalizer (continuous_normalizer)](../properties/transformations/continuous_normalizer.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transformations/continuous_normalizer`](https://schemas.httk.org/defs/v0.1/properties/transformations/continuous_normalizer.md)  
@@ -1379,7 +1379,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -1796,7 +1796,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -2450,7 +2450,7 @@ This entrytype defines the following properties:
                                 "boolean",
                                 "null"
                             ],
-                            "description": "Whether the matrix part is orthogonal."
+                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                         }
                     },
                     "examples": [
@@ -2855,7 +2855,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -2925,7 +2925,7 @@ This entrytype defines the following properties:
                                     "array",
                                     "null"
                                 ],
-                                "description": "Crystal metric systems compatible with the transform.",
+                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "x-optimade-unit": "inapplicable",
@@ -3517,7 +3517,7 @@ This entrytype defines the following properties:
                 "object",
                 "null"
             ],
-            "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of crystal systems for which the representative's linear part is compatible with a crystallographic metric.",
+            "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.",
             "properties": {
                 "normalizer_kind": {
                     "x-optimade-type": "string",
@@ -3833,7 +3833,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -3903,7 +3903,7 @@ This entrytype defines the following properties:
                                     "array",
                                     "null"
                                 ],
-                                "description": "Crystal metric systems compatible with the transform.",
+                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "x-optimade-unit": "inapplicable",
@@ -4418,12 +4418,11 @@ This entrytype defines the following properties:
             "examples": [
                 {
                     "normalizer_kind": "affine",
-                    "representation": "bounded_coset_representatives",
+                    "representation": "coset_representatives",
                     "candidate_set": "bounded_unimodular_integer_matrices",
                     "n_symops": 63,
                     "n_linear_parts": 63,
                     "n_raw_candidates": 6960,
-                    "n_unique_candidates": 6960,
                     "n_coset_representatives": 6959,
                     "bounds": {
                         "det_abs": 1,
@@ -4809,7 +4808,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -4879,7 +4878,7 @@ This entrytype defines the following properties:
                                     "array",
                                     "null"
                                 ],
-                                "description": "Crystal metric systems compatible with the transform.",
+                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "x-optimade-unit": "inapplicable",
@@ -5715,7 +5714,7 @@ This entrytype defines the following properties:
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is orthogonal."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -5785,7 +5784,7 @@ This entrytype defines the following properties:
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric systems compatible with the transform.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -6564,7 +6563,7 @@ This entrytype defines the following properties:
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is orthogonal."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -6634,7 +6633,7 @@ This entrytype defines the following properties:
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric systems compatible with the transform.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -7471,7 +7470,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -7541,7 +7540,7 @@ This entrytype defines the following properties:
                                     "array",
                                     "null"
                                 ],
-                                "description": "Crystal metric systems compatible with the transform.",
+                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "x-optimade-unit": "inapplicable",
@@ -8398,7 +8397,7 @@ This entrytype defines the following properties:
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is orthogonal."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -8468,7 +8467,7 @@ This entrytype defines the following properties:
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric systems compatible with the transform.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -9208,7 +9207,7 @@ This entrytype defines the following properties:
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is orthogonal."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -9278,7 +9277,7 @@ This entrytype defines the following properties:
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric systems compatible with the transform.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -10314,7 +10313,7 @@ This entrytype defines the following properties:
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -10384,7 +10383,7 @@ This entrytype defines the following properties:
                             "array",
                             "null"
                         ],
-                        "description": "Crystal metric systems compatible with the transform.",
+                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                         "items": {
                             "x-optimade-type": "string",
                             "x-optimade-unit": "inapplicable",
@@ -11130,7 +11129,7 @@ This entrytype defines the following properties:
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -11200,7 +11199,7 @@ This entrytype defines the following properties:
                             "array",
                             "null"
                         ],
-                        "description": "Crystal metric systems compatible with the transform.",
+                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                         "items": {
                             "x-optimade-type": "string",
                             "x-optimade-unit": "inapplicable",
@@ -12068,7 +12067,7 @@ This entrytype defines the following properties:
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is orthogonal."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -12138,7 +12137,7 @@ This entrytype defines the following properties:
                             "array",
                             "null"
                         ],
-                        "description": "Crystal metric systems compatible with the transform.",
+                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                         "items": {
                             "x-optimade-type": "string",
                             "x-optimade-unit": "inapplicable",
@@ -13514,7 +13513,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -13931,7 +13930,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -14579,7 +14578,7 @@ This entrytype defines the following properties:
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is orthogonal."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -14978,7 +14977,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -15048,7 +15047,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -15634,7 +15633,7 @@ This entrytype defines the following properties:
                             "object",
                             "null"
                         ],
-                        "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of crystal systems for which the representative's linear part is compatible with a crystallographic metric.",
+                        "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.",
                         "properties": {
                             "normalizer_kind": {
                                 "x-optimade-type": "string",
@@ -15950,7 +15949,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -16020,7 +16019,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -16535,12 +16534,11 @@ This entrytype defines the following properties:
                         "examples": [
                             {
                                 "normalizer_kind": "affine",
-                                "representation": "bounded_coset_representatives",
+                                "representation": "coset_representatives",
                                 "candidate_set": "bounded_unimodular_integer_matrices",
                                 "n_symops": 63,
                                 "n_linear_parts": 63,
                                 "n_raw_candidates": 6960,
-                                "n_unique_candidates": 6960,
                                 "n_coset_representatives": 6959,
                                 "bounds": {
                                     "det_abs": 1,
@@ -16914,7 +16912,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -16984,7 +16982,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -17814,7 +17812,7 @@ This entrytype defines the following properties:
                                                             "boolean",
                                                             "null"
                                                         ],
-                                                        "description": "Whether the matrix part is orthogonal."
+                                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                     }
                                                 },
                                                 "examples": [
@@ -17884,7 +17882,7 @@ This entrytype defines the following properties:
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Crystal metric systems compatible with the transform.",
+                                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                                 "items": {
                                                     "x-optimade-type": "string",
                                                     "x-optimade-unit": "inapplicable",
@@ -18744,7 +18742,7 @@ This entrytype defines the following properties:
                                                             "boolean",
                                                             "null"
                                                         ],
-                                                        "description": "Whether the matrix part is orthogonal."
+                                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                     }
                                                 },
                                                 "examples": [
@@ -18814,7 +18812,7 @@ This entrytype defines the following properties:
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Crystal metric systems compatible with the transform.",
+                                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                                 "items": {
                                                     "x-optimade-type": "string",
                                                     "x-optimade-unit": "inapplicable",
@@ -19587,7 +19585,7 @@ This entrytype defines the following properties:
                                                             "boolean",
                                                             "null"
                                                         ],
-                                                        "description": "Whether the matrix part is orthogonal."
+                                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                     }
                                                 },
                                                 "examples": [
@@ -19657,7 +19655,7 @@ This entrytype defines the following properties:
                                                     "array",
                                                     "null"
                                                 ],
-                                                "description": "Crystal metric systems compatible with the transform.",
+                                                "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                                 "items": {
                                                     "x-optimade-type": "string",
                                                     "x-optimade-unit": "inapplicable",
@@ -20441,7 +20439,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -20511,7 +20509,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -21361,7 +21359,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -21431,7 +21429,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -22429,7 +22427,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -22499,7 +22497,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -23085,7 +23083,7 @@ This entrytype defines the following properties:
                             "object",
                             "null"
                         ],
-                        "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of crystal systems for which the representative's linear part is compatible with a crystallographic metric.",
+                        "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.",
                         "properties": {
                             "normalizer_kind": {
                                 "x-optimade-type": "string",
@@ -23401,7 +23399,7 @@ This entrytype defines the following properties:
                                                         "boolean",
                                                         "null"
                                                     ],
-                                                    "description": "Whether the matrix part is orthogonal."
+                                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                                 }
                                             },
                                             "examples": [
@@ -23471,7 +23469,7 @@ This entrytype defines the following properties:
                                                 "array",
                                                 "null"
                                             ],
-                                            "description": "Crystal metric systems compatible with the transform.",
+                                            "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
                                             "items": {
                                                 "x-optimade-type": "string",
                                                 "x-optimade-unit": "inapplicable",
@@ -23986,12 +23984,11 @@ This entrytype defines the following properties:
                         "examples": [
                             {
                                 "normalizer_kind": "affine",
-                                "representation": "bounded_coset_representatives",
+                                "representation": "coset_representatives",
                                 "candidate_set": "bounded_unimodular_integer_matrices",
                                 "n_symops": 63,
                                 "n_linear_parts": 63,
                                 "n_raw_candidates": 6960,
-                                "n_unique_candidates": 6960,
                                 "n_coset_representatives": 6959,
                                 "bounds": {
                                     "det_abs": 1,
