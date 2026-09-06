@@ -19,6 +19,11 @@ The supergroup IT number is stored in `supergroup_it_number` rather than as a JS
 - Each dictionary MUST contain `relations`, a list of subgroup-relation records for that supergroup.
 - Each relation record MUST include the subgroup IT number, subgroup index, subgroup type, and optional klassengleiche subtype.
 
+A maximal subgroup H of G is proper and admits no intermediate subgroup K with `H < K < G`.
+These records project the relation to space-group type, index, and t/k classification; they do not contain basis/origin transforms or enumerate inequivalent embeddings with the same type and index.
+Non-isomorphic means the parent and subgroup have different space-group types; same-type finite-index embeddings are covered separately by `isomorphic_subgroups`.
+Use a corresponding `baernighausen` transform and its splitting maps when coordinates are required.
+
 **Examples:**
 
 - `[{"supergroup_it_number": 5, "relations": [{"subgroup_it_number": 1, "index": 2, "subgroup_type": "t"}, {"subgroup_it_number": 3, "index": 2, "subgroup_type": "k", "k_subtype": "loss_of_centering_translation"}]}]`
@@ -45,7 +50,7 @@ The supergroup IT number is stored in `supergroup_it_number` rather than as a JS
         "array",
         "null"
     ],
-    "description": "Maximal non-isomorphic subgroup relations for International Tables space-group types.\n\nEach list item describes all known maximal non-isomorphic subgroup relations for one supergroup IT number.\nThe supergroup IT number is stored in `supergroup_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `supergroup_it_number`, an International Tables space-group number.\n- Each dictionary MUST contain `relations`, a list of subgroup-relation records for that supergroup.\n- Each relation record MUST include the subgroup IT number, subgroup index, subgroup type, and optional klassengleiche subtype.",
+    "description": "Maximal non-isomorphic subgroup relations for International Tables space-group types.\n\nEach list item describes all known maximal non-isomorphic subgroup relations for one supergroup IT number.\nThe supergroup IT number is stored in `supergroup_it_number` rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `supergroup_it_number`, an International Tables space-group number.\n- Each dictionary MUST contain `relations`, a list of subgroup-relation records for that supergroup.\n- Each relation record MUST include the subgroup IT number, subgroup index, subgroup type, and optional klassengleiche subtype.\n\nA maximal subgroup H of G is proper and admits no intermediate subgroup K with `H < K < G`.\nThese records project the relation to space-group type, index, and t/k classification; they do not contain basis/origin transforms or enumerate inequivalent embeddings with the same type and index.\nNon-isomorphic means the parent and subgroup have different space-group types; same-type finite-index embeddings are covered separately by `isomorphic_subgroups`.\nUse a corresponding `baernighausen` transform and its splitting maps when coordinates are required.",
     "items": {
         "x-optimade-type": "dictionary",
         "x-optimade-unit": "inapplicable",

@@ -98,6 +98,9 @@ overflow-wrap: break-word;
 <strong>Description:</strong> The crystal system of the space group or point group.<br>
 <strong>Type:</strong> string  </p>
 <p>Values use the conventional crystallographic system names.</p>
+<p>This classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.
+Trigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use <code>bravais_type</code> on a space-group record for the translational lattice type.
+Null denotes unavailable classification, not an additional crystal system.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>"triclinic"</code></li>
@@ -124,10 +127,9 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.\n\nThis classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.\nTrigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.\nNull denotes unavailable classification, not an additional crystal system.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="kc">null</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;triclinic&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;monoclinic&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;orthorhombic&quot;</span><span class="p">,</span>

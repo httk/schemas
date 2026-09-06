@@ -99,9 +99,12 @@ overflow-wrap: break-word;
 <strong>Type:</strong> dictionary  </p>
 <p>An isomorphic subgroup has the same space-group type as the parent but is embedded with a finite index, usually corresponding to an enlarged unit cell or a sublattice choice.
 These transforms are useful for algorithms that need to enumerate same-type subgroup embeddings, compare structures under supercell changes, or construct bounded same-space-group refinement paths.</p>
-<p>The transform records use the basis-transform convention represented by <code>matrix</code> and <code>vector</code>.
-The <code>index</code> field is the subgroup index and equals the determinant factor of the basis transformation.
-The generator currently searches indices up to its configured maximum index and deduplicates equivalent transforms under normalizer equivalence.</p>
+<p>The transform records use <code>x_parent = P*x_subgroup + p</code>, with <code>P</code> and <code>p</code> stored inside <code>affine_transformation</code> as <code>matrix</code> and <code>vector</code>.
+The <code>index</code> field is the subgroup index and equals <code>abs(det(P))</code> because both sides use the same space-group setting and centering convention.
+Index one is allowed and does not describe a proper subgroup.
+The generator currently searches indices up to its configured maximum index (default 9), with bounded candidate bases, and deduplicates the embedded translation lattice and operation cosets under the finite cctbx Euclidean normalizer.
+Only the first valid origin in the tested origin pool is retained for each linear candidate.
+The result is a bounded embedding table, not all possible origin or subgroup conjugacy classes; different sublattices must not be identified merely because their point-group operations agree.</p>
 <p><strong>Requirements/Conventions</strong>:</p>
 <ul>
 <li>It MUST be a dictionary containing an <code>items</code> list.</li>
@@ -110,7 +113,7 @@ The generator currently searches indices up to its configured maximum index and 
 </ul>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>{"items": [{"index": 2, "wyckoff_splitting": {"a": [["a", "x,y,z", [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "1/2"]]], ["a", "x,y,z", [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "0"]]]]}, "affine_transformation": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "2"]], "vector": ["0", "0", "0"]}}]}</code></li>
+<li><code>{"items": [{"index": 2, "wyckoff_splitting": [{"parent": "a", "splits": [{"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "0"]]}, {"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "1/2"]]}]}], "affine_transformation": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "2"]], "vector": ["0", "0", "0"]}}]}</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="isomorphic_subgroups.json">JSON</a>] [<a href="isomorphic_subgroups.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -131,7 +134,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">        </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Isomorphic subgroup transforms of bounded index for one parent setting or space-group type.\n\nAn isomorphic subgroup has the same space-group type as the parent but is embedded with a finite index, usually corresponding to an enlarged unit cell or a sublattice choice.\nThese transforms are useful for algorithms that need to enumerate same-type subgroup embeddings, compare structures under supercell changes, or construct bounded same-space-group refinement paths.\n\nThe transform records use the basis-transform convention represented by `matrix` and `vector`.\nThe `index` field is the subgroup index and equals the determinant factor of the basis transformation.\nThe generator currently searches indices up to its configured maximum index and deduplicates equivalent transforms under normalizer equivalence.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary containing an `items` list.\n- Each item in `items` MUST describe one exact isomorphic subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Isomorphic subgroup transforms of bounded index for one parent setting or space-group type.\n\nAn isomorphic subgroup has the same space-group type as the parent but is embedded with a finite index, usually corresponding to an enlarged unit cell or a sublattice choice.\nThese transforms are useful for algorithms that need to enumerate same-type subgroup embeddings, compare structures under supercell changes, or construct bounded same-space-group refinement paths.\n\nThe transform records use `x_parent = P*x_subgroup + p`, with `P` and `p` stored inside `affine_transformation` as `matrix` and `vector`.\nThe `index` field is the subgroup index and equals `abs(det(P))` because both sides use the same space-group setting and centering convention.\nIndex one is allowed and does not describe a proper subgroup.\nThe generator currently searches indices up to its configured maximum index (default 9), with bounded candidate bases, and deduplicates the embedded translation lattice and operation cosets under the finite cctbx Euclidean normalizer.\nOnly the first valid origin in the tested origin pool is retained for each linear candidate.\nThe result is a bounded embedding table, not all possible origin or subgroup conjugacy classes; different sublattices must not be identified merely because their point-group operations agree.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary containing an `items` list.\n- Each item in `items` MUST describe one exact isomorphic subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
@@ -157,7 +160,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                    </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      International Tables subgroup-type label when the transform describes a maximal subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted when the transform is not a maximal subgroup embedding.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Crystal metric systems for which the transform is compatible.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nFor a subgroup embedding the convention is `x_G = P*x_H + p`, where `P = affine_transformation.matrix` and `p = affine_transformation.vector`.\nThe columns of `P` are the subgroup cell vectors expressed in the parent fractional basis, and `p` is the subgroup origin expressed in that basis.\nThus conversion of parent coordinates to subgroup coordinates uses `x_H = P^-1*(x_G-p)`, not the forward affine map.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      Translation/point-symmetry classification when supplied for a subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted for identity embeddings and general subgroups that lose both translations and point symmetry, and for transforms that are not subgroup embeddings.\n      Presence of `t` or `k` alone does not certify maximality; the containing relation table supplies that information.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Reference-setting metric families whose every metric tensor is preserved by the linear part after transport to the actual setting basis.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                        </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation&quot;</span><span class="p">,</span>
@@ -175,7 +178,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                            </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
@@ -311,7 +314,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Determinant of the matrix part when emitted by the generator.&quot;</span>
+<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted.&quot;</span>
 <span class="w">                            </span><span class="p">},</span>
 <span class="w">                            </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
@@ -320,7 +323,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                    </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
+<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
 <span class="w">                            </span><span class="p">}</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -381,7 +384,11 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable.&quot;</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">&quot;loss_of_centering_translation&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
+<span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="nt">&quot;compatible_systems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
@@ -390,7 +397,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.\nMonoclinic reference metrics use unique axis b; trigonal and hexagonal reference metrics both use hexagonal axes with a = b and gamma = 120 degrees.\nThese labels describe the tested metric families, not a reassignment of the space group&#39;s crystal system or the accidental metric symmetry of a particular specimen.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -438,7 +445,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent&#39;s published `first_orbit` branch and `q_H` is on the child&#39;s published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent&#39;s `orbit[0]` map when starting from parameters.\nThe piece&#39;s `xyz` names the child representative branch and MUST equal that child&#39;s `first_orbit`; it is not a rendering of the piece&#39;s `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -561,10 +568,10 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                        </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                            </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">{</span>
-<span class="w">                                    </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                    </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                        </span><span class="p">{</span>
-<span class="w">                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
 <span class="w">                                            </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                </span><span class="p">[</span>
@@ -582,8 +589,32 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                                </span><span class="p">[</span>
 <span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">},</span>
+<span class="w">                                        </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">],</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">],</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                                                </span><span class="p">]</span>
 <span class="w">                                            </span><span class="p">]</span>
 <span class="w">                                        </span><span class="p">}</span>
@@ -599,7 +630,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraint metadata induced by the transform, grouped by explicit parent Wyckoff letter.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -633,7 +664,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                            </span><span class="s2">&quot;object&quot;</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One linear backward-lift constraint record.&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One modular equation `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nHere `q_i` is the three-component fractional coordinate on the published subgroup representative branch selected by `roles[i]`, not a local parameter vector or an arbitrary symmetry-equivalent site.\nThe current generator emits one scalar equation per record: `target` has length one, `coeffs` has one item per role, and each item contains one three-component row.\nThe coefficient entries are integer-valued exact strings, which makes the equation invariant under independent integer translations of the role coordinates.&quot;</span><span class="p">,</span>
 <span class="w">                                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                            </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
@@ -668,7 +699,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                                </span><span class="s2">&quot;integer&quot;</span>
 <span class="w">                                                            </span><span class="p">],</span>
-<span class="w">                                                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Zero-based occurrence index for the role.&quot;</span>
+<span class="w">                                                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Zero-based occurrence index among split pieces having this same letter in the corresponding parent&#39;s ordered `splits` list, not an index into all pieces or into the overall Wyckoff table.&quot;</span>
 <span class="w">                                                        </span><span class="p">}</span>
 <span class="w">                                                    </span><span class="p">}</span>
 <span class="w">                                                </span><span class="p">}</span>
@@ -679,7 +710,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                    </span><span class="s2">&quot;array&quot;</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact coefficient vectors for the constraint.&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact integer-valued coefficient rows, in the same order as `roles`.&quot;</span><span class="p">,</span>
 <span class="w">                                                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -735,7 +766,7 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                                    </span><span class="s2">&quot;array&quot;</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact target vector or scalar for the constraint.&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One-element list containing the exact right-hand side modulo one, normalized to the interval [0,1).&quot;</span><span class="p">,</span>
 <span class="w">                                                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                                                    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
 <span class="w">                                                    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
@@ -770,6 +801,162 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">]</span>
+<span class="w">                                    </span><span class="p">},</span>
+<span class="w">                                    </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">]</span>
+<span class="w">                                    </span><span class="p">}</span>
+<span class="w">                                </span><span class="p">]</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                        </span><span class="p">],</span>
+<span class="w">                        </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                                            </span><span class="p">},</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                            </span><span class="p">}</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;-1&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
+<span class="w">                                    </span><span class="p">},</span>
+<span class="w">                                    </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                                            </span><span class="p">},</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                            </span><span class="p">}</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
+<span class="w">                                    </span><span class="p">},</span>
+<span class="w">                                    </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                                            </span><span class="p">},</span>
+<span class="w">                                            </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                            </span><span class="p">}</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">],</span>
+<span class="w">                                            </span><span class="p">[</span>
+<span class="w">                                                </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                                </span><span class="p">]</span>
+<span class="w">                                            </span><span class="p">]</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
+<span class="w">                                    </span><span class="p">}</span>
+<span class="w">                                </span><span class="p">]</span>
+<span class="w">                            </span><span class="p">}</span>
+<span class="w">                        </span><span class="p">],</span>
 <span class="w">                        </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                            </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="p">[</span>
@@ -797,67 +984,8 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">                            </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">                        </span><span class="p">},</span>
-<span class="w">                        </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;subgroup_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">],</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                            </span><span class="p">]</span>
-<span class="w">                                        </span><span class="p">]</span>
-<span class="w">                                    </span><span class="p">}</span>
-<span class="w">                                </span><span class="p">]</span>
-<span class="w">                            </span><span class="p">}</span>
-<span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;criteria&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;constraints&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;roles&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">                                            </span><span class="p">}</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;coeffs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="p">[</span>
-<span class="w">                                                </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                                </span><span class="p">]</span>
-<span class="w">                                            </span><span class="p">]</span>
-<span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;target&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                        </span><span class="p">]</span>
-<span class="w">                                    </span><span class="p">}</span>
-<span class="w">                                </span><span class="p">]</span>
-<span class="w">                            </span><span class="p">}</span>
-<span class="w">                        </span><span class="p">]</span>
+<span class="w">                        </span><span class="nt">&quot;k_subtype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;enlarged_unit_cell&quot;</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
 <span class="w">                        </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -907,58 +1035,61 @@ The generator currently searches indices up to its configured maximum index and 
 <span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;index&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="p">[</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                    </span><span class="nt">&quot;wyckoff_splitting&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
 <span class="w">                                    </span><span class="p">]</span>
-<span class="w">                                </span><span class="p">]</span>
-<span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="p">[</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span>
-<span class="w">                                    </span><span class="p">],</span>
-<span class="w">                                    </span><span class="p">[</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                </span><span class="p">},</span>
+<span class="w">                                </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                                    </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                                        </span><span class="p">],</span>
+<span class="w">                                        </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                            </span><span class="s2">&quot;1/2&quot;</span>
+<span class="w">                                        </span><span class="p">]</span>
 <span class="w">                                    </span><span class="p">]</span>
-<span class="w">                                </span><span class="p">]</span>
+<span class="w">                                </span><span class="p">}</span>
 <span class="w">                            </span><span class="p">]</span>
-<span class="w">                        </span><span class="p">]</span>
-<span class="w">                    </span><span class="p">},</span>
+<span class="w">                        </span><span class="p">}</span>
+<span class="w">                    </span><span class="p">],</span>
 <span class="w">                    </span><span class="nt">&quot;affine_transformation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                            </span><span class="p">[</span>

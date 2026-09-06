@@ -98,6 +98,7 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Number of candidate affine operations remaining after exact duplicate removal.<br>
 <strong>Type:</strong> integer  </p>
 <p>The counted candidate set itself is not stored; this value documents the size of the bounded search.</p>
+<p>The current composed normalizer generator omits this legacy field; it must not be inferred from <code>n_raw_candidates</code> or a final coset count.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>48</code></li>
@@ -121,7 +122,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of candidate affine operations remaining after exact duplicate removal.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of candidate affine operations remaining after exact duplicate removal.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.\n\nThe current composed normalizer generator omits this legacy field; it must not be inferred from `n_raw_candidates` or a final coset count.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="mi">48</span><span class="p">,</span>

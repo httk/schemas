@@ -95,7 +95,9 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting</code></a></strong><br>
 <strong>Definition name:</strong> <code>is_reference_setting</code></p>
 <p><strong>Property name:</strong> is reference setting<br>
-<strong>Description:</strong> Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.<br>
+<strong>Description:</strong> Whether cctbx identifies this Hall setting as its reference setting for the space-group type.
+This is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.
+For the pipeline's selected IT-standard setting, use <code>index_it_number_to_std_spacegroups</code> in the dataset's companion <code>indicies</code> structure.<br>
 <strong>Type:</strong> boolean  </p>
 <p><strong>Examples:</strong></p>
 <ul>
@@ -120,7 +122,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether cctbx identifies this Hall setting as its reference setting for the space-group type.\nThis is the reference used by cctbx&#39;s change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.\nFor the pipeline&#39;s selected IT-standard setting, use `index_it_number_to_std_spacegroups` in the dataset&#39;s companion `indicies` structure.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="kc">true</span><span class="p">,</span>

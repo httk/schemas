@@ -21,6 +21,9 @@ The remaining fields classify the operation crystallographically, for example by
       Exact affine map for the operation.
       It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.
 
+    - **operation\_kind**: OPTIONAL; String.
+      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.
+
     - **rot\_type**: OPTIONAL; String.
       Crystallographic operation-type label for the linear part.
 
@@ -37,6 +40,14 @@ The remaining fields classify the operation crystallographically, for example by
       Origin shift associated with the screw/glide decomposition of a space-group affine operation.
 
 - Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.
+
+Writing the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.
+The reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.
+It locates the symmetry element and is not a second translation to add to `w`.
+For a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.
+These are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.
+The identity and inversion use `[0,0,0]` because neither has a unique axis.
+The signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.
 
 **Examples:**
 
@@ -64,7 +75,7 @@ The remaining fields classify the operation crystallographically, for example by
         "object",
         "null"
     ],
-    "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+    "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
     "properties": {
         "affine_transformation": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -82,7 +93,7 @@ The remaining fields classify the operation crystallographically, for example by
                 "object",
                 "null"
             ],
-            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
             "properties": {
                 "matrix": {
                     "x-optimade-type": "list",
@@ -218,7 +229,7 @@ The remaining fields classify the operation crystallographically, for example by
                         "integer",
                         "null"
                     ],
-                    "description": "Determinant of the matrix part when emitted by the generator."
+                    "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                 },
                 "is_orthogonal": {
                     "x-optimade-type": "boolean",
@@ -227,7 +238,7 @@ The remaining fields classify the operation crystallographically, for example by
                         "boolean",
                         "null"
                     ],
-                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                 }
             },
             "examples": [
@@ -259,6 +270,17 @@ The remaining fields classify the operation crystallographically, for example by
                     "is_orthogonal": true
                 }
             ]
+        },
+        "operation_kind": {
+            "x-optimade-type": "string",
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string"
+            ],
+            "enum": [
+                "euclidean"
+            ],
+            "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
         },
         "rot_type": {
             "x-optimade-type": "string",
@@ -313,7 +335,12 @@ The remaining fields classify the operation crystallographically, for example by
                 "integer",
                 "null"
             ],
-            "description": "Rotation sense/sign convention returned by the generator."
+            "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+            "enum": [
+                -1,
+                0,
+                1
+            ]
         },
         "screw_glide": {
             "x-optimade-type": "list",

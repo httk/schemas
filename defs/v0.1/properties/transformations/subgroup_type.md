@@ -12,6 +12,11 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 The value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.
 The field is omitted when the enclosing record is not a maximal subgroup relation.
 
+A translationengleiche subgroup retains the complete translation lattice and loses point symmetry: `i_T = 1`, `i_P > 1`.
+A klassengleiche subgroup retains the point group and loses translations: `i_P = 1`, `i_T > 1`.
+For a maximal proper subgroup these are the alternatives; a subgroup losing both is not represented by either value.
+The underlying t/k classification describes what symmetry is lost and does not by itself prove that an embedding is maximal.
+
 **Examples:**
 
 - `"k"`
@@ -37,7 +42,7 @@ The field is omitted when the enclosing record is not a maximal subgroup relatio
     "type": [
         "string"
     ],
-    "description": "International Tables maximal subgroup class.\n\nThe value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.\nThe field is omitted when the enclosing record is not a maximal subgroup relation.",
+    "description": "International Tables maximal subgroup class.\n\nThe value is `t` for a translationengleiche subgroup and `k` for a klassengleiche subgroup.\nThe field is omitted when the enclosing record is not a maximal subgroup relation.\n\nA translationengleiche subgroup retains the complete translation lattice and loses point symmetry: `i_T = 1`, `i_P > 1`.\nA klassengleiche subgroup retains the point group and loses translations: `i_P = 1`, `i_T > 1`.\nFor a maximal proper subgroup these are the alternatives; a subgroup losing both is not represented by either value.\nThe underlying t/k classification describes what symmetry is lost and does not by itself prove that an embedding is maximal.",
     "enum": [
         "t",
         "k"

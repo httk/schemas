@@ -6,7 +6,9 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `is_centric`
 
 **Property name:** is centric  
-**Description:** Boolean flag indicating whether the space group is centric.  
+**Description:** Whether the space group contains an inversion operation `(W,w)` with `W = -I`.
+The inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.
+This tests the space-group symmetry, not the centricity of an individual diffraction reflection.  
 **Type:** boolean  
 
 
@@ -37,7 +39,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "boolean",
         "null"
     ],
-    "description": "Boolean flag indicating whether the space group is centric.",
+    "description": "Whether the space group contains an inversion operation `(W,w)` with `W = -I`.\nThe inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.\nThis tests the space-group symmetry, not the centricity of an individual diffraction reflection.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         false,

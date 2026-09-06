@@ -16,6 +16,10 @@ The value is derived from the Hall symbol by using lowercase letters and undersc
 - This field identifies a concrete Hall setting, not only an IT space-group type.
 - The same value is normally used as the key of the containing `spacegroups` map.
 
+The normalization is `hall.strip().replace(" ", "_").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.
+The key is a coordinate-setting identifier, not a numeric spglib Hall number.
+Different conventional H-M entry labels can resolve to the same Hall-entry record.
+
 **Examples:**
 
 - `"p_1"`
@@ -42,7 +46,7 @@ The value is derived from the Hall symbol by using lowercase letters and undersc
         "string",
         "null"
     ],
-    "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.",
+    "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.\n\nThe normalization is `hall.strip().replace(\" \", \"_\").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.\nThe key is a coordinate-setting identifier, not a numeric spglib Hall number.\nDifferent conventional H-M entry labels can resolve to the same Hall-entry record.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         "p_1",

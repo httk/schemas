@@ -99,6 +99,9 @@ overflow-wrap: break-word;
 <strong>Type:</strong> string  </p>
 <p>This setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.
 The value <code>Rrev</code> denotes the reverse rhombohedral setting.</p>
+<p>The symbol describes the recorded coordinate cell, whereas <code>bravais_type</code> describes its lattice type.
+A rhombohedral lattice in primitive rhombohedral axes has centring symbol <code>P</code>; in hexagonal axes it has rhombohedral centring.
+Null denotes unavailable classification, not an additional centring type.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>"P"</code></li>
@@ -125,10 +128,9 @@ The value <code>Rrev</code> denotes the reverse rhombohedral setting.</p>
 <span class="w">        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.\n\nThe symbol describes the recorded coordinate cell, whereas `bravais_type` describes its lattice type.\nA rhombohedral lattice in primitive rhombohedral axes has centring symbol `P`; in hexagonal axes it has rhombohedral centring.\nNull denotes unavailable classification, not an additional centring type.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="kc">null</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;P&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;B&quot;</span><span class="p">,</span>

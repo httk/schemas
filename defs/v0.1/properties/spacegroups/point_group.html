@@ -99,6 +99,8 @@ overflow-wrap: break-word;
 <strong>Type:</strong> string  </p>
 <p>This field identifies the crystallographic point group obtained from the space group by removing translational components.
 The value uses the same Hermann-Mauguin symbol vocabulary as the <code>hm_symbol</code> key of the pointgroups entries, defined by <code>/defs/v0.1/properties/pointgroups/hm_symbol</code>, and can be used to look up the corresponding pointgroups entry.</p>
+<p>Removing translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.
+The pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>"1"</code></li>
@@ -126,7 +128,7 @@ The value uses the same Hermann-Mauguin symbol vocabulary as the <code>hm_symbol
 <span class="w">        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.\n\nRemoving translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.\nThe pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>

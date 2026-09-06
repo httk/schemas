@@ -12,6 +12,10 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 The value distinguishes loss of centering translations from enlarged-unit-cell subgroups.
 The value is null for non-`k` relations and for records that are not subgroup relations.
 
+For the emitted embedding convention `x_G = P*x_H + p`, `loss_of_centering_translation` is assigned when `abs(det(P)) = 1` and the subgroup cell has fewer centering translations than the parent cell.
+Other klassengleiche embeddings are assigned `enlarged_unit_cell`.
+The subtype is therefore a convention tied to the recorded cells, not an invariant of the abstract pair of group types; a cell change can combine translation loss with a change of centering description.
+
 **Examples:**
 
 - `"enlarged_unit_cell"`
@@ -38,7 +42,7 @@ The value is null for non-`k` relations and for records that are not subgroup re
         "string",
         "null"
     ],
-    "description": "Subtype of a klassengleiche (`k`) subgroup relation.\n\nThe value distinguishes loss of centering translations from enlarged-unit-cell subgroups.\nThe value is null for non-`k` relations and for records that are not subgroup relations.",
+    "description": "Subtype of a klassengleiche (`k`) subgroup relation.\n\nThe value distinguishes loss of centering translations from enlarged-unit-cell subgroups.\nThe value is null for non-`k` relations and for records that are not subgroup relations.\n\nFor the emitted embedding convention `x_G = P*x_H + p`, `loss_of_centering_translation` is assigned when `abs(det(P)) = 1` and the subgroup cell has fewer centering translations than the parent cell.\nOther klassengleiche embeddings are assigned `enlarged_unit_cell`.\nThe subtype is therefore a convention tied to the recorded cells, not an invariant of the abstract pair of group types; a cell change can combine translation loss with a change of centering description.",
     "x-optimade-unit": "inapplicable",
     "enum": [
         "loss_of_centering_translation",

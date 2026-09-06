@@ -16,11 +16,21 @@ The parent Wyckoff letter is stored in the `parent` field rather than as a JSON 
 
 - It MUST be a list of dictionaries.
 - Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.
-- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.
+- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.
+
+For an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.
+For each piece let `A` be the first three columns of `affine` and `b` its last column.
+Then `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.
+The input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.
+The piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.
+Repeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.
+For generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.
+Their multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.
+Keep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.
 
 **Examples:**
 
-- `[{"parent": "c", "splits": [{"letter": "e", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1", "0"]]}]}]`
+- `[{"parent": "a", "splits": [{"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "0"]]}, {"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "1/2"]]}]}]`
 
 **Formats:** [[JSON](wyckoff_splitting.json)] [[MD](wyckoff_splitting.md)]
 
@@ -44,7 +54,7 @@ The parent Wyckoff letter is stored in the `parent` field rather than as a JSON 
         "array",
         "null"
     ],
-    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.",
+    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.\nThe piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.",
     "items": {
         "x-optimade-type": "dictionary",
         "x-optimade-unit": "inapplicable",
@@ -167,10 +177,10 @@ The parent Wyckoff letter is stored in the `parent` field rather than as a JSON 
     "examples": [
         [
             {
-                "parent": "c",
+                "parent": "a",
                 "splits": [
                     {
-                        "letter": "e",
+                        "letter": "a",
                         "xyz": "x,y,z",
                         "affine": [
                             [
@@ -188,8 +198,32 @@ The parent Wyckoff letter is stored in the `parent` field rather than as a JSON 
                             [
                                 "0",
                                 "0",
-                                "1",
+                                "1/2",
                                 "0"
+                            ]
+                        ]
+                    },
+                    {
+                        "letter": "a",
+                        "xyz": "x,y,z",
+                        "affine": [
+                            [
+                                "1",
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "1",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "0",
+                                "1/2",
+                                "1/2"
                             ]
                         ]
                     }

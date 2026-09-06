@@ -74,7 +74,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "string",
                     "null"
                 ],
-                "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.",
+                "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.\n\nThis lookup key preserves capitalization and spaces: unlike `hall_entry`, it is not lowercased or underscore-normalized.\nH-M entries and their aliases are resolved through the dataset's H-M-entry index; more than one conventional label can identify the same generated Hall record.\nThis label selects a setting convention; use the embedded affine operations to perform coordinate transformations.",
                 "x-optimade-unit": "inapplicable",
                 "examples": [
                     "P 1",
@@ -97,7 +97,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "string",
                     "null"
                 ],
-                "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.",
+                "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.\n\nThe normalization is `hall.strip().replace(\" \", \"_\").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.\nThe key is a coordinate-setting identifier, not a numeric spglib Hall number.\nDifferent conventional H-M entry labels can resolve to the same Hall-entry record.",
                 "x-optimade-unit": "inapplicable",
                 "examples": [
                     "p_1",
@@ -137,7 +137,7 @@ The `centering_translations` field gives the setting's centering translations di
                         "array",
                         "null"
                     ],
-                    "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.",
+                    "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.\n\nThe components are coefficients of the recorded cell basis vectors, not Cartesian lengths.\nTranslations differing by an integer vector represent the same centering class; the generated list uses representatives modulo integer cell translations.",
                     "x-optimade-dimensions": {
                         "names": [
                             "dim_lattice"
@@ -221,7 +221,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Finite Euclidean normalizer operations for one crystallographic space-group setting.\n\nThe Euclidean normalizer consists of metric-preserving affine operations that normalize the space group in the chosen setting.\nThese operations are useful for algorithms that need to compare or enumerate equivalent descriptions of the same setting under rigid crystallographic changes of coordinates.\n\nThis object is generated from the finite Euclidean normalizer operations exposed by cctbx.\nIt is not a bounded candidate search table.\nTherefore fields such as `candidate_set`, `candidate_sets`, and bounded-search `bounds` do not belong to this property.\n\nThis property is one of three related normalizer tables for a setting:\nthis property holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded coset table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded coset table generated from unimodular integer linear parts.\nContinuous origin-shift freedoms are described separately by `continuous_normalizer`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n      For this property the value is `euclidean`.\n\n    - **n\\_centering\\_translations**: REQUIRED; Integer.\n      Number of centering translations represented in the underlying Euclidean normalizer operation construction.\n\n    - **n\\_pointgroup\\_symops**: REQUIRED; Integer.\n      Number of point-group symmetry operations represented before centering translations are combined with them.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of Euclidean normalizer operations listed in `symops`.\n      This value MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Finite Euclidean normalizer operations for the setting.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\n    - **symops\\_mod\\_centering**: REQUIRED; List of dictionaries.\n      Euclidean normalizer operations factorized modulo the centering translations of the setting.\n      This keeps one operation for each linear part and translation class modulo centering, while `symops` keeps the complete operation list.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.",
+                "description": "Finite Euclidean normalizer operations for one crystallographic space-group setting.\n\nThe Euclidean normalizer consists of metric-preserving affine operations that normalize the space group in the chosen setting.\nThese operations are useful for algorithms that need to compare or enumerate equivalent descriptions of the same setting under rigid crystallographic changes of coordinates.\n\nThis object is generated from the finite Euclidean normalizer operations exposed by cctbx.\nIt is not a bounded candidate search table.\nTherefore fields such as `candidate_set`, `candidate_sets`, and bounded-search `bounds` do not belong to this property.\n\nThis property is one of three related normalizer tables for a setting:\nthis property holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded coset table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded coset table generated from unimodular integer linear parts.\nContinuous origin-shift freedoms are described separately by `continuous_normalizer`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n      For this property the value is `euclidean`.\n\n    - **n\\_centering\\_translations**: REQUIRED; Integer.\n      Number of centering translations represented in the underlying Euclidean normalizer operation construction.\n\n    - **n\\_pointgroup\\_symops**: REQUIRED; Integer.\n      Number of point-group symmetry operations represented before centering translations are combined with them.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of Euclidean normalizer operations listed in `symops`.\n      This value MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Finite Euclidean normalizer operations for the setting.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\n    - **symops\\_mod\\_centering**: REQUIRED; List of dictionaries.\n      Euclidean normalizer operations factorized modulo the centering translations of the setting.\n      This keeps one operation for each linear part and translation class modulo centering, while `symops` keeps the complete operation list.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\nThis is the finite operation list of the group obtained by expanding cctbx's additional Euclidean-normalizer generators, represented modulo integer translations of the recorded cell.\nIt includes the original space-group operations and the identity, unlike the nontrivial coset lists in the two affine-normalizer properties.\nThe normalizer's `n_centering_translations` counts its own pure-translation representatives, which can outnumber the centering translations of the original space group.\nIts `n_pointgroup_symops` equals `n_linear_parts`, and `n_symops = n_centering_translations * n_pointgroup_symops`.\nHowever, `symops_mod_centering` is factored by the original space group's `centering_translations` supplied in the containing H-M record.\nIts length is therefore `n_symops` divided by the length of that outer list and need not equal the normalizer's `n_pointgroup_symops`.",
                 "properties": {
                     "normalizer_kind": {
                         "x-optimade-type": "string",
@@ -230,7 +230,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Kind label for this normalizer contribution."
+                        "description": "Kind label for this normalizer contribution.",
+                        "enum": [
+                            "euclidean"
+                        ]
                     },
                     "n_centering_translations": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_centering_translations",
@@ -256,7 +259,7 @@ The `centering_translations` field gives the setting's centering translations di
                     },
                     "n_pointgroup_symops": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops",
-                        "title": "Number of pointgroup symops",
+                        "title": "Number of point-group operations",
                         "x-optimade-type": "integer",
                         "x-optimade-definition": {
                             "kind": "property",
@@ -269,7 +272,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.",
+                        "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             1,
@@ -313,7 +316,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.",
+                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.\n\nThis value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             2,
@@ -344,7 +347,7 @@ The `centering_translations` field gives the setting's centering translations di
                                 "object",
                                 "null"
                             ],
-                            "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                            "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                             "properties": {
                                 "affine_transformation": {
                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -362,7 +365,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "object",
                                         "null"
                                     ],
-                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                     "properties": {
                                         "matrix": {
                                             "x-optimade-type": "list",
@@ -498,7 +501,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "integer",
                                                 "null"
                                             ],
-                                            "description": "Determinant of the matrix part when emitted by the generator."
+                                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                         },
                                         "is_orthogonal": {
                                             "x-optimade-type": "boolean",
@@ -507,7 +510,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -539,6 +542,17 @@ The `centering_translations` field gives the setting's centering translations di
                                             "is_orthogonal": true
                                         }
                                     ]
+                                },
+                                "operation_kind": {
+                                    "x-optimade-type": "string",
+                                    "x-optimade-unit": "inapplicable",
+                                    "type": [
+                                        "string"
+                                    ],
+                                    "enum": [
+                                        "euclidean"
+                                    ],
+                                    "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                                 },
                                 "rot_type": {
                                     "x-optimade-type": "string",
@@ -593,7 +607,12 @@ The `centering_translations` field gives the setting's centering translations di
                                         "integer",
                                         "null"
                                     ],
-                                    "description": "Rotation sense/sign convention returned by the generator."
+                                    "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                                    "enum": [
+                                        -1,
+                                        0,
+                                        1
+                                    ]
                                 },
                                 "screw_glide": {
                                     "x-optimade-type": "list",
@@ -744,7 +763,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "array",
                             "null"
                         ],
-                        "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+                        "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op\n\nTwo listed full operations are equivalent here when their matrices agree and their translation vectors differ by a centering translation modulo integer cell translations.\nThere is one representative for each point-group operation, including inversion-related operations.\nFor a space-group record, the list length MUST equal `n_pointgroup_symops`.\nCombining each representative with every `centering_translations` vector and reducing translations modulo integers recovers `symops` as a set.",
                         "items": {
                             "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                             "title": "Operation",
@@ -761,7 +780,7 @@ The `centering_translations` field gives the setting's centering translations di
                                 "object",
                                 "null"
                             ],
-                            "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                            "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                             "properties": {
                                 "affine_transformation": {
                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -779,7 +798,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "object",
                                         "null"
                                     ],
-                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                     "properties": {
                                         "matrix": {
                                             "x-optimade-type": "list",
@@ -915,7 +934,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "integer",
                                                 "null"
                                             ],
-                                            "description": "Determinant of the matrix part when emitted by the generator."
+                                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                         },
                                         "is_orthogonal": {
                                             "x-optimade-type": "boolean",
@@ -924,7 +943,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -956,6 +975,17 @@ The `centering_translations` field gives the setting's centering translations di
                                             "is_orthogonal": true
                                         }
                                     ]
+                                },
+                                "operation_kind": {
+                                    "x-optimade-type": "string",
+                                    "x-optimade-unit": "inapplicable",
+                                    "type": [
+                                        "string"
+                                    ],
+                                    "enum": [
+                                        "euclidean"
+                                    ],
+                                    "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                                 },
                                 "rot_type": {
                                     "x-optimade-type": "string",
@@ -1010,7 +1040,12 @@ The `centering_translations` field gives the setting's centering translations di
                                         "integer",
                                         "null"
                                     ],
-                                    "description": "Rotation sense/sign convention returned by the generator."
+                                    "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                                    "enum": [
+                                        -1,
+                                        0,
+                                        1
+                                    ]
                                 },
                                 "screw_glide": {
                                     "x-optimade-type": "list",
@@ -1198,13 +1233,30 @@ The `centering_translations` field gives the setting's centering translations di
                     {
                         "normalizer_kind": "euclidean",
                         "n_centering_translations": 1,
-                        "n_pointgroup_symops": 1,
+                        "n_pointgroup_symops": 2,
                         "n_symops": 2,
                         "n_linear_parts": 2,
                         "symops": [
                             {
+                                "rot_type": "-1",
+                                "sense": 0,
+                                "axis": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "screw_glide": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "origin_shift": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "operation_kind": "euclidean",
                                 "affine_transformation": {
-                                    "xyz": "-x,-y,-z",
                                     "matrix": [
                                         [
                                             "-1",
@@ -1227,10 +1279,13 @@ The `centering_translations` field gives the setting's centering translations di
                                         "0",
                                         "0"
                                     ],
+                                    "xyz": "-x,-y,-z",
                                     "det": -1,
                                     "is_orthogonal": true
-                                },
-                                "rot_type": "-1",
+                                }
+                            },
+                            {
+                                "rot_type": "1",
                                 "sense": 0,
                                 "axis": [
                                     0,
@@ -1247,13 +1302,57 @@ The `centering_translations` field gives the setting's centering translations di
                                     "0",
                                     "0"
                                 ],
-                                "operation_kind": "euclidean"
+                                "operation_kind": "euclidean",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z",
+                                    "det": 1,
+                                    "is_orthogonal": true
+                                }
                             }
                         ],
                         "symops_mod_centering": [
                             {
+                                "rot_type": "-1",
+                                "sense": 0,
+                                "axis": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "screw_glide": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "origin_shift": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "operation_kind": "euclidean",
                                 "affine_transformation": {
-                                    "xyz": "-x,-y,-z",
                                     "matrix": [
                                         [
                                             "-1",
@@ -1276,10 +1375,13 @@ The `centering_translations` field gives the setting's centering translations di
                                         "0",
                                         "0"
                                     ],
+                                    "xyz": "-x,-y,-z",
                                     "det": -1,
                                     "is_orthogonal": true
-                                },
-                                "rot_type": "-1",
+                                }
+                            },
+                            {
+                                "rot_type": "1",
                                 "sense": 0,
                                 "axis": [
                                     0,
@@ -1296,7 +1398,34 @@ The `centering_translations` field gives the setting's centering translations di
                                     "0",
                                     "0"
                                 ],
-                                "operation_kind": "euclidean"
+                                "operation_kind": "euclidean",
+                                "affine_transformation": {
+                                    "matrix": [
+                                        [
+                                            "1",
+                                            "0",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "1",
+                                            "0"
+                                        ],
+                                        [
+                                            "0",
+                                            "0",
+                                            "1"
+                                        ]
+                                    ],
+                                    "vector": [
+                                        "0",
+                                        "0",
+                                        "0"
+                                    ],
+                                    "xyz": "x,y,z",
+                                    "det": 1,
+                                    "is_orthogonal": true
+                                }
                             }
                         ]
                     }
@@ -1318,7 +1447,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Exact basis and origin transform from one stored Hall setting to the International Tables standard Hall setting of the same space-group type.\n\nThis transform is useful when data generated or detected in an arbitrary Hall setting needs to be compared with a conventional IT-standard reference setting.\nThe transform is represented by `matrix` and `vector`, following the same affine-transformation convention as the other generated transformation tables.\n\nIf `x_to_ref_hall` is a fractional coordinate column vector in the target IT-standard Hall setting, and `x_from_hall` is the corresponding fractional coordinate column vector in the source Hall setting keyed by the containing map, then the stored transform satisfies:\n`x_from_hall = matrix * x_to_ref_hall + vector`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary describing one exact transform from the containing Hall setting to the IT-standard Hall setting of the same `it_number`.\n- The `index` value is always `1`, because this is a same-space-group setting transform rather than a proper subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.\n- It MUST be a dictionary with the following keys:\n\n    - **hall\\_entry**: REQUIRED; String.\n      Source Hall-entry key for the setting transformed by this object.\n\n    - **it\\_number**: REQUIRED; Integer.\n      International Tables space-group number shared by the source and target Hall settings.\n\n    - **to\\_hall\\_entry**: REQUIRED; String.\n      Target Hall-entry key for the IT-standard Hall setting of the same space-group type.\n\n    - **index**: REQUIRED; Integer.\n      Transform index.\n      For this table the value is `1` because the transform maps between settings of the same space group.\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for this setting transform.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n      The transform convention is `x_from_hall = matrix * x_to_ref_hall + vector`, where `matrix` and `vector` are the fields inside `affine_transformation`.",
+                "description": "Exact basis and origin transform from one stored Hall setting to the International Tables standard Hall setting of the same space-group type.\n\nThis transform is useful when data generated or detected in an arbitrary Hall setting needs to be compared with a conventional IT-standard reference setting.\nThe transform is represented by `matrix` and `vector`, following the same affine-transformation convention as the other generated transformation tables.\n\nIf `x_to_ref_hall` is a fractional coordinate column vector in the target IT-standard Hall setting, and `x_from_hall` is the corresponding fractional coordinate column vector in the source Hall setting keyed by the containing map, then the stored transform satisfies:\n`x_from_hall = matrix * x_to_ref_hall + vector`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary describing one exact transform from the containing Hall setting to the IT-standard Hall setting of the same `it_number`.\n- The `index` value is always `1`, because this is a same-space-group setting transform rather than a proper subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.\n- It MUST be a dictionary with the following keys:\n\n    - **hall\\_entry**: REQUIRED; String.\n      Source Hall-entry key for the setting transformed by this object.\n\n    - **it\\_number**: REQUIRED; Integer.\n      International Tables space-group number shared by the source and target Hall settings.\n\n    - **to\\_hall\\_entry**: REQUIRED; String.\n      Target Hall-entry key for the IT-standard Hall setting of the same space-group type.\n\n    - **index**: REQUIRED; Integer.\n      Transform index.\n      For this table the value is `1` because the transform maps between settings of the same space group.\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for this setting transform.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n      The transform convention is `x_from_hall = matrix * x_to_ref_hall + vector`, where `matrix` and `vector` are the fields inside `affine_transformation`.\n\nDespite the source-to-standard purpose of the record, the stored affine map sends target-standard coordinates to source coordinates.\nTo convert a source coordinate to the standard setting, evaluate `matrix^-1 * (x_from_hall-vector)`.\nWith cell basis vectors arranged as columns, `B_standard = B_source * matrix`.\nThe transformed operation is `W_standard = matrix^-1*W_source*matrix` with translation `matrix^-1*(W_source*vector + w_source - vector)`.\nChanging between centered and primitive descriptions can change the determinant without changing the group index.",
                 "properties": {
                     "hall_entry": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/spacegroups/hall_entry",
@@ -1335,7 +1464,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.",
+                        "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.\n\nThe normalization is `hall.strip().replace(\" \", \"_\").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.\nThe key is a coordinate-setting identifier, not a numeric spglib Hall number.\nDifferent conventional H-M entry labels can resolve to the same Hall-entry record.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             "p_1",
@@ -1404,7 +1533,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.",
+                        "description": "Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.\n\nFor the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.\nEquivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.\nThus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.\nIn `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             2,
@@ -1427,7 +1556,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -1563,7 +1692,7 @@ The `centering_translations` field gives the setting's centering translations di
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -1572,7 +1701,7 @@ The `centering_translations` field gives the setting's centering translations di
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -1655,7 +1784,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Orthogonal affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains the signed-permutation subset of affine normalizer representatives.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `signed_permutation_matrices`, meaning 3 by 3 integer matrices with exactly one nonzero entry in each row and column and each nonzero entry equal to `-1` or `1`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\nthis property holds the older bounded table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded table generated from unimodular integer linear parts, which is a superset of this one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds satisfied by the signed-permutation candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed orthogonal affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of crystal systems for which the representative's linear part is compatible with a crystallographic metric.",
+                "description": "Orthogonal affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains the signed-permutation subset of affine normalizer representatives.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `signed_permutation_matrices`, meaning 3 by 3 integer matrices with exactly one nonzero entry in each row and column and each nonzero entry equal to `-1` or `1`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\nthis property holds the older bounded table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded table generated from unimodular integer linear parts, whose linear candidate set contains the signed-permutation set.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n      It MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct exact linear matrix parts represented in `symops`.\n      This count ignores translation differences and can be smaller than `n_symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of accepted affine normalizer candidates generated before quotienting by the space group and metric filtering; the candidate list itself is not stored.\n\n    - **n\\_unique\\_candidates**: OPTIONAL; Integer.\n      Legacy count of unique affine candidates before quotienting by the space group.\n      The current canonical-coset composition does not emit this field; it is retained to describe older records.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds satisfied by the signed-permutation candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed orthogonal affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families whose every metric tensor is preserved after transport to the actual setting basis.\n\nFor the infinite space group G, an affine map A normalizes G when `A*G*A^-1 = G`, including its full translation lattice.\nRepresentatives differing by multiplication by an element of G describe the same coset.\nThe identity coset G itself is omitted, but a nonzero pure translation can represent a nontrivial coset and MUST NOT be discarded just because its matrix is identity.\nContinuous origin shifts are represented separately by `continuous_normalizer`; this finite list is not all of `N_A(G)/G`.\nA nonempty `compatible_systems` list means the linear part preserves every metric in at least one listed reference-setting family after transport to the recorded Hall basis.\nIt need not preserve the actual setting's general metric; that distinction is recorded by `affine_transformation.is_orthogonal`.\nThe signed-permutation candidate set is contained in the bounded integer candidate set, but independently chosen coset representatives need not appear as identical affine matrices and vectors in both lists.\n\nThe historical word orthogonal names the signed-permutation search: `M^T*M = I` as a numerical matrix condition.\nIn a fractional basis this is not sufficient for physical orthogonality, which instead requires `M^T*g*M = g` for the relevant lattice metric g.\n\nThe example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); multiplication by inversion in the space group explains the displayed linear part `-I`.",
                 "properties": {
                     "normalizer_kind": {
                         "x-optimade-type": "string",
@@ -1664,7 +1793,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Kind label for this normalizer contribution."
+                        "description": "Kind label for this normalizer contribution.",
+                        "enum": [
+                            "orthogonal_affine"
+                        ]
                     },
                     "representation": {
                         "x-optimade-type": "string",
@@ -1673,7 +1805,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Representation label for the listed normalizer data."
+                        "description": "Representation label for the listed normalizer data.",
+                        "enum": [
+                            "orthogonal_coset_representatives"
+                        ]
                     },
                     "candidate_set": {
                         "x-optimade-type": "string",
@@ -1682,7 +1817,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Name of the finite linear candidate set used for generation."
+                        "description": "Name of the finite linear candidate set used for generation.",
+                        "enum": [
+                            "signed_permutation_matrices"
+                        ]
                     },
                     "n_symops": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_symops",
@@ -1721,7 +1859,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.",
+                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.\n\nThis value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             2,
@@ -1735,7 +1873,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of affine candidates found before deduplication modulo the space group."
+                        "description": "Number of accepted affine normalizer candidates generated before quotienting by the space group and metric filtering; the candidate list itself is not stored."
                     },
                     "n_unique_candidates": {
                         "x-optimade-type": "integer",
@@ -1744,7 +1882,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of unique affine candidates before quotienting by the space group."
+                        "description": "Legacy count of unique affine candidates before quotienting by the space group; omitted by the current generator."
                     },
                     "n_coset_representatives": {
                         "x-optimade-type": "integer",
@@ -1808,7 +1946,7 @@ The `centering_translations` field gives the setting's centering translations di
                                 "object",
                                 "null"
                             ],
-                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      International Tables subgroup-type label when the transform describes a maximal subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted when the transform is not a maximal subgroup embedding.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Crystal metric systems for which the transform is compatible.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
+                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nFor a subgroup embedding the convention is `x_G = P*x_H + p`, where `P = affine_transformation.matrix` and `p = affine_transformation.vector`.\nThe columns of `P` are the subgroup cell vectors expressed in the parent fractional basis, and `p` is the subgroup origin expressed in that basis.\nThus conversion of parent coordinates to subgroup coordinates uses `x_H = P^-1*(x_G-p)`, not the forward affine map.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      Translation/point-symmetry classification when supplied for a subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted for identity embeddings and general subgroups that lose both translations and point symmetry, and for transforms that are not subgroup embeddings.\n      Presence of `t` or `k` alone does not certify maximality; the containing relation table supplies that information.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Reference-setting metric families whose every metric tensor is preserved by the linear part after transport to the actual setting basis.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
                             "properties": {
                                 "affine_transformation": {
                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -1826,7 +1964,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "object",
                                         "null"
                                     ],
-                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                     "properties": {
                                         "matrix": {
                                             "x-optimade-type": "list",
@@ -1962,7 +2100,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "integer",
                                                 "null"
                                             ],
-                                            "description": "Determinant of the matrix part when emitted by the generator."
+                                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                         },
                                         "is_orthogonal": {
                                             "x-optimade-type": "boolean",
@@ -1971,7 +2109,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -2032,7 +2170,11 @@ The `centering_translations` field gives the setting's centering translations di
                                         "string",
                                         "null"
                                     ],
-                                    "description": "Klassengleiche subtype when applicable."
+                                    "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
+                                    "enum": [
+                                        "loss_of_centering_translation",
+                                        "enlarged_unit_cell"
+                                    ]
                                 },
                                 "compatible_systems": {
                                     "x-optimade-type": "list",
@@ -2041,7 +2183,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.\nMonoclinic reference metrics use unique axis b; trigonal and hexagonal reference metrics both use hexagonal axes with a = b and gamma = 120 degrees.\nThese labels describe the tested metric families, not a reassignment of the space group's crystal system or the accidental metric symmetry of a particular specimen.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -2089,7 +2231,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.",
+                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.\nThe piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -2212,10 +2354,10 @@ The `centering_translations` field gives the setting's centering translations di
                                     "examples": [
                                         [
                                             {
-                                                "parent": "c",
+                                                "parent": "a",
                                                 "splits": [
                                                     {
-                                                        "letter": "e",
+                                                        "letter": "a",
                                                         "xyz": "x,y,z",
                                                         "affine": [
                                                             [
@@ -2233,8 +2375,32 @@ The `centering_translations` field gives the setting's centering translations di
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1",
+                                                                "1/2",
                                                                 "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "a",
+                                                        "xyz": "x,y,z",
+                                                        "affine": [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1/2",
+                                                                "1/2"
                                                             ]
                                                         ]
                                                     }
@@ -2250,7 +2416,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraint metadata induced by the transform, grouped by explicit parent Wyckoff letter.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -2284,7 +2450,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                     "type": [
                                                         "object"
                                                     ],
-                                                    "description": "One linear backward-lift constraint record.",
+                                                    "description": "One modular equation `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nHere `q_i` is the three-component fractional coordinate on the published subgroup representative branch selected by `roles[i]`, not a local parameter vector or an arbitrary symmetry-equivalent site.\nThe current generator emits one scalar equation per record: `target` has length one, `coeffs` has one item per role, and each item contains one three-component row.\nThe coefficient entries are integer-valued exact strings, which makes the equation invariant under independent integer translations of the role coordinates.",
                                                     "properties": {
                                                         "roles": {
                                                             "x-optimade-type": "list",
@@ -2319,7 +2485,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                         "type": [
                                                                             "integer"
                                                                         ],
-                                                                        "description": "Zero-based occurrence index for the role."
+                                                                        "description": "Zero-based occurrence index among split pieces having this same letter in the corresponding parent's ordered `splits` list, not an index into all pieces or into the overall Wyckoff table."
                                                                     }
                                                                 }
                                                             }
@@ -2330,7 +2496,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact coefficient vectors for the constraint.",
+                                                            "description": "Exact integer-valued coefficient rows, in the same order as `roles`.",
                                                             "items": {
                                                                 "x-optimade-type": "list",
                                                                 "x-optimade-unit": "inapplicable",
@@ -2386,7 +2552,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact target vector or scalar for the constraint.",
+                                                            "description": "One-element list containing the exact right-hand side modulo one, normalized to the interval [0,1).",
                                                             "items": {
                                                                 "$id": "https://schemas.httk.org/defs/v0.1/properties/core/fraction",
                                                                 "title": "Fraction",
@@ -2421,6 +2587,162 @@ The `centering_translations` field gives the setting's centering translations di
                             },
                             "examples": [
                                 {
+                                    "index": 2,
+                                    "wyckoff_splitting": [
+                                        {
+                                            "parent": "a",
+                                            "splits": [
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "criteria": [
+                                        {
+                                            "parent": "a",
+                                            "constraints": [
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "-1"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "1/2"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "affine_transformation": {
                                         "matrix": [
                                             [
@@ -2448,67 +2770,8 @@ The `centering_translations` field gives the setting's centering translations di
                                         "det": 2,
                                         "is_orthogonal": false
                                     },
-                                    "index": 2,
                                     "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell",
-                                    "wyckoff_splitting": [
-                                        {
-                                            "parent": "a",
-                                            "splits": [
-                                                {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
-                                                    "affine": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "criteria": [
-                                        {
-                                            "parent": "a",
-                                            "constraints": [
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 0
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "1",
-                                                                "0",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    "k_subtype": "enlarged_unit_cell"
                                 },
                                 {
                                     "affine_transformation": {
@@ -2558,19 +2821,26 @@ The `centering_translations` field gives the setting's centering translations di
                         "normalizer_kind": "orthogonal_affine",
                         "representation": "orthogonal_coset_representatives",
                         "candidate_set": "signed_permutation_matrices",
-                        "n_symops": 47,
-                        "n_linear_parts": 47,
-                        "n_raw_candidates": 48,
-                        "n_unique_candidates": 48,
-                        "n_coset_representatives": 47,
+                        "n_symops": 1,
+                        "n_linear_parts": 1,
+                        "n_raw_candidates": 96,
+                        "n_coset_representatives": 1,
                         "bounds": {
                             "det_abs": 1,
                             "max_abs_linear_entry": 1
                         },
                         "symops": [
                             {
+                                "compatible_systems": [
+                                    "triclinic",
+                                    "monoclinic",
+                                    "orthorhombic",
+                                    "tetragonal",
+                                    "trigonal",
+                                    "hexagonal",
+                                    "cubic"
+                                ],
                                 "affine_transformation": {
-                                    "xyz": "-x,-y,-z",
                                     "matrix": [
                                         [
                                             "-1",
@@ -2589,22 +2859,14 @@ The `centering_translations` field gives the setting's centering translations di
                                         ]
                                     ],
                                     "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
+                                        "1/2",
+                                        "1/2",
+                                        "1/2"
                                     ],
+                                    "xyz": "-x+1/2,-y+1/2,-z+1/2",
                                     "det": -1,
                                     "is_orthogonal": true
                                 },
-                                "compatible_systems": [
-                                    "triclinic",
-                                    "monoclinic",
-                                    "orthorhombic",
-                                    "tetragonal",
-                                    "trigonal",
-                                    "hexagonal",
-                                    "cubic"
-                                ],
                                 "operation_kind": "orthogonal_affine"
                             }
                         ]
@@ -2627,7 +2889,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, which is a superset of the orthogonal one.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of affine candidates found before deduplication modulo the space group.\n\n    - **n\\_unique\\_candidates**: REQUIRED; Integer.\n      Number of unique affine candidates before quotienting by the space group.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.",
+                "description": "Affine normalizer coset representatives for one crystallographic space-group setting.\n\nThe representatives are listed modulo the space group itself, so each listed operation represents an equivalence class of affine normalizer operations rather than every operation in that class.\nThis property contains representatives generated from bounded unimodular integer linear parts. It is a finite bounded representative table, not a complete infinite affine normalizer.\n\nThe `candidate_set` field belongs in this property because the listed representatives are produced from a deliberately restricted finite candidate set.\nFor this property `candidate_set` is `bounded_unimodular_integer_matrices`, meaning unimodular 3 by 3 integer matrices satisfying the recorded `bounds`.\nThe plural field `candidate_sets` is not part of the emitted data and MUST NOT be used here.\n\nThis property is one of three related normalizer tables for a setting:\n`euclidean_normalizer` holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded table restricted to signed-permutation linear parts,\nand this property holds the bounded table generated from unimodular integer linear parts, whose linear candidate set contains the signed-permutation set.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n\n    - **representation**: REQUIRED; String.\n      Representation label for the listed data.\n\n    - **candidate\\_set**: REQUIRED; String.\n      Name of the finite linear candidate set used for generation.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of listed coset representatives after metric-compatibility filtering.\n      It MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct exact linear matrix parts represented in `symops`.\n      This count ignores translation differences and can be smaller than `n_symops`.\n\n    - **n\\_raw\\_candidates**: REQUIRED; Integer.\n      Number of accepted affine normalizer candidates generated before quotienting by the space group and metric filtering; the candidate list itself is not stored.\n\n    - **n\\_unique\\_candidates**: OPTIONAL; Integer.\n      Legacy count of unique affine candidates before quotienting by the space group.\n      The current canonical-coset composition does not emit this field; it is retained to describe older records.\n\n    - **n\\_coset\\_representatives**: REQUIRED; Integer.\n      Number of non-trivial coset representatives before metric-compatibility filtering.\n\n    - **bounds**: REQUIRED; Dictionary.\n      Simple numerical bounds defining the bounded unimodular integer candidate matrices.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Listed affine normalizer coset representatives.\n      Each item follows `/defs/v0.1/properties/symmetry/basis_transform`.\n      Each item MUST carry `compatible_systems`, the list of reference-setting metric families (transported to the actual setting's basis) whose every metric tensor is preserved by the representative's linear part.\n\nFor the infinite space group G, an affine map A normalizes G when `A*G*A^-1 = G`, including its full translation lattice.\nRepresentatives differing by multiplication by an element of G describe the same coset.\nThe identity coset G itself is omitted, but a nonzero pure translation can represent a nontrivial coset and MUST NOT be discarded just because its matrix is identity.\nContinuous origin shifts are represented separately by `continuous_normalizer`; this finite list is not all of `N_A(G)/G`.\nA nonempty `compatible_systems` list means the linear part preserves every metric in at least one listed reference-setting family after transport to the recorded Hall basis.\nIt need not preserve the actual setting's general metric; that distinction is recorded by `affine_transformation.is_orthogonal`.\nThe signed-permutation candidate set is contained in the bounded integer candidate set, but independently chosen coset representatives need not appear as identical affine matrices and vectors in both lists.\n\nThe example is the nontrivial half-cell origin-shift coset for Pm-3m (No. 221); multiplication by inversion in the space group explains the displayed linear part `-I`.",
                 "properties": {
                     "normalizer_kind": {
                         "x-optimade-type": "string",
@@ -2636,7 +2898,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Kind label for this normalizer contribution."
+                        "description": "Kind label for this normalizer contribution.",
+                        "enum": [
+                            "affine"
+                        ]
                     },
                     "representation": {
                         "x-optimade-type": "string",
@@ -2645,7 +2910,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Representation label for the listed normalizer data."
+                        "description": "Representation label for the listed normalizer data.",
+                        "enum": [
+                            "coset_representatives"
+                        ]
                     },
                     "candidate_set": {
                         "x-optimade-type": "string",
@@ -2654,7 +2922,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Name of the finite linear candidate set used for generation."
+                        "description": "Name of the finite linear candidate set used for generation.",
+                        "enum": [
+                            "bounded_unimodular_integer_matrices"
+                        ]
                     },
                     "n_symops": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_symops",
@@ -2693,7 +2964,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.",
+                        "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.\n\nThis value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             2,
@@ -2707,7 +2978,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of affine candidates found before deduplication modulo the space group."
+                        "description": "Number of accepted affine normalizer candidates generated before quotienting by the space group and metric filtering; the candidate list itself is not stored."
                     },
                     "n_unique_candidates": {
                         "x-optimade-type": "integer",
@@ -2716,7 +2987,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "integer",
                             "null"
                         ],
-                        "description": "Number of unique affine candidates before quotienting by the space group."
+                        "description": "Legacy count of unique affine candidates before quotienting by the space group; omitted by the current generator."
                     },
                     "n_coset_representatives": {
                         "x-optimade-type": "integer",
@@ -2780,7 +3051,7 @@ The `centering_translations` field gives the setting's centering translations di
                                 "object",
                                 "null"
                             ],
-                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      International Tables subgroup-type label when the transform describes a maximal subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted when the transform is not a maximal subgroup embedding.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Crystal metric systems for which the transform is compatible.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
+                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nFor a subgroup embedding the convention is `x_G = P*x_H + p`, where `P = affine_transformation.matrix` and `p = affine_transformation.vector`.\nThe columns of `P` are the subgroup cell vectors expressed in the parent fractional basis, and `p` is the subgroup origin expressed in that basis.\nThus conversion of parent coordinates to subgroup coordinates uses `x_H = P^-1*(x_G-p)`, not the forward affine map.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      Translation/point-symmetry classification when supplied for a subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted for identity embeddings and general subgroups that lose both translations and point symmetry, and for transforms that are not subgroup embeddings.\n      Presence of `t` or `k` alone does not certify maximality; the containing relation table supplies that information.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Reference-setting metric families whose every metric tensor is preserved by the linear part after transport to the actual setting basis.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
                             "properties": {
                                 "affine_transformation": {
                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -2798,7 +3069,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "object",
                                         "null"
                                     ],
-                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                     "properties": {
                                         "matrix": {
                                             "x-optimade-type": "list",
@@ -2934,7 +3205,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "integer",
                                                 "null"
                                             ],
-                                            "description": "Determinant of the matrix part when emitted by the generator."
+                                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                         },
                                         "is_orthogonal": {
                                             "x-optimade-type": "boolean",
@@ -2943,7 +3214,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -3004,7 +3275,11 @@ The `centering_translations` field gives the setting's centering translations di
                                         "string",
                                         "null"
                                     ],
-                                    "description": "Klassengleiche subtype when applicable."
+                                    "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
+                                    "enum": [
+                                        "loss_of_centering_translation",
+                                        "enlarged_unit_cell"
+                                    ]
                                 },
                                 "compatible_systems": {
                                     "x-optimade-type": "list",
@@ -3013,7 +3288,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.\nMonoclinic reference metrics use unique axis b; trigonal and hexagonal reference metrics both use hexagonal axes with a = b and gamma = 120 degrees.\nThese labels describe the tested metric families, not a reassignment of the space group's crystal system or the accidental metric symmetry of a particular specimen.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -3061,7 +3336,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.",
+                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.\nThe piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -3184,10 +3459,10 @@ The `centering_translations` field gives the setting's centering translations di
                                     "examples": [
                                         [
                                             {
-                                                "parent": "c",
+                                                "parent": "a",
                                                 "splits": [
                                                     {
-                                                        "letter": "e",
+                                                        "letter": "a",
                                                         "xyz": "x,y,z",
                                                         "affine": [
                                                             [
@@ -3205,8 +3480,32 @@ The `centering_translations` field gives the setting's centering translations di
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1",
+                                                                "1/2",
                                                                 "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "a",
+                                                        "xyz": "x,y,z",
+                                                        "affine": [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1/2",
+                                                                "1/2"
                                                             ]
                                                         ]
                                                     }
@@ -3222,7 +3521,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraint metadata induced by the transform, grouped by explicit parent Wyckoff letter.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -3256,7 +3555,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                     "type": [
                                                         "object"
                                                     ],
-                                                    "description": "One linear backward-lift constraint record.",
+                                                    "description": "One modular equation `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nHere `q_i` is the three-component fractional coordinate on the published subgroup representative branch selected by `roles[i]`, not a local parameter vector or an arbitrary symmetry-equivalent site.\nThe current generator emits one scalar equation per record: `target` has length one, `coeffs` has one item per role, and each item contains one three-component row.\nThe coefficient entries are integer-valued exact strings, which makes the equation invariant under independent integer translations of the role coordinates.",
                                                     "properties": {
                                                         "roles": {
                                                             "x-optimade-type": "list",
@@ -3291,7 +3590,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                         "type": [
                                                                             "integer"
                                                                         ],
-                                                                        "description": "Zero-based occurrence index for the role."
+                                                                        "description": "Zero-based occurrence index among split pieces having this same letter in the corresponding parent's ordered `splits` list, not an index into all pieces or into the overall Wyckoff table."
                                                                     }
                                                                 }
                                                             }
@@ -3302,7 +3601,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact coefficient vectors for the constraint.",
+                                                            "description": "Exact integer-valued coefficient rows, in the same order as `roles`.",
                                                             "items": {
                                                                 "x-optimade-type": "list",
                                                                 "x-optimade-unit": "inapplicable",
@@ -3358,7 +3657,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact target vector or scalar for the constraint.",
+                                                            "description": "One-element list containing the exact right-hand side modulo one, normalized to the interval [0,1).",
                                                             "items": {
                                                                 "$id": "https://schemas.httk.org/defs/v0.1/properties/core/fraction",
                                                                 "title": "Fraction",
@@ -3393,6 +3692,162 @@ The `centering_translations` field gives the setting's centering translations di
                             },
                             "examples": [
                                 {
+                                    "index": 2,
+                                    "wyckoff_splitting": [
+                                        {
+                                            "parent": "a",
+                                            "splits": [
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "criteria": [
+                                        {
+                                            "parent": "a",
+                                            "constraints": [
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "-1"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "1/2"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "affine_transformation": {
                                         "matrix": [
                                             [
@@ -3420,67 +3875,8 @@ The `centering_translations` field gives the setting's centering translations di
                                         "det": 2,
                                         "is_orthogonal": false
                                     },
-                                    "index": 2,
                                     "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell",
-                                    "wyckoff_splitting": [
-                                        {
-                                            "parent": "a",
-                                            "splits": [
-                                                {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
-                                                    "affine": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "criteria": [
-                                        {
-                                            "parent": "a",
-                                            "constraints": [
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 0
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "1",
-                                                                "0",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    "k_subtype": "enlarged_unit_cell"
                                 },
                                 {
                                     "affine_transformation": {
@@ -3530,18 +3926,26 @@ The `centering_translations` field gives the setting's centering translations di
                         "normalizer_kind": "affine",
                         "representation": "coset_representatives",
                         "candidate_set": "bounded_unimodular_integer_matrices",
-                        "n_symops": 63,
-                        "n_linear_parts": 63,
-                        "n_raw_candidates": 6960,
-                        "n_coset_representatives": 6959,
+                        "n_symops": 1,
+                        "n_linear_parts": 1,
+                        "n_raw_candidates": 96,
+                        "n_coset_representatives": 1,
                         "bounds": {
                             "det_abs": 1,
                             "max_abs_linear_entry": 1
                         },
                         "symops": [
                             {
+                                "compatible_systems": [
+                                    "triclinic",
+                                    "monoclinic",
+                                    "orthorhombic",
+                                    "tetragonal",
+                                    "trigonal",
+                                    "hexagonal",
+                                    "cubic"
+                                ],
                                 "affine_transformation": {
-                                    "xyz": "-x,-y,-z",
                                     "matrix": [
                                         [
                                             "-1",
@@ -3560,22 +3964,14 @@ The `centering_translations` field gives the setting's centering translations di
                                         ]
                                     ],
                                     "vector": [
-                                        "0",
-                                        "0",
-                                        "0"
+                                        "1/2",
+                                        "1/2",
+                                        "1/2"
                                     ],
+                                    "xyz": "-x+1/2,-y+1/2,-z+1/2",
                                     "det": -1,
                                     "is_orthogonal": true
                                 },
-                                "compatible_systems": [
-                                    "triclinic",
-                                    "monoclinic",
-                                    "orthorhombic",
-                                    "tetragonal",
-                                    "trigonal",
-                                    "hexagonal",
-                                    "cubic"
-                                ],
                                 "operation_kind": "affine"
                             }
                         ]
@@ -3598,7 +3994,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Parameterized continuous normalizer subspace for a setting.\n\nIt describes continuous origin-shift freedoms by dimension and fractional-coordinate basis vectors rather than by enumerating infinitely many operations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **dimension**: OPTIONAL; Integer.\n      Dimension of the continuous parameter subspace.\n      When present, it MUST equal the length of `basis_vectors`.\n\n    - **basis\\_vectors**: REQUIRED; List of vectors.\n      Basis vectors spanning the continuous normalizer parameter space.\n      Each basis vector is represented as exact fractional-coordinate components.\n\n    - **coordinate\\_system**: OPTIONAL; String.\n      Coordinate system used for the parameter vectors.\n\n    - **representation**: OPTIONAL; String.\n      Textual description of the parameterized representation.",
+                "description": "Parameterized continuous normalizer subspace for a setting.\n\nIt describes continuous origin-shift freedoms by dimension and fractional-coordinate basis vectors rather than by enumerating infinitely many operations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **dimension**: OPTIONAL; Integer.\n      Dimension of the continuous parameter subspace.\n      When present, it MUST equal the length of `basis_vectors`.\n\n    - **basis\\_vectors**: REQUIRED; List of vectors.\n      Basis vectors spanning the continuous normalizer parameter space.\n      Each basis vector is represented as exact fractional-coordinate components.\n\n    - **coordinate\\_system**: OPTIONAL; String.\n      Coordinate system used for the parameter vectors.\n\n    - **representation**: OPTIONAL; String.\n      Textual description of the parameterized representation.\n\nThe represented shifts are `t = sum_i u_i*basis_vectors[i]`, with arbitrary real coefficients `u_i`, acting on fractional coordinates as `x -> x+t`.\nTheir span is the common fixed subspace of all space-group rotations: `(W-I)*t = 0` for every linear part `W`.\nThe basis vectors are exact and independent but need not be normalized or orthogonal.\nA dimension of zero and an empty basis list mean there is no continuous origin-shift freedom; discrete allowed shifts can still exist.\nThis property describes continuous translations only, not arbitrary continuous rotations, strains, or the full affine normalizer.",
                 "properties": {
                     "dimension": {
                         "x-optimade-type": "integer",
@@ -3665,7 +4061,10 @@ The `centering_translations` field gives the setting's centering translations di
                             "string",
                             "null"
                         ],
-                        "description": "Coordinate system used for the parameter vectors."
+                        "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
+                        "enum": [
+                            "fractional"
+                        ]
                     },
                     "representation": {
                         "x-optimade-type": "string",
@@ -3717,7 +4116,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "object",
                     "null"
                 ],
-                "description": "Isomorphic subgroup transforms of bounded index for one parent setting or space-group type.\n\nAn isomorphic subgroup has the same space-group type as the parent but is embedded with a finite index, usually corresponding to an enlarged unit cell or a sublattice choice.\nThese transforms are useful for algorithms that need to enumerate same-type subgroup embeddings, compare structures under supercell changes, or construct bounded same-space-group refinement paths.\n\nThe transform records use the basis-transform convention represented by `matrix` and `vector`.\nThe `index` field is the subgroup index and equals the determinant factor of the basis transformation.\nThe generator currently searches indices up to its configured maximum index and deduplicates equivalent transforms under normalizer equivalence.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary containing an `items` list.\n- Each item in `items` MUST describe one exact isomorphic subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.",
+                "description": "Isomorphic subgroup transforms of bounded index for one parent setting or space-group type.\n\nAn isomorphic subgroup has the same space-group type as the parent but is embedded with a finite index, usually corresponding to an enlarged unit cell or a sublattice choice.\nThese transforms are useful for algorithms that need to enumerate same-type subgroup embeddings, compare structures under supercell changes, or construct bounded same-space-group refinement paths.\n\nThe transform records use `x_parent = P*x_subgroup + p`, with `P` and `p` stored inside `affine_transformation` as `matrix` and `vector`.\nThe `index` field is the subgroup index and equals `abs(det(P))` because both sides use the same space-group setting and centering convention.\nIndex one is allowed and does not describe a proper subgroup.\nThe generator currently searches indices up to its configured maximum index (default 9), with bounded candidate bases, and deduplicates the embedded translation lattice and operation cosets under the finite cctbx Euclidean normalizer.\nOnly the first valid origin in the tested origin pool is retained for each linear candidate.\nThe result is a bounded embedding table, not all possible origin or subgroup conjugacy classes; different sublattices must not be identified merely because their point-group operations agree.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary containing an `items` list.\n- Each item in `items` MUST describe one exact isomorphic subgroup transform.\n- Matrix and vector entries MUST be exact strings, using integer strings or fraction strings as appropriate.",
                 "properties": {
                     "items": {
                         "x-optimade-type": "list",
@@ -3743,7 +4142,7 @@ The `centering_translations` field gives the setting's centering translations di
                                 "object",
                                 "null"
                             ],
-                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      International Tables subgroup-type label when the transform describes a maximal subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted when the transform is not a maximal subgroup embedding.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Crystal metric systems for which the transform is compatible.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
+                            "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nFor a subgroup embedding the convention is `x_G = P*x_H + p`, where `P = affine_transformation.matrix` and `p = affine_transformation.vector`.\nThe columns of `P` are the subgroup cell vectors expressed in the parent fractional basis, and `p` is the subgroup origin expressed in that basis.\nThus conversion of parent coordinates to subgroup coordinates uses `x_H = P^-1*(x_G-p)`, not the forward affine map.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      Translation/point-symmetry classification when supplied for a subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted for identity embeddings and general subgroups that lose both translations and point symmetry, and for transforms that are not subgroup embeddings.\n      Presence of `t` or `k` alone does not certify maximality; the containing relation table supplies that information.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Reference-setting metric families whose every metric tensor is preserved by the linear part after transport to the actual setting basis.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
                             "properties": {
                                 "affine_transformation": {
                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -3761,7 +4160,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "object",
                                         "null"
                                     ],
-                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                     "properties": {
                                         "matrix": {
                                             "x-optimade-type": "list",
@@ -3897,7 +4296,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "integer",
                                                 "null"
                                             ],
-                                            "description": "Determinant of the matrix part when emitted by the generator."
+                                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                         },
                                         "is_orthogonal": {
                                             "x-optimade-type": "boolean",
@@ -3906,7 +4305,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                 "boolean",
                                                 "null"
                                             ],
-                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                         }
                                     },
                                     "examples": [
@@ -3967,7 +4366,11 @@ The `centering_translations` field gives the setting's centering translations di
                                         "string",
                                         "null"
                                     ],
-                                    "description": "Klassengleiche subtype when applicable."
+                                    "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
+                                    "enum": [
+                                        "loss_of_centering_translation",
+                                        "enlarged_unit_cell"
+                                    ]
                                 },
                                 "compatible_systems": {
                                     "x-optimade-type": "list",
@@ -3976,7 +4379,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
+                                    "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.\nMonoclinic reference metrics use unique axis b; trigonal and hexagonal reference metrics both use hexagonal axes with a = b and gamma = 120 degrees.\nThese labels describe the tested metric families, not a reassignment of the space group's crystal system or the accidental metric symmetry of a particular specimen.",
                                     "items": {
                                         "x-optimade-type": "string",
                                         "x-optimade-unit": "inapplicable",
@@ -4024,7 +4427,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.",
+                                    "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.\nThe piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -4147,10 +4550,10 @@ The `centering_translations` field gives the setting's centering translations di
                                     "examples": [
                                         [
                                             {
-                                                "parent": "c",
+                                                "parent": "a",
                                                 "splits": [
                                                     {
-                                                        "letter": "e",
+                                                        "letter": "a",
                                                         "xyz": "x,y,z",
                                                         "affine": [
                                                             [
@@ -4168,8 +4571,32 @@ The `centering_translations` field gives the setting's centering translations di
                                                             [
                                                                 "0",
                                                                 "0",
-                                                                "1",
+                                                                "1/2",
                                                                 "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "a",
+                                                        "xyz": "x,y,z",
+                                                        "affine": [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1/2",
+                                                                "1/2"
                                                             ]
                                                         ]
                                                     }
@@ -4185,7 +4612,7 @@ The `centering_translations` field gives the setting's centering translations di
                                         "array",
                                         "null"
                                     ],
-                                    "description": "Backward-lift constraint metadata induced by the transform, grouped by explicit parent Wyckoff letter.",
+                                    "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
                                     "items": {
                                         "x-optimade-type": "dictionary",
                                         "x-optimade-unit": "inapplicable",
@@ -4219,7 +4646,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                     "type": [
                                                         "object"
                                                     ],
-                                                    "description": "One linear backward-lift constraint record.",
+                                                    "description": "One modular equation `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nHere `q_i` is the three-component fractional coordinate on the published subgroup representative branch selected by `roles[i]`, not a local parameter vector or an arbitrary symmetry-equivalent site.\nThe current generator emits one scalar equation per record: `target` has length one, `coeffs` has one item per role, and each item contains one three-component row.\nThe coefficient entries are integer-valued exact strings, which makes the equation invariant under independent integer translations of the role coordinates.",
                                                     "properties": {
                                                         "roles": {
                                                             "x-optimade-type": "list",
@@ -4254,7 +4681,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                         "type": [
                                                                             "integer"
                                                                         ],
-                                                                        "description": "Zero-based occurrence index for the role."
+                                                                        "description": "Zero-based occurrence index among split pieces having this same letter in the corresponding parent's ordered `splits` list, not an index into all pieces or into the overall Wyckoff table."
                                                                     }
                                                                 }
                                                             }
@@ -4265,7 +4692,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact coefficient vectors for the constraint.",
+                                                            "description": "Exact integer-valued coefficient rows, in the same order as `roles`.",
                                                             "items": {
                                                                 "x-optimade-type": "list",
                                                                 "x-optimade-unit": "inapplicable",
@@ -4321,7 +4748,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                             "type": [
                                                                 "array"
                                                             ],
-                                                            "description": "Exact target vector or scalar for the constraint.",
+                                                            "description": "One-element list containing the exact right-hand side modulo one, normalized to the interval [0,1).",
                                                             "items": {
                                                                 "$id": "https://schemas.httk.org/defs/v0.1/properties/core/fraction",
                                                                 "title": "Fraction",
@@ -4356,6 +4783,162 @@ The `centering_translations` field gives the setting's centering translations di
                             },
                             "examples": [
                                 {
+                                    "index": 2,
+                                    "wyckoff_splitting": [
+                                        {
+                                            "parent": "a",
+                                            "splits": [
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "0"
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "letter": "a",
+                                                    "xyz": "x,y,z",
+                                                    "affine": [
+                                                        [
+                                                            "1",
+                                                            "0",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "1",
+                                                            "0",
+                                                            "0"
+                                                        ],
+                                                        [
+                                                            "0",
+                                                            "0",
+                                                            "1/2",
+                                                            "1/2"
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "criteria": [
+                                        {
+                                            "parent": "a",
+                                            "constraints": [
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "-1"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "1/2"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "0",
+                                                                "-1",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                },
+                                                {
+                                                    "roles": [
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 0
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "index": 1
+                                                        }
+                                                    ],
+                                                    "coeffs": [
+                                                        [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ],
+                                                        [
+                                                            [
+                                                                "-1",
+                                                                "0",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    ],
+                                                    "target": [
+                                                        "0"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
                                     "affine_transformation": {
                                         "matrix": [
                                             [
@@ -4383,67 +4966,8 @@ The `centering_translations` field gives the setting's centering translations di
                                         "det": 2,
                                         "is_orthogonal": false
                                     },
-                                    "index": 2,
                                     "subgroup_type": "k",
-                                    "k_subtype": "enlarged_unit_cell",
-                                    "wyckoff_splitting": [
-                                        {
-                                            "parent": "a",
-                                            "splits": [
-                                                {
-                                                    "letter": "a",
-                                                    "xyz": "x,y,z",
-                                                    "affine": [
-                                                        [
-                                                            "1",
-                                                            "0",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "1",
-                                                            "0",
-                                                            "0"
-                                                        ],
-                                                        [
-                                                            "0",
-                                                            "0",
-                                                            "1",
-                                                            "0"
-                                                        ]
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "criteria": [
-                                        {
-                                            "parent": "a",
-                                            "constraints": [
-                                                {
-                                                    "roles": [
-                                                        {
-                                                            "letter": "a",
-                                                            "index": 0
-                                                        }
-                                                    ],
-                                                    "coeffs": [
-                                                        [
-                                                            [
-                                                                "1",
-                                                                "0",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    ],
-                                                    "target": [
-                                                        "0"
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
+                                    "k_subtype": "enlarged_unit_cell"
                                 },
                                 {
                                     "affine_transformation": {
@@ -4493,58 +5017,61 @@ The `centering_translations` field gives the setting's centering translations di
                         "items": [
                             {
                                 "index": 2,
-                                "wyckoff_splitting": {
-                                    "a": [
-                                        [
-                                            "a",
-                                            "x,y,z",
-                                            [
-                                                [
-                                                    "1",
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "0",
-                                                    "1/2",
-                                                    "1/2"
+                                "wyckoff_splitting": [
+                                    {
+                                        "parent": "a",
+                                        "splits": [
+                                            {
+                                                "letter": "a",
+                                                "xyz": "x,y,z",
+                                                "affine": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1/2",
+                                                        "0"
+                                                    ]
                                                 ]
-                                            ]
-                                        ],
-                                        [
-                                            "a",
-                                            "x,y,z",
-                                            [
-                                                [
-                                                    "1",
-                                                    "0",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "1",
-                                                    "0",
-                                                    "0"
-                                                ],
-                                                [
-                                                    "0",
-                                                    "0",
-                                                    "1/2",
-                                                    "0"
+                                            },
+                                            {
+                                                "letter": "a",
+                                                "xyz": "x,y,z",
+                                                "affine": [
+                                                    [
+                                                        "1",
+                                                        "0",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "1",
+                                                        "0",
+                                                        "0"
+                                                    ],
+                                                    [
+                                                        "0",
+                                                        "0",
+                                                        "1/2",
+                                                        "1/2"
+                                                    ]
                                                 ]
-                                            ]
+                                            }
                                         ]
-                                    ]
-                                },
+                                    }
+                                ],
                                 "affine_transformation": {
                                     "matrix": [
                                         [
@@ -4590,7 +5117,7 @@ The `centering_translations` field gives the setting's centering translations di
                     "array",
                     "null"
                 ],
-                "description": "B\u00e4rnighausen subgroup transform table for one parent setting or space-group type.\n\nEntries describe generated embeddings of subgroup settings into the containing parent setting.\nEach list item groups transform records for one target subgroup, with the target stored as ordinary data rather than as a JSON dictionary key.\nTransform records follow `/properties/symmetry/basis_transform`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain either `target_hall_entry` or `target_it_number`, depending on whether the containing dataset is Hall-setting keyed or IT-number keyed.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records.",
+                "description": "B\u00e4rnighausen subgroup transform table for one parent setting or space-group type.\n\nEntries describe generated embeddings of subgroup settings into the containing parent setting.\nEach list item groups transform records for one target subgroup, with the target stored as ordinary data rather than as a JSON dictionary key.\nTransform records follow `/defs/v0.1/properties/symmetry/basis_transform`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain either `target_hall_entry` or `target_it_number`, depending on whether the containing dataset is Hall-setting keyed or IT-number keyed.\n- Each dictionary MUST contain `transforms`, a list of basis-transform records.\n\nWriting the parent as G and the subgroup as H, the stored convention is `x_G = P*x_H + p` with column coordinate vectors.\nThe group index is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`, using the finite operation counts in each recorded cell.\nThe standard generation follows the maximal non-isomorphic type/index relations and retains the selected transform for each covered triple; it does not enumerate every conjugacy class of embedded subgroups.\nThe underlying search covers selected indices `{1,2,3,4,5,7,9}`, bounded basis candidates, and a finite pool of origins, with documented editorial choices selecting representatives.\nAn absent transform means none is supplied within this generation scope, not a proof that no subgroup embedding exists.\n`wyckoff_splitting` uses the published representative conventions in both settings, including when a Hall-setting row is transported from the standard setting.",
                 "items": {
                     "x-optimade-type": "dictionary",
                     "x-optimade-unit": "inapplicable",
@@ -4643,7 +5170,7 @@ The `centering_translations` field gives the setting's centering translations di
                                     "object",
                                     "null"
                                 ],
-                                "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      International Tables subgroup-type label when the transform describes a maximal subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted when the transform is not a maximal subgroup embedding.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Crystal metric systems for which the transform is compatible.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
+                                "description": "One crystallographic transform between coordinate descriptions, settings, cells, or related group embeddings.\n\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe parent property defines the source and target coordinate systems and the precise role of the transform.\nFor a subgroup embedding the convention is `x_G = P*x_H + p`, where `P = affine_transformation.matrix` and `p = affine_transformation.vector`.\nThe columns of `P` are the subgroup cell vectors expressed in the parent fractional basis, and `p` is the subgroup origin expressed in that basis.\nThus conversion of parent coordinates to subgroup coordinates uses `x_H = P^-1*(x_G-p)`, not the forward affine map.\nUseful, for example, for representing setting changes, subgroup embeddings, isomorphic subgroup transforms, normalizer representatives, and same-space-group affine images.\nThis property is not limited to symmetry operations within one fixed setting; the matrix may be non-orthogonal or have determinant different from one when the transform changes cell or basis.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the transform, using exact rational matrix and vector entries.\n      The coordinate convention and source/target interpretation are supplied by the parent property.\n\n    - **index**: OPTIONAL; Integer or null.\n      Index metadata whose interpretation is defined by the parent property.\n      Common uses include the subgroup index for subgroup embeddings, the cell index for isomorphic subgroup transforms, or an ordinal representative index in a finite transform table.\n\n    - **subgroup\\_type**: OPTIONAL; String.\n      Translation/point-symmetry classification when supplied for a subgroup embedding.\n      The value MUST be `t` for a translationengleiche subgroup or `k` for a klassengleiche subgroup.\n      It MUST be omitted for identity embeddings and general subgroups that lose both translations and point symmetry, and for transforms that are not subgroup embeddings.\n      Presence of `t` or `k` alone does not certify maximality; the containing relation table supplies that information.\n\n    - **k\\_subtype**: OPTIONAL; String or null.\n      Klassengleiche subtype when the transform describes a klassengleiche subgroup relation.\n      The value MUST be `loss_of_centering_translation` or `enlarged_unit_cell` for klassengleiche relations and null or omitted otherwise.\n\n    - **compatible\\_systems**: OPTIONAL; List of strings.\n      Reference-setting metric families whose every metric tensor is preserved by the linear part after transport to the actual setting basis.\n      This is used for bounded affine normalizer representatives.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      Categorical label for normalizer-type representatives.\n      The value MUST be `euclidean` for Euclidean normalizer operations, `orthogonal_affine` for the signed-permutation affine normalizer subset, or `affine` for the bounded unimodular affine normalizer table.\n      It MUST be omitted when the transform is a setting transform, subgroup embedding, or other transform for which no normalizer operation class applies.\n\n    - **wyckoff\\_splitting**: OPTIONAL; List.\n      Wyckoff-position splitting metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.\n\n    - **criteria**: OPTIONAL; List.\n      Backward-lift constraint metadata induced by the transform when available.\n      The list is grouped by explicit parent Wyckoff letter.",
                                 "properties": {
                                     "affine_transformation": {
                                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -4661,7 +5188,7 @@ The `centering_translations` field gives the setting's centering translations di
                                             "object",
                                             "null"
                                         ],
-                                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                         "properties": {
                                             "matrix": {
                                                 "x-optimade-type": "list",
@@ -4797,7 +5324,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                     "integer",
                                                     "null"
                                                 ],
-                                                "description": "Determinant of the matrix part when emitted by the generator."
+                                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                             },
                                             "is_orthogonal": {
                                                 "x-optimade-type": "boolean",
@@ -4806,7 +5333,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                     "boolean",
                                                     "null"
                                                 ],
-                                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                             }
                                         },
                                         "examples": [
@@ -4867,7 +5394,11 @@ The `centering_translations` field gives the setting's centering translations di
                                             "string",
                                             "null"
                                         ],
-                                        "description": "Klassengleiche subtype when applicable."
+                                        "description": "Klassengleiche subtype when applicable; follows the cell-dependent convention defined in `/defs/v0.1/properties/transformations/k_subtype`.",
+                                        "enum": [
+                                            "loss_of_centering_translation",
+                                            "enlarged_unit_cell"
+                                        ]
                                     },
                                     "compatible_systems": {
                                         "x-optimade-type": "list",
@@ -4876,7 +5407,7 @@ The `centering_translations` field gives the setting's centering translations di
                                             "array",
                                             "null"
                                         ],
-                                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.",
+                                        "description": "Crystal metric families, named by reference-setting crystal system, whose metric tensors are all preserved by the transform.\nEach family is the full linear space of metric tensors of that crystal system in the reference setting (including unconstrained cross terms), transported to the basis of the actual setting.\nMonoclinic reference metrics use unique axis b; trigonal and hexagonal reference metrics both use hexagonal axes with a = b and gamma = 120 degrees.\nThese labels describe the tested metric families, not a reassignment of the space group's crystal system or the accidental metric symmetry of a particular specimen.",
                                         "items": {
                                             "x-optimade-type": "string",
                                             "x-optimade-unit": "inapplicable",
@@ -4924,7 +5455,7 @@ The `centering_translations` field gives the setting's centering translations di
                                             "array",
                                             "null"
                                         ],
-                                        "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.",
+                                        "description": "Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent's published `first_orbit` branch and `q_H` is on the child's published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's `orbit[0]` map when starting from parameters.\nThe piece's `xyz` names the child representative branch and MUST equal that child's `first_orbit`; it is not a rendering of the piece's `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.",
                                         "items": {
                                             "x-optimade-type": "dictionary",
                                             "x-optimade-unit": "inapplicable",
@@ -5047,10 +5578,10 @@ The `centering_translations` field gives the setting's centering translations di
                                         "examples": [
                                             [
                                                 {
-                                                    "parent": "c",
+                                                    "parent": "a",
                                                     "splits": [
                                                         {
-                                                            "letter": "e",
+                                                            "letter": "a",
                                                             "xyz": "x,y,z",
                                                             "affine": [
                                                                 [
@@ -5068,8 +5599,32 @@ The `centering_translations` field gives the setting's centering translations di
                                                                 [
                                                                     "0",
                                                                     "0",
-                                                                    "1",
+                                                                    "1/2",
                                                                     "0"
+                                                                ]
+                                                            ]
+                                                        },
+                                                        {
+                                                            "letter": "a",
+                                                            "xyz": "x,y,z",
+                                                            "affine": [
+                                                                [
+                                                                    "1",
+                                                                    "0",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "1",
+                                                                    "0",
+                                                                    "0"
+                                                                ],
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1/2",
+                                                                    "1/2"
                                                                 ]
                                                             ]
                                                         }
@@ -5085,7 +5640,7 @@ The `centering_translations` field gives the setting's centering translations di
                                             "array",
                                             "null"
                                         ],
-                                        "description": "Backward-lift constraint metadata induced by the transform, grouped by explicit parent Wyckoff letter.",
+                                        "description": "Backward-lift constraints for each parent Wyckoff position under this particular subgroup embedding.\nFor a fixed parent entry, every constraint MUST hold on the assigned subgroup representative coordinates modulo integer cell translations.\nThese are geometric coordinate conditions, conditional on the specified split roles and their Wyckoff branches; chemical species, occupancies, and matching an entire structure require separate checks.\nAn empty `constraints` list means no additional equations beyond the selected subgroup branches; it does not mean that no split roles are needed.",
                                         "items": {
                                             "x-optimade-type": "dictionary",
                                             "x-optimade-unit": "inapplicable",
@@ -5119,7 +5674,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                         "type": [
                                                             "object"
                                                         ],
-                                                        "description": "One linear backward-lift constraint record.",
+                                                        "description": "One modular equation `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nHere `q_i` is the three-component fractional coordinate on the published subgroup representative branch selected by `roles[i]`, not a local parameter vector or an arbitrary symmetry-equivalent site.\nThe current generator emits one scalar equation per record: `target` has length one, `coeffs` has one item per role, and each item contains one three-component row.\nThe coefficient entries are integer-valued exact strings, which makes the equation invariant under independent integer translations of the role coordinates.",
                                                         "properties": {
                                                             "roles": {
                                                                 "x-optimade-type": "list",
@@ -5154,7 +5709,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                             "type": [
                                                                                 "integer"
                                                                             ],
-                                                                            "description": "Zero-based occurrence index for the role."
+                                                                            "description": "Zero-based occurrence index among split pieces having this same letter in the corresponding parent's ordered `splits` list, not an index into all pieces or into the overall Wyckoff table."
                                                                         }
                                                                     }
                                                                 }
@@ -5165,7 +5720,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                 "type": [
                                                                     "array"
                                                                 ],
-                                                                "description": "Exact coefficient vectors for the constraint.",
+                                                                "description": "Exact integer-valued coefficient rows, in the same order as `roles`.",
                                                                 "items": {
                                                                     "x-optimade-type": "list",
                                                                     "x-optimade-unit": "inapplicable",
@@ -5221,7 +5776,7 @@ The `centering_translations` field gives the setting's centering translations di
                                                                 "type": [
                                                                     "array"
                                                                 ],
-                                                                "description": "Exact target vector or scalar for the constraint.",
+                                                                "description": "One-element list containing the exact right-hand side modulo one, normalized to the interval [0,1).",
                                                                 "items": {
                                                                     "$id": "https://schemas.httk.org/defs/v0.1/properties/core/fraction",
                                                                     "title": "Fraction",
@@ -5256,6 +5811,162 @@ The `centering_translations` field gives the setting's centering translations di
                                 },
                                 "examples": [
                                     {
+                                        "index": 2,
+                                        "wyckoff_splitting": [
+                                            {
+                                                "parent": "a",
+                                                "splits": [
+                                                    {
+                                                        "letter": "a",
+                                                        "xyz": "x,y,z",
+                                                        "affine": [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1/2",
+                                                                "0"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    {
+                                                        "letter": "a",
+                                                        "xyz": "x,y,z",
+                                                        "affine": [
+                                                            [
+                                                                "1",
+                                                                "0",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "1",
+                                                                "0",
+                                                                "0"
+                                                            ],
+                                                            [
+                                                                "0",
+                                                                "0",
+                                                                "1/2",
+                                                                "1/2"
+                                                            ]
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "criteria": [
+                                            {
+                                                "parent": "a",
+                                                "constraints": [
+                                                    {
+                                                        "roles": [
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 0
+                                                            },
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 1
+                                                            }
+                                                        ],
+                                                        "coeffs": [
+                                                            [
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "1"
+                                                                ]
+                                                            ],
+                                                            [
+                                                                [
+                                                                    "0",
+                                                                    "0",
+                                                                    "-1"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        "target": [
+                                                            "1/2"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "roles": [
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 0
+                                                            },
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 1
+                                                            }
+                                                        ],
+                                                        "coeffs": [
+                                                            [
+                                                                [
+                                                                    "0",
+                                                                    "1",
+                                                                    "0"
+                                                                ]
+                                                            ],
+                                                            [
+                                                                [
+                                                                    "0",
+                                                                    "-1",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        "target": [
+                                                            "0"
+                                                        ]
+                                                    },
+                                                    {
+                                                        "roles": [
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 0
+                                                            },
+                                                            {
+                                                                "letter": "a",
+                                                                "index": 1
+                                                            }
+                                                        ],
+                                                        "coeffs": [
+                                                            [
+                                                                [
+                                                                    "1",
+                                                                    "0",
+                                                                    "0"
+                                                                ]
+                                                            ],
+                                                            [
+                                                                [
+                                                                    "-1",
+                                                                    "0",
+                                                                    "0"
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        "target": [
+                                                            "0"
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
                                         "affine_transformation": {
                                             "matrix": [
                                                 [
@@ -5283,67 +5994,8 @@ The `centering_translations` field gives the setting's centering translations di
                                             "det": 2,
                                             "is_orthogonal": false
                                         },
-                                        "index": 2,
                                         "subgroup_type": "k",
-                                        "k_subtype": "enlarged_unit_cell",
-                                        "wyckoff_splitting": [
-                                            {
-                                                "parent": "a",
-                                                "splits": [
-                                                    {
-                                                        "letter": "a",
-                                                        "xyz": "x,y,z",
-                                                        "affine": [
-                                                            [
-                                                                "1",
-                                                                "0",
-                                                                "0",
-                                                                "0"
-                                                            ],
-                                                            [
-                                                                "0",
-                                                                "1",
-                                                                "0",
-                                                                "0"
-                                                            ],
-                                                            [
-                                                                "0",
-                                                                "0",
-                                                                "1",
-                                                                "0"
-                                                            ]
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ],
-                                        "criteria": [
-                                            {
-                                                "parent": "a",
-                                                "constraints": [
-                                                    {
-                                                        "roles": [
-                                                            {
-                                                                "letter": "a",
-                                                                "index": 0
-                                                            }
-                                                        ],
-                                                        "coeffs": [
-                                                            [
-                                                                [
-                                                                    "1",
-                                                                    "0",
-                                                                    "0"
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        "target": [
-                                                            "0"
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "k_subtype": "enlarged_unit_cell"
                                     },
                                     {
                                         "affine_transformation": {
@@ -5396,6 +6048,7 @@ The `centering_translations` field gives the setting's centering translations di
                             "transforms": [
                                 {
                                     "index": 2,
+                                    "subgroup_type": "t",
                                     "affine_transformation": {
                                         "matrix": [
                                             [
@@ -5411,7 +6064,7 @@ The `centering_translations` field gives the setting's centering translations di
                                             [
                                                 "0",
                                                 "0",
-                                                "2"
+                                                "1"
                                             ]
                                         ],
                                         "vector": [

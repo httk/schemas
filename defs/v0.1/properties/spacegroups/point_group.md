@@ -12,6 +12,9 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 This field identifies the crystallographic point group obtained from the space group by removing translational components.
 The value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.
 
+Removing translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.
+The pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.
+
 **Examples:**
 
 - `"1"`
@@ -42,7 +45,7 @@ The value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key
         "string",
         "null"
     ],
-    "description": "The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.",
+    "description": "The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.\n\nRemoving translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.\nThe pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.",
     "x-optimade-unit": "inapplicable",
     "enum": [
         "1",

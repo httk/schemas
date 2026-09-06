@@ -11,6 +11,11 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 For subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.
 
+For the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.
+Equivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.
+Thus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.
+In `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.
+
 **Examples:**
 
 - `2`
@@ -37,7 +42,7 @@ For subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal
         "integer",
         "null"
     ],
-    "description": "Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.",
+    "description": "Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.\n\nFor the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.\nEquivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.\nThus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.\nIn `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         2,

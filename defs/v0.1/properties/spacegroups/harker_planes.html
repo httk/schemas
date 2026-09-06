@@ -98,6 +98,12 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Harker planes of the space group in fractional Patterson coordinates.<br>
 <strong>Type:</strong> list  </p>
 <p>Each entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.</p>
+<p>A Harker plane contains Patterson displacement vectors between symmetry-related sites.
+For a contributing operation <code>(W,w)</code>, those displacements are parameterized by <code>(W-I)*x+w</code>; the algebraic rendering may reverse parameter signs without changing the plane.
+The current generator emits the cctbx plane descriptors <code>algebraic</code>, <code>normal</code>, and <code>point</code>; the optional <code>xyz</code> and <code>const</code> fields are retained but are not emitted.
+Here <code>normal</code> is the direct-lattice direction returned by cctbx for the rotation axis, and <code>point</code> is a fractional point on the plane.
+For lattice metric g, a displacement u lies in that plane when <code>normal^T*g*(u-point) = 0</code>; the fractional components of <code>normal</code> must not be treated as a Cartesian unit normal or a reciprocal covector.
+The list covers planes constructed by cctbx's Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>[{"algebraic": "2*x,0,2*z", "normal": [0, 1, 0], "point": ["0", "0", "0"]}]</code></li>
@@ -121,7 +127,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.\n\nA Harker plane contains Patterson displacement vectors between symmetry-related sites.\nFor a contributing operation `(W,w)`, those displacements are parameterized by `(W-I)*x+w`; the algebraic rendering may reverse parameter signs without changing the plane.\nThe current generator emits the cctbx plane descriptors `algebraic`, `normal`, and `point`; the optional `xyz` and `const` fields are retained but are not emitted.\nHere `normal` is the direct-lattice direction returned by cctbx for the rotation axis, and `point` is a fractional point on the plane.\nFor lattice metric g, a displacement u lies in that plane when `normal^T*g*(u-point) = 0`; the fractional components of `normal` must not be treated as a Cartesian unit normal or a reciprocal covector.\nThe list covers planes constructed by cctbx&#39;s Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -147,7 +153,7 @@ overflow-wrap: break-word;
 <span class="w">                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Plane equation in `x,y,z` notation when available.&quot;</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Optional plane expression in `x,y,z` notation; not emitted by the current generator.&quot;</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
@@ -164,7 +170,7 @@ overflow-wrap: break-word;
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Integer normal vector of the plane.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Integer direct-lattice direction normal to the plane in the physical metric, following cctbx&#39;s rotation-axis convention.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>

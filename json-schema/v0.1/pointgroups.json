@@ -137,7 +137,6 @@
                         "response-level": "may"
                     },
                     "title": "Complex character table",
-                    "$comment": "Generated from data-generators JSON-LD fields without external definition URLs.",
                     "x-optimade-type": "list",
                     "x-optimade-definition": {
                         "kind": "property",
@@ -150,7 +149,7 @@
                         "array",
                         "null"
                     ],
-                    "description": "Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters are exact complex rational values stored as dictionaries with `re` and `im` fraction strings, so that they round-trip without floating-point loss.",
+                    "description": "Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nEach character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.\nComponents can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.\nFor example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: \"-1/2\"` and `im: \"sqrt(3)/2\"`, preserving its algebraic value without replacing the radical by a decimal approximation.\n\nFor a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.\nEach row's character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.\nThe number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.\nThe row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.\nConjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.\nThe current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.\nIn particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.",
                     "x-optimade-unit": "inapplicable",
                     "items": {
                         "x-optimade-type": "dictionary",
@@ -254,7 +253,7 @@
                                                 "string",
                                                 "null"
                                             ],
-                                            "description": "Exact real part represented as a string.",
+                                            "description": "Real component serialized as an integer or rational string for the generated crystallographic tables.",
                                             "x-optimade-unit": "inapplicable"
                                         },
                                         "im": {
@@ -263,7 +262,7 @@
                                                 "string",
                                                 "null"
                                             ],
-                                            "description": "Exact imaginary part represented as a string.",
+                                            "description": "Imaginary component serialized as a symbolic real-number string, including signed radicals such as `-sqrt(3)/2`; `0` denotes a real character.",
                                             "x-optimade-unit": "inapplicable"
                                         }
                                     }
@@ -272,11 +271,15 @@
                             },
                             "frobenius_schur_indicator": {
                                 "x-optimade-type": "integer",
+                                "enum": [
+                                    0,
+                                    1
+                                ],
                                 "type": [
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Frobenius-Schur indicator of the representation.",
+                                "description": "The complex-irrep indicator `nu = sum_g chi(g^2)/order`.\nThe emitted value 1 means the irrep admits a real realization; 0 means it is of complex type and has a distinct complex-conjugate partner.\nThe crystallographic point groups covered here have no quaternionic-type irreps (whose indicator would be -1).",
                                 "x-optimade-unit": "inapplicable"
                             },
                             "basis_linear": {
@@ -285,7 +288,7 @@
                                     "array",
                                     "null"
                                 ],
-                                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
+                                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "type": [
@@ -342,7 +345,10 @@
                                 "label": "A",
                                 "dimension": 1,
                                 "characters": [
-                                    1
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    }
                                 ],
                                 "frobenius_schur_indicator": 1,
                                 "label_markup": {
@@ -356,8 +362,14 @@
                                 "label": "Ag",
                                 "dimension": 1,
                                 "characters": [
-                                    1,
-                                    1
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    }
                                 ],
                                 "frobenius_schur_indicator": 1,
                                 "label_markup": {
@@ -369,13 +381,90 @@
                                 "label": "Au",
                                 "dimension": 1,
                                 "characters": [
-                                    1,
-                                    -1
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "-1",
+                                        "im": "0"
+                                    }
                                 ],
                                 "frobenius_schur_indicator": 1,
                                 "label_markup": {
                                     "latex": "A_{u}",
                                     "unicode": "Au"
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "label": "A",
+                                "dimension": 1,
+                                "characters": [
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    }
+                                ],
+                                "frobenius_schur_indicator": 1,
+                                "label_markup": {
+                                    "latex": "A",
+                                    "unicode": "A"
+                                }
+                            },
+                            {
+                                "label": "E_a",
+                                "dimension": 1,
+                                "characters": [
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "-1/2",
+                                        "im": "sqrt(3)/2"
+                                    },
+                                    {
+                                        "re": "-1/2",
+                                        "im": "-sqrt(3)/2"
+                                    }
+                                ],
+                                "frobenius_schur_indicator": 0,
+                                "label_markup": {
+                                    "latex": "E",
+                                    "unicode": "E"
+                                }
+                            },
+                            {
+                                "label": "E_b",
+                                "dimension": 1,
+                                "characters": [
+                                    {
+                                        "re": "1",
+                                        "im": "0"
+                                    },
+                                    {
+                                        "re": "-1/2",
+                                        "im": "-sqrt(3)/2"
+                                    },
+                                    {
+                                        "re": "-1/2",
+                                        "im": "sqrt(3)/2"
+                                    }
+                                ],
+                                "frobenius_schur_indicator": 0,
+                                "label_markup": {
+                                    "latex": "E",
+                                    "unicode": "E"
                                 }
                             }
                         ]
@@ -390,7 +479,6 @@
                         "response-level": "may"
                     },
                     "title": "Real character table",
-                    "$comment": "Generated from data-generators JSON-LD fields without external definition URLs.",
                     "x-optimade-type": "list",
                     "x-optimade-definition": {
                         "kind": "property",
@@ -403,7 +491,7 @@
                         "array",
                         "null"
                     ],
-                    "description": "Real irreducible character table of the crystallographic point group.\n\nRows correspond to real irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters of the real table are exact integers and are therefore stored as plain integers, unlike the `re`/`im` fraction-string pairs of `character_table_complex`.",
+                    "description": "Real irreducible character table of the crystallographic point group.\n\nRows correspond to real irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters of the real table are exact integers and are therefore stored as plain integers, unlike the symbolic `re`/`im` string pairs of `character_table_complex`.\n\nIrreducibility here is over the real numbers.\nA pair of inequivalent complex-conjugate irreps can combine into one real irrep whose dimension and character are the sums of the constituent dimensions and characters.\nConsequently the number of real rows can be smaller than `n_conjugacy_classes`; such a paired row has character norm two under the class-size-weighted complex character inner product, not one.\nEvery character list MUST follow `conjugacy_classes` and have that list's length, and the identity character MUST equal `dimension`.\nPolynomial bases span each isotypic component, meaning all copies of the indicated real irrep in the chosen polynomial space.\nThe number of listed polynomials can therefore exceed `dimension`, but must be an integer multiple of it.\nLinear and axial spaces each have dimension three; the homogeneous quadratic space has dimension six, including the scalar trace `x^2+y^2+z^2`.\nBasis lists are independent spanning sets, not promised to be orthonormal or partitioned into conventional multiplets; the generator omits a basis field when that irrep is absent from that polynomial space.\nThe coordinates in these polynomial strings are Cartesian variables, unlike the fractional-coordinate variables in `symops`.\nFor a Cartesian operation Q, polar coordinates transform by Q and axial coordinates by `det(Q)*Q`; quadratic polynomials transform by substitution.\nThe final example displays selected A1 and B1 rows of 4mm rather than a complete table; full emitted tables contain every real irrep.",
                     "x-optimade-unit": "inapplicable",
                     "items": {
                         "x-optimade-type": "dictionary",
@@ -509,7 +597,7 @@
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Frobenius-Schur indicator of the representation.",
+                                "description": "Optional Frobenius-Schur annotation; the current generator does not emit this field in the real table.\nThe indicator convention is defined for complex irreducible rows in `character_table_complex`; do not assume a real row formed from a conjugate pair is itself complex-irreducible or has indicator one.",
                                 "x-optimade-unit": "inapplicable"
                             },
                             "basis_linear": {
@@ -518,7 +606,7 @@
                                     "array",
                                     "null"
                                 ],
-                                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
+                                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                                 "items": {
                                     "x-optimade-type": "string",
                                     "type": [
@@ -710,7 +798,7 @@
                         "array",
                         "null"
                     ],
-                    "description": "Conjugacy classes of a crystallographic point group.\n\nEach class lists its member operation indices, a representative operation, a conventional class label, and operation-type metadata used by the character tables.\nOperation indices refer to positions in the `symops` list of the same point-group record, starting at 0.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries, one per conjugacy class, ordered consistently with the character tables.\n- **size** MUST equal the length of **members**.\n- **op\\_type** is the signed integer rotation-type code of the representative operation: `1`, `2`, `3`, `4`, `6` for proper rotations, and the negated value for the corresponding rotoinversions, with `-2` denoting a mirror plane.",
+                    "description": "Conjugacy classes of a crystallographic point group.\n\nEach class lists its member operation indices, a representative operation, a conventional class label, and operation-type metadata used by the character tables.\nOperation indices refer to positions in the `symops` list of the same point-group record, starting at 0.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries, one per conjugacy class, ordered consistently with the character tables.\n- **size** MUST equal the length of **members**.\n- **op\\_type** is the signed integer rotation-type code of the representative operation: `1`, `2`, `3`, `4`, `6` for proper rotations, and the negated value for the corresponding rotoinversions, with `-2` denoting a mirror plane.\n\nTwo operations g and h belong to the same class precisely when `h = a*g*a^-1` for an operation a of this point group.\nThe `members` lists MUST partition the indices of `symops`, and `representative` MUST be a member of its class.\nClass sizes therefore sum to `order`.\nThe class order defines character-table columns and must not be changed without applying the same permutation to every character row.\nClass labels use Schoenflies-style rotation-reflection notation: `S_n` combines a rotation through `2*pi/n` with reflection perpendicular to its axis.\nFor odd n the order of `S_n` is `2*n`, so its inverse is `S_n^(2*n-1)`; these powers must not be confused with crystallographic rotoinversion type codes in `op_type`.\nThe reported `op_axis` follows the same direct-lattice direction convention as `symops[representative].axis`; labels are display aids, while the operation matrix fixes the action.",
                     "x-optimade-unit": "inapplicable",
                     "items": {
                         "x-optimade-type": "dictionary",
@@ -909,10 +997,9 @@
                         "string",
                         "null"
                     ],
-                    "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
+                    "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.\n\nThis classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.\nTrigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.\nNull denotes unavailable classification, not an additional crystal system.",
                     "x-optimade-unit": "inapplicable",
                     "enum": [
-                        null,
                         "triclinic",
                         "monoclinic",
                         "orthorhombic",
@@ -1042,7 +1129,7 @@
                         "string",
                         "null"
                     ],
-                    "description": "The Laue class associated with the space group or point group.\n\nThe Laue class groups point groups that become equivalent when inversion symmetry is included.",
+                    "description": "The Laue class associated with the space group or point group.\n\nThe Laue class groups point groups that become equivalent when inversion symmetry is included.\n\nIt is the centrosymmetric point-group type generated by the original point group together with inversion.\nIts use as diffraction symmetry invokes the usual Friedel-pair equivalence; anomalous-scattering measurements need not have that intensity symmetry.",
                     "x-optimade-unit": "inapplicable",
                     "enum": [
                         "-1",
@@ -1083,7 +1170,7 @@
                         "integer",
                         "null"
                     ],
-                    "description": "Number of conjugacy classes in the crystallographic point group.\n\nThis value MUST equal the length of the `conjugacy_classes` list of the point-group entry.",
+                    "description": "Number of conjugacy classes in the crystallographic point group.\n\nThis value MUST equal the length of the `conjugacy_classes` list of the point-group entry.\n\nIt also equals the number of complex irreducible rows in `character_table_complex`, but need not equal the number of rows in `character_table_real`.",
                     "x-optimade-unit": "inapplicable",
                     "examples": [
                         1,
@@ -1203,7 +1290,7 @@
                         "array",
                         "null"
                     ],
-                    "description": "Full list of symmetry-operation descriptors for a point group.\nEach list member is an `op` object as defined by `/defs/v0.1/properties/symmetry/op`.\nPoint-group operations have a zero translation part, so the `screw_glide` and `origin_shift` classification fields are omitted.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST follow the schema inherited from `/defs/v0.1/properties/symmetry/op`.",
+                    "description": "Full list of symmetry-operation descriptors for a point group.\nEach list member is an `op` object as defined by `/defs/v0.1/properties/symmetry/op`.\nPoint-group operations have a zero translation part, so the `screw_glide` and `origin_shift` classification fields are omitted.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST follow the schema inherited from `/defs/v0.1/properties/symmetry/op`.\n\nThe matrices act on fractional column coordinates in the generator's reference lattice frame, not directly on Cartesian vectors.\nIn particular the hexagonal-axis matrices need not satisfy `W^T*W = I` although they are physical isometries of the appropriate metric.\nCharacter traces are independent of this basis choice; Cartesian polynomial bases are documented separately in `character_table_real`.\nThe order of this list is authoritative for operation indices in `conjugacy_classes`.",
                     "items": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                         "title": "Operation",
@@ -1220,7 +1307,7 @@
                             "object",
                             "null"
                         ],
-                        "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                        "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                         "properties": {
                             "affine_transformation": {
                                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -1238,7 +1325,7 @@
                                     "object",
                                     "null"
                                 ],
-                                "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                                "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                                 "properties": {
                                     "matrix": {
                                         "x-optimade-type": "list",
@@ -1374,7 +1461,7 @@
                                             "integer",
                                             "null"
                                         ],
-                                        "description": "Determinant of the matrix part when emitted by the generator."
+                                        "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                     },
                                     "is_orthogonal": {
                                         "x-optimade-type": "boolean",
@@ -1383,7 +1470,7 @@
                                             "boolean",
                                             "null"
                                         ],
-                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                        "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                     }
                                 },
                                 "examples": [
@@ -1415,6 +1502,17 @@
                                         "is_orthogonal": true
                                     }
                                 ]
+                            },
+                            "operation_kind": {
+                                "x-optimade-type": "string",
+                                "x-optimade-unit": "inapplicable",
+                                "type": [
+                                    "string"
+                                ],
+                                "enum": [
+                                    "euclidean"
+                                ],
+                                "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                             },
                             "rot_type": {
                                 "x-optimade-type": "string",
@@ -1469,7 +1567,12 @@
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Rotation sense/sign convention returned by the generator."
+                                "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                                "enum": [
+                                    -1,
+                                    0,
+                                    1
+                                ]
                             },
                             "screw_glide": {
                                 "x-optimade-type": "list",

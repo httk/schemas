@@ -103,11 +103,20 @@ The parent Wyckoff letter is stored in the <code>parent</code> field rather than
 <ul>
 <li>It MUST be a list of dictionaries.</li>
 <li>Each dictionary MUST contain <code>parent</code>, the Wyckoff letter in the parent setting.</li>
-<li>Each dictionary MUST contain <code>splits</code>, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.</li>
+<li>Each dictionary MUST contain <code>splits</code>, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.</li>
 </ul>
+<p>For an embedding <code>x_G = P*x_H + p</code>, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.
+For each piece let <code>A</code> be the first three columns of <code>affine</code> and <code>b</code> its last column.
+Then <code>q_H = A*q_G + b</code>, where <code>q_G</code> is a fractional coordinate on the parent's published <code>first_orbit</code> branch and <code>q_H</code> is on the child's published representative branch.
+The input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent's <code>orbit[0]</code> map when starting from parameters.
+The piece's <code>xyz</code> names the child representative branch and MUST equal that child's <code>first_orbit</code>; it is not a rendering of the piece's <code>affine</code> map on parent coordinates.
+Repeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.
+For generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.
+Their multiplicities sum to <code>abs(det(P)) * parent_multiplicity</code>; this factor accounts for the cells and is not generally the full subgroup index.
+Keep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>[{"parent": "c", "splits": [{"letter": "e", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1", "0"]]}]}]</code></li>
+<li><code>[{"parent": "a", "splits": [{"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "0"]]}, {"letter": "a", "xyz": "x,y,z", "affine": [["1", "0", "0", "0"], ["0", "1", "0", "0"], ["0", "0", "1/2", "1/2"]]}]}]</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="wyckoff_splitting.json">JSON</a>] [<a href="wyckoff_splitting.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -128,7 +137,7 @@ The parent Wyckoff letter is stored in the <code>parent</code> field rather than
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments or coordinate expressions emitted by the generator.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Wyckoff-position splitting data associated with a subgroup or same-space-group transform.\n\nEach list item gives the split of one parent Wyckoff position.\nThe parent Wyckoff letter is stored in the `parent` field rather than as a JSON dictionary key.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each dictionary MUST contain `parent`, the Wyckoff letter in the parent setting.\n- Each dictionary MUST contain `splits`, an ordered list of subgroup Wyckoff-position assignments, each carrying its target representative expression and exact affine map.\n\nFor an embedding `x_G = P*x_H + p`, the split records partition the parent orbit, expressed in the subgroup cell, into distinct subgroup orbits.\nFor each piece let `A` be the first three columns of `affine` and `b` its last column.\nThen `q_H = A*q_G + b`, where `q_G` is a fractional coordinate on the parent&#39;s published `first_orbit` branch and `q_H` is on the child&#39;s published representative branch.\nThe input is the actual parent representative coordinate, not its free-parameter vector; first evaluate the parent&#39;s `orbit[0]` map when starting from parameters.\nThe piece&#39;s `xyz` names the child representative branch and MUST equal that child&#39;s `first_orbit`; it is not a rendering of the piece&#39;s `affine` map on parent coordinates.\nRepeated child letters are meaningful: they identify different child orbits with the same Wyckoff type and MUST NOT be deduplicated by letter.\nFor generic parent parameters, expanding all split pieces under the subgroup gives disjoint orbits whose union is the transformed parent orbit in the subgroup cell.\nTheir multiplicities sum to `abs(det(P)) * parent_multiplicity`; this factor accounts for the cells and is not generally the full subgroup index.\nKeep the exact affine offsets when evaluating the maps; wrapping parent coordinates before applying a non-unimodular map can select a different child orbit.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
@@ -251,10 +260,10 @@ The parent Wyckoff letter is stored in the <code>parent</code> field rather than
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;splits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
 <span class="w">                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                            </span><span class="p">[</span>
@@ -272,8 +281,32 @@ The parent Wyckoff letter is stored in the <code>parent</code> field rather than
 <span class="w">                            </span><span class="p">[</span>
 <span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                            </span><span class="p">]</span>
+<span class="w">                        </span><span class="p">]</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;letter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;x,y,z&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;affine&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                            </span><span class="p">],</span>
+<span class="w">                            </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                            </span><span class="p">],</span>
+<span class="w">                            </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">]</span>
 <span class="w">                    </span><span class="p">}</span>

@@ -6,16 +6,18 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `target`
 
 **Property name:** Criterion target  
-**Description:** Exact target vector or scalar of a generated linear criterion.  
+**Description:** Exact right-hand side of a generated modular linear criterion, stored as a list of fraction strings.  
 **Type:** list  
 
-This field appears in `criteria` items of basis-transform records, for example in backward-lift criteria, where it gives the value that the linear form evaluated on the constrained coordinates must equal.
-The components are exact rational values serialized as fraction strings.
+This field appears in `criteria` items of basis-transform records, for example in backward-lift criteria.
+The current generator emits one scalar equation per record, so `target` has one component and the condition is `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.
+The target component is normalized to [0,1); zero denotes an integer-valued left-hand side, not necessarily the real number zero.
+The role-coordinate and coefficient conventions are specified in `/defs/v0.1/properties/symmetry/basis_transform`.
 
 **Examples:**
 
-- `["0", "0", "0"]`
-- `["1/2", "0", "0"]`
+- `["0"]`
+- `["1/2"]`
 
 **Formats:** [[JSON](target.json)] [[MD](target.md)]
 
@@ -39,7 +41,7 @@ The components are exact rational values serialized as fraction strings.
         "array",
         "null"
     ],
-    "description": "Exact target vector or scalar of a generated linear criterion.\n\nThis field appears in `criteria` items of basis-transform records, for example in backward-lift criteria, where it gives the value that the linear form evaluated on the constrained coordinates must equal.\nThe components are exact rational values serialized as fraction strings.",
+    "description": "Exact right-hand side of a generated modular linear criterion, stored as a list of fraction strings.\n\nThis field appears in `criteria` items of basis-transform records, for example in backward-lift criteria.\nThe current generator emits one scalar equation per record, so `target` has one component and the condition is `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nThe target component is normalized to [0,1); zero denotes an integer-valued left-hand side, not necessarily the real number zero.\nThe role-coordinate and coefficient conventions are specified in `/defs/v0.1/properties/symmetry/basis_transform`.",
     "items": {
         "$id": "https://schemas.httk.org/defs/v0.1/properties/core/fraction",
         "title": "Fraction",
@@ -66,14 +68,10 @@ The components are exact rational values serialized as fraction strings.
     },
     "examples": [
         [
-            "0",
-            "0",
             "0"
         ],
         [
-            "1/2",
-            "0",
-            "0"
+            "1/2"
         ]
     ]
 }

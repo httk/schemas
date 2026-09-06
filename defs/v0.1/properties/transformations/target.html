@@ -95,14 +95,16 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/target"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/target</code></a></strong><br>
 <strong>Definition name:</strong> <code>target</code></p>
 <p><strong>Property name:</strong> Criterion target<br>
-<strong>Description:</strong> Exact target vector or scalar of a generated linear criterion.<br>
+<strong>Description:</strong> Exact right-hand side of a generated modular linear criterion, stored as a list of fraction strings.<br>
 <strong>Type:</strong> list  </p>
-<p>This field appears in <code>criteria</code> items of basis-transform records, for example in backward-lift criteria, where it gives the value that the linear form evaluated on the constrained coordinates must equal.
-The components are exact rational values serialized as fraction strings.</p>
+<p>This field appears in <code>criteria</code> items of basis-transform records, for example in backward-lift criteria.
+The current generator emits one scalar equation per record, so <code>target</code> has one component and the condition is <code>sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)</code>.
+The target component is normalized to [0,1); zero denotes an integer-valued left-hand side, not necessarily the real number zero.
+The role-coordinate and coefficient conventions are specified in <code>/defs/v0.1/properties/symmetry/basis_transform</code>.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>["0", "0", "0"]</code></li>
-<li><code>["1/2", "0", "0"]</code></li>
+<li><code>["0"]</code></li>
+<li><code>["1/2"]</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="target.json">JSON</a>] [<a href="target.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -123,7 +125,7 @@ The components are exact rational values serialized as fraction strings.</p>
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact target vector or scalar of a generated linear criterion.\n\nThis field appears in `criteria` items of basis-transform records, for example in backward-lift criteria, where it gives the value that the linear form evaluated on the constrained coordinates must equal.\nThe components are exact rational values serialized as fraction strings.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact right-hand side of a generated modular linear criterion, stored as a list of fraction strings.\n\nThis field appears in `criteria` items of basis-transform records, for example in backward-lift criteria.\nThe current generator emits one scalar equation per record, so `target` has one component and the condition is `sum_i dot(coeffs[i][0], q_i) = target[0] (mod 1)`.\nThe target component is normalized to [0,1); zero denotes an integer-valued left-hand side, not necessarily the real number zero.\nThe role-coordinate and coefficient conventions are specified in `/defs/v0.1/properties/symmetry/basis_transform`.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
@@ -150,14 +152,10 @@ The components are exact rational values serialized as fraction strings.</p>
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">[</span>
-<span class="w">            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
 <span class="w">            </span><span class="s2">&quot;0&quot;</span>
 <span class="w">        </span><span class="p">],</span>
 <span class="w">        </span><span class="p">[</span>
-<span class="w">            </span><span class="s2">&quot;1/2&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">            </span><span class="s2">&quot;1/2&quot;</span>
 <span class="w">        </span><span class="p">]</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>

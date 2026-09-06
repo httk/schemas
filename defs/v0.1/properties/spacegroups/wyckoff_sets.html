@@ -98,6 +98,10 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Sets of Wyckoff letters related by normalizer operations.<br>
 <strong>Type:</strong> list  </p>
 <p>Each inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.</p>
+<p>The generator forms these classes using the finite group obtained by expanding cctbx's additional Euclidean-normalizer generators in the recorded Hall setting.
+Every Wyckoff letter occurs in exactly one inner list, including singleton lists.
+A normalizer-induced permutation preserves multiplicity and the conjugacy type of site symmetry, although the oriented site-symmetry symbols can change.
+This grouping describes the generated Euclidean-normalizer action; it is not a claim to enumerate equivalence under the full affine normalizer or its continuous freedoms.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>[["a"]]</code></li>
@@ -121,7 +125,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sets of Wyckoff letters related by normalizer operations.\n\nEach inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Sets of Wyckoff letters related by normalizer operations.\n\nEach inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.\n\nThe generator forms these classes using the finite group obtained by expanding cctbx&#39;s additional Euclidean-normalizer generators in the recorded Hall setting.\nEvery Wyckoff letter occurs in exactly one inner list, including singleton lists.\nA normalizer-induced permutation preserves multiplicity and the conjugacy type of site symmetry, although the oriented site-symmetry symbols can change.\nThis grouping describes the generated Euclidean-normalizer action; it is not a claim to enumerate equivalence under the full affine normalizer or its continuous freedoms.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>

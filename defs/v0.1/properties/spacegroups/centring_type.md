@@ -12,6 +12,10 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 This setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.
 The value `Rrev` denotes the reverse rhombohedral setting.
 
+The symbol describes the recorded coordinate cell, whereas `bravais_type` describes its lattice type.
+A rhombohedral lattice in primitive rhombohedral axes has centring symbol `P`; in hexagonal axes it has rhombohedral centring.
+Null denotes unavailable classification, not an additional centring type.
+
 **Examples:**
 
 - `"P"`
@@ -41,10 +45,9 @@ The value `Rrev` denotes the reverse rhombohedral setting.
         "string",
         "null"
     ],
-    "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.",
+    "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.\n\nThe symbol describes the recorded coordinate cell, whereas `bravais_type` describes its lattice type.\nA rhombohedral lattice in primitive rhombohedral axes has centring symbol `P`; in hexagonal axes it has rhombohedral centring.\nNull denotes unavailable classification, not an additional centring type.",
     "x-optimade-unit": "inapplicable",
     "enum": [
-        null,
         "P",
         "A",
         "B",

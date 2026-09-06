@@ -98,6 +98,7 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Number of orthogonal affine normalizer coset representatives stored for the setting.<br>
 <strong>Type:</strong> integer  </p>
 <p>This value MUST equal the length of the <code>orthogonal_affine_normalizer_cosets</code> list of the containing record.</p>
+<p>The trivial space-group coset is excluded; the count is for the bounded, metric-filtered list and is not the cardinality of the full affine-normalizer quotient.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>47</code></li>
@@ -121,7 +122,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of orthogonal affine normalizer coset representatives stored for the setting.\n\nThis value MUST equal the length of the `orthogonal_affine_normalizer_cosets` list of the containing record.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Number of orthogonal affine normalizer coset representatives stored for the setting.\n\nThis value MUST equal the length of the `orthogonal_affine_normalizer_cosets` list of the containing record.\n\nThe trivial space-group coset is excluded; the count is for the bounded, metric-filtered list and is not the cardinality of the full affine-normalizer quotient.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="mi">47</span><span class="p">,</span>

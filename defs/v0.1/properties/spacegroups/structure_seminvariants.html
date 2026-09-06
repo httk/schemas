@@ -95,19 +95,32 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants</code></a></strong><br>
 <strong>Definition name:</strong> <code>structure_seminvariants</code></p>
 <p><strong>Property name:</strong> Structure seminvariants<br>
-<strong>Description:</strong> Structure seminvariant vectors and moduli for the space-group setting.<br>
+<strong>Description:</strong> Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.<br>
 <strong>Type:</strong> list  </p>
-<p>These characterize phase restrictions and FFT grid constraints associated with the symmetry.
-They are on format of a list of dictionaries.
-The dictionaries MUST contain the fields:</p>
+<p>These are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx's FFT gridding restrictions.
+For a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair <code>(v,m)</code> satisfies <code>v dot h = 0 (mod m)</code> for <code>m &gt; 0</code>, or <code>v dot h = 0</code> as an ordinary equality for <code>m = 0</code>.
+A positive modulus describes a discrete allowed origin shift <code>v/m</code>; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.
+These restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.</p>
+<p><strong>Requirements/Conventions</strong>:</p>
 <ul>
-<li>vector: List of Integer. One structure-seminvariant condition vector.</li>
-<li>modulus: Integer. Modulus for the seminvariant congruence.</li>
+<li>
+<p>It MUST be a list of dictionaries, each with the following keys:</p>
+<ul>
+<li>
+<p><strong>vector</strong>: REQUIRED; List of 3 Integers.
+  Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.</p>
+</li>
+<li>
+<p><strong>modulus</strong>: REQUIRED; Integer.
+  Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.</p>
+</li>
+</ul>
+</li>
 </ul>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>[{"vector": [1, 0], "modulus": 0}, {"vector": [0, 1], "modulus": 0}, {"vector": [0, 0], "modulus": 0}]</code></li>
-<li><code>[{"vector": [1, 0], "modulus": 2}, {"vector": [0, 1], "modulus": 2}, {"vector": [0, 0], "modulus": 2}]</code></li>
+<li><code>[{"vector": [1, 0, 0], "modulus": 0}, {"vector": [0, 1, 0], "modulus": 0}, {"vector": [0, 0, 1], "modulus": 0}]</code></li>
+<li><code>[{"vector": [1, 0, 0], "modulus": 2}, {"vector": [0, 1, 0], "modulus": 2}, {"vector": [0, 0, 1], "modulus": 2}]</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="structure_seminvariants.json">JSON</a>] [<a href="structure_seminvariants.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -127,7 +140,7 @@ The dictionaries MUST contain the fields:</p>
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Structure seminvariant vectors and moduli for the space-group setting.\n\nThese characterize phase restrictions and FFT grid constraints associated with the symmetry.\nThey are on format of a list of dictionaries.\nThe dictionaries MUST contain the fields:\n\n- vector: List of Integer. One structure-seminvariant condition vector.\n- modulus: Integer. Modulus for the seminvariant congruence. &quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.\n\nThese are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx&#39;s FFT gridding restrictions.\nFor a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair `(v,m)` satisfies `v dot h = 0 (mod m)` for `m &gt; 0`, or `v dot h = 0` as an ordinary equality for `m = 0`.\nA positive modulus describes a discrete allowed origin shift `v/m`; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.\nThese restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries, each with the following keys:\n\n    - **vector**: REQUIRED; List of 3 Integers.\n      Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.\n\n    - **modulus**: REQUIRED; Integer.\n      Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
@@ -169,7 +182,7 @@ The dictionaries MUST contain the fields:</p>
 <span class="w">                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Modulus for the seminvariant congruence.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Positive modulus for the discrete seminvariant congruence, or zero for an exact equality associated with a continuous allowed shift.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
@@ -180,21 +193,24 @@ The dictionaries MUST contain the fields:</p>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">0</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">1</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">0</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
 <span class="w">            </span><span class="p">}</span>
@@ -203,21 +219,24 @@ The dictionaries MUST contain the fields:</p>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">0</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">0</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">1</span>
-<span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">0</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;modulus&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
 <span class="w">            </span><span class="p">}</span>

@@ -95,7 +95,9 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric</code></a></strong><br>
 <strong>Definition name:</strong> <code>is_centric</code></p>
 <p><strong>Property name:</strong> is centric<br>
-<strong>Description:</strong> Boolean flag indicating whether the space group is centric.<br>
+<strong>Description:</strong> Whether the space group contains an inversion operation <code>(W,w)</code> with <code>W = -I</code>.
+The inversion center need not be the coordinate origin; one such center is at <code>w/2</code> in fractional coordinates.
+This tests the space-group symmetry, not the centricity of an individual diffraction reflection.<br>
 <strong>Type:</strong> boolean  </p>
 <p><strong>Examples:</strong></p>
 <ul>
@@ -120,7 +122,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boolean flag indicating whether the space group is centric.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the space group contains an inversion operation `(W,w)` with `W = -I`.\nThe inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.\nThis tests the space-group symmetry, not the centricity of an individual diffraction reflection.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="kc">false</span><span class="p">,</span>

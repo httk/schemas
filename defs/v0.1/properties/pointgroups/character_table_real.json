@@ -2,7 +2,6 @@
     "$id": "https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_real",
     "$schema": "https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json",
     "title": "Real character table",
-    "$comment": "Generated from data-generators JSON-LD fields without external definition URLs.",
     "x-optimade-type": "list",
     "x-optimade-definition": {
         "kind": "property",
@@ -15,7 +14,7 @@
         "array",
         "null"
     ],
-    "description": "Real irreducible character table of the crystallographic point group.\n\nRows correspond to real irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters of the real table are exact integers and are therefore stored as plain integers, unlike the `re`/`im` fraction-string pairs of `character_table_complex`.",
+    "description": "Real irreducible character table of the crystallographic point group.\n\nRows correspond to real irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters of the real table are exact integers and are therefore stored as plain integers, unlike the symbolic `re`/`im` string pairs of `character_table_complex`.\n\nIrreducibility here is over the real numbers.\nA pair of inequivalent complex-conjugate irreps can combine into one real irrep whose dimension and character are the sums of the constituent dimensions and characters.\nConsequently the number of real rows can be smaller than `n_conjugacy_classes`; such a paired row has character norm two under the class-size-weighted complex character inner product, not one.\nEvery character list MUST follow `conjugacy_classes` and have that list's length, and the identity character MUST equal `dimension`.\nPolynomial bases span each isotypic component, meaning all copies of the indicated real irrep in the chosen polynomial space.\nThe number of listed polynomials can therefore exceed `dimension`, but must be an integer multiple of it.\nLinear and axial spaces each have dimension three; the homogeneous quadratic space has dimension six, including the scalar trace `x^2+y^2+z^2`.\nBasis lists are independent spanning sets, not promised to be orthonormal or partitioned into conventional multiplets; the generator omits a basis field when that irrep is absent from that polynomial space.\nThe coordinates in these polynomial strings are Cartesian variables, unlike the fractional-coordinate variables in `symops`.\nFor a Cartesian operation Q, polar coordinates transform by Q and axial coordinates by `det(Q)*Q`; quadratic polynomials transform by substitution.\nThe final example displays selected A1 and B1 rows of 4mm rather than a complete table; full emitted tables contain every real irrep.",
     "x-optimade-unit": "inapplicable",
     "items": {
         "x-optimade-type": "dictionary",
@@ -121,7 +120,7 @@
                     "integer",
                     "null"
                 ],
-                "description": "Frobenius-Schur indicator of the representation.",
+                "description": "Optional Frobenius-Schur annotation; the current generator does not emit this field in the real table.\nThe indicator convention is defined for complex irreducible rows in `character_table_complex`; do not assume a real row formed from a conjugate pair is itself complex-irreducible or has indicator one.",
                 "x-optimade-unit": "inapplicable"
             },
             "basis_linear": {
@@ -130,7 +129,7 @@
                     "array",
                     "null"
                 ],
-                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
+                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [

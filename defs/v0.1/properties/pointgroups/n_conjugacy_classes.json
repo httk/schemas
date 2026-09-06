@@ -14,7 +14,7 @@
         "integer",
         "null"
     ],
-    "description": "Number of conjugacy classes in the crystallographic point group.\n\nThis value MUST equal the length of the `conjugacy_classes` list of the point-group entry.",
+    "description": "Number of conjugacy classes in the crystallographic point group.\n\nThis value MUST equal the length of the `conjugacy_classes` list of the point-group entry.\n\nIt also equals the number of complex irreducible rows in `character_table_complex`, but need not equal the number of rows in `character_table_real`.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         1,

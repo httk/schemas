@@ -29,6 +29,12 @@ It describes continuous origin-shift freedoms by dimension and fractional-coordi
     - **representation**: OPTIONAL; String.
       Textual description of the parameterized representation.
 
+The represented shifts are `t = sum_i u_i*basis_vectors[i]`, with arbitrary real coefficients `u_i`, acting on fractional coordinates as `x -> x+t`.
+Their span is the common fixed subspace of all space-group rotations: `(W-I)*t = 0` for every linear part `W`.
+The basis vectors are exact and independent but need not be normalized or orthogonal.
+A dimension of zero and an empty basis list mean there is no continuous origin-shift freedom; discrete allowed shifts can still exist.
+This property describes continuous translations only, not arbitrary continuous rotations, strains, or the full affine normalizer.
+
 **Examples:**
 
 - `{"dimension": 3, "coordinate_system": "fractional", "basis_vectors": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]]}`
@@ -55,7 +61,7 @@ It describes continuous origin-shift freedoms by dimension and fractional-coordi
         "object",
         "null"
     ],
-    "description": "Parameterized continuous normalizer subspace for a setting.\n\nIt describes continuous origin-shift freedoms by dimension and fractional-coordinate basis vectors rather than by enumerating infinitely many operations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **dimension**: OPTIONAL; Integer.\n      Dimension of the continuous parameter subspace.\n      When present, it MUST equal the length of `basis_vectors`.\n\n    - **basis\\_vectors**: REQUIRED; List of vectors.\n      Basis vectors spanning the continuous normalizer parameter space.\n      Each basis vector is represented as exact fractional-coordinate components.\n\n    - **coordinate\\_system**: OPTIONAL; String.\n      Coordinate system used for the parameter vectors.\n\n    - **representation**: OPTIONAL; String.\n      Textual description of the parameterized representation.",
+    "description": "Parameterized continuous normalizer subspace for a setting.\n\nIt describes continuous origin-shift freedoms by dimension and fractional-coordinate basis vectors rather than by enumerating infinitely many operations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **dimension**: OPTIONAL; Integer.\n      Dimension of the continuous parameter subspace.\n      When present, it MUST equal the length of `basis_vectors`.\n\n    - **basis\\_vectors**: REQUIRED; List of vectors.\n      Basis vectors spanning the continuous normalizer parameter space.\n      Each basis vector is represented as exact fractional-coordinate components.\n\n    - **coordinate\\_system**: OPTIONAL; String.\n      Coordinate system used for the parameter vectors.\n\n    - **representation**: OPTIONAL; String.\n      Textual description of the parameterized representation.\n\nThe represented shifts are `t = sum_i u_i*basis_vectors[i]`, with arbitrary real coefficients `u_i`, acting on fractional coordinates as `x -> x+t`.\nTheir span is the common fixed subspace of all space-group rotations: `(W-I)*t = 0` for every linear part `W`.\nThe basis vectors are exact and independent but need not be normalized or orthogonal.\nA dimension of zero and an empty basis list mean there is no continuous origin-shift freedom; discrete allowed shifts can still exist.\nThis property describes continuous translations only, not arbitrary continuous rotations, strains, or the full affine normalizer.",
     "properties": {
         "dimension": {
             "x-optimade-type": "integer",
@@ -122,7 +128,10 @@ It describes continuous origin-shift freedoms by dimension and fractional-coordi
                 "string",
                 "null"
             ],
-            "description": "Coordinate system used for the parameter vectors."
+            "description": "Coordinate system used for the parameter vectors; fractional components in the containing setting's cell.",
+            "enum": [
+                "fractional"
+            ]
         },
         "representation": {
             "x-optimade-type": "string",

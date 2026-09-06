@@ -6,7 +6,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `n_raw_candidates`
 
 **Property name:** Number of raw candidates  
-**Description:** Number of candidate affine operations considered before filtering and deduplication.  
+**Description:** Number of accepted affine normalizer candidates generated before quotienting modulo the space group and before metric filtering.
+This is not the number of all linear matrices tested: candidates whose affine normalization equations have no solution are not counted.  
 **Type:** integer  
 
 The counted candidate set itself is not stored; this value documents the size of the bounded search.
@@ -37,7 +38,7 @@ The counted candidate set itself is not stored; this value documents the size of
         "integer",
         "null"
     ],
-    "description": "Number of candidate affine operations considered before filtering and deduplication.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.",
+    "description": "Number of accepted affine normalizer candidates generated before quotienting modulo the space group and before metric filtering.\nThis is not the number of all linear matrices tested: candidates whose affine normalization equations have no solution are not counted.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         48,

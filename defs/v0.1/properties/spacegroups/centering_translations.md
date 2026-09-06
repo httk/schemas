@@ -56,7 +56,7 @@ The zero translation `(0,0,0)` is listed first.
             "array",
             "null"
         ],
-        "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.",
+        "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.\n\nThe components are coefficients of the recorded cell basis vectors, not Cartesian lengths.\nTranslations differing by an integer vector represent the same centering class; the generated list uses representatives modulo integer cell translations.",
         "x-optimade-dimensions": {
             "names": [
                 "dim_lattice"

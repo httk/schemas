@@ -1,15 +1,19 @@
-# Number of pointgroup symops (property)
+# Number of point-group operations (property)
 
 This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definition](https://schemas.optimade.org/#definitions). See [https://schemas.optimade.org/](https://schemas.optimade.org/) for more information.
 
 **ID: [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops.md)**  
 **Definition name:** `n_pointgroup_symops`
 
-**Property name:** Number of pointgroup symops  
+**Property name:** Number of point-group operations  
 **Description:** Number of point-group symmetry operations.  
 **Type:** integer  
 
 For a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.
+
+For a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.
+For a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.
+Inversion and other improper point operations are included.
 
 **Examples:**
 
@@ -24,7 +28,7 @@ For a space-group entry this is the number of operations of the point group of t
 {
     "$id": "https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops",
     "$schema": "https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json",
-    "title": "Number of pointgroup symops",
+    "title": "Number of point-group operations",
     "x-optimade-type": "integer",
     "x-optimade-definition": {
         "kind": "property",
@@ -37,7 +41,7 @@ For a space-group entry this is the number of operations of the point group of t
         "integer",
         "null"
     ],
-    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.",
+    "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         1,

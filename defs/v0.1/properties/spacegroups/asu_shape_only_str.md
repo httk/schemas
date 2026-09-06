@@ -11,6 +11,9 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 The structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.
 
+This is the closure of the volume shape: all top-level boundaries are included and lower-dimensional ownership rules are discarded.
+It MUST NOT be used as a substitute for `asu` when assigning symmetry-equivalent boundary points to an ASU.
+
 **Examples:**
 
 - `"x>=0; x<=1; y>=0; y<=1; z>=0; z<=1"`
@@ -37,7 +40,7 @@ The structured representation in `asu` is canonical; this string is a rendering 
         "string",
         "null"
     ],
-    "description": "Plain string rendering of the geometric shape part of the asymmetric-unit restrictions, without conditional refinements.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.",
+    "description": "Plain string rendering of the geometric shape part of the asymmetric-unit restrictions, without conditional refinements.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.\n\nThis is the closure of the volume shape: all top-level boundaries are included and lower-dimensional ownership rules are discarded.\nIt MUST NOT be used as a substitute for `asu` when assigning symmetry-equivalent boundary points to an ASU.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         "x>=0; x<=1; y>=0; y<=1; z>=0; z<=1",

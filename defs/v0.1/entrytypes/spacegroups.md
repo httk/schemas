@@ -152,6 +152,14 @@ This entrytype defines the following properties:
         - **vertex\_rules**: REQUIRED; List of dictionaries.
           Terminal rule table for zero-dimensional vertex-boundary ownership.
           Vertex rules cannot descend to another rule level.
+    
+    Plane coefficients are covector components in the fractional basis; `normal` is not generally a Cartesian unit normal.
+    All signs and equality tests refer to `normal dot (x,y,z) + const`, with exact rational coefficients.
+    A zero-boundary action is consulted only on the plane: a false boundary condition never includes a point on the negative side.
+    Plane and rule identifiers are local to this ASU record; every reference MUST resolve in the appropriate registry and every registry identifier MUST be unique within its table.
+    The `include` and `exclude` actions return true and false for the current cut or term; all top-level cuts must still pass.
+    The shape-only representation closes all top-level boundaries and omits their ownership refinements, so it is unsuitable for assigning boundary points uniquely.
+    The example below is the full half-open unit-cube ASU of P1.
 
 
 * **[Asymmetric unit string (asu_str)](../properties/spacegroups/asu_str.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_str`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_str.md)  
@@ -163,6 +171,9 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     The structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.
+    
+    Semicolon-separated cuts are combined by AND.
+    A bracketed condition following a cut is evaluated only on that cut's zero plane; positive values pass without it and negative values fail regardless of it.
 
 
 * **[Shape-only asymmetric unit string (asu_shape_only_str)](../properties/spacegroups/asu_shape_only_str.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_shape_only_str`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_shape_only_str.md)  
@@ -174,6 +185,9 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     The structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.
+    
+    This is the closure of the volume shape: all top-level boundaries are included and lower-dimensional ownership rules are discarded.
+    It MUST NOT be used as a substitute for `asu` when assigning symmetry-equivalent boundary points to an ASU.
 
 
 * **[Bravais type (bravais_type)](../properties/spacegroups/bravais_type.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/bravais_type`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/bravais_type.md)  
@@ -184,12 +198,16 @@ This entrytype defines the following properties:
     - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
-    The symbol consists of a lower-case crystal-system letter followed by an upper-case centring symbol.
+    The symbol consists of a lower-case crystal-family letter followed by an upper-case centring symbol.
     Side-centred settings (`A`, `B`, or `C` centring) are normalized to the setting-independent `S` symbol for monoclinic and orthorhombic lattices.
     Body-centred monoclinic settings keep the symbol `mI`, which describes the same lattice type as `mS` in a different conventional cell choice.
+    
+    The first character follows the crystal-family notation: `a` denotes triclinic (anorthic), and `h` covers the hexagonal family, which includes trigonal and hexagonal crystal systems.
+    Rhombohedral lattices have `hR` in both hexagonal-axis and primitive rhombohedral-axis descriptions; `centring_type: P` in rhombohedral axes does not imply `hP`.
+    The retained `mI` alternative means the vocabulary has 15 symbols for 14 Bravais lattice types.
 
 
-* **[Cctbx FFT grid factors (cctbx_fft_grid_factors)](../properties/spacegroups/cctbx_fft_grid_factors.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors.md)  
+* **[cctbx FFT grid factors (cctbx_fft_grid_factors)](../properties/spacegroups/cctbx_fft_grid_factors.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors.md)  
   FFT grid-factor requirements derived from cctbx for the space group, its structure seminvariants, and its Euclidean normalizer.
 
     **Requirements/Conventions:**  
@@ -211,6 +229,11 @@ This entrytype defines the following properties:
     
         - **euclidean**: REQUIRED; List of 3 Integers.
           Per-axis grid factors obtained by refining the seminvariant factors against the Euclidean normalizer.
+    
+    These factors impose divisibility constraints; they are not grid dimensions or a resolution prescription.
+    Choose grid dimensions as appropriate multiples and also enforce rotational compatibility, including relations between axes mixed by the symmetry.
+    Per-axis factors alone do not certify that an arbitrary three-dimensional grid is invariant under all rotations.
+    The `euclidean` factors are computed by refining the seminvariant gridding with the finite cctbx Euclidean-normalizer group in this same setting.
 
 
 * **[Centering translations (centering_translations)](../properties/spacegroups/centering_translations.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/centering_translations`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/centering_translations.md)  
@@ -235,6 +258,10 @@ This entrytype defines the following properties:
     - **Response:** MAY be included by default in the response.
     This setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.
     The value `Rrev` denotes the reverse rhombohedral setting.
+    
+    The symbol describes the recorded coordinate cell, whereas `bravais_type` describes its lattice type.
+    A rhombohedral lattice in primitive rhombohedral axes has centring symbol `P`; in hexagonal axes it has rhombohedral centring.
+    Null denotes unavailable classification, not an additional centring type.
 
 
 * **[Crystal system (crystal_system)](../properties/pointgroups/crystal_system.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/crystal_system`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/crystal_system.md)  
@@ -246,6 +273,10 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Values use the conventional crystallographic system names.
+    
+    This classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.
+    Trigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.
+    Null denotes unavailable classification, not an additional crystal system.
 
 
 * **[Hall symbol (hall)](../properties/spacegroups/hall.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/hall`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/hall.md)  
@@ -290,6 +321,10 @@ This entrytype defines the following properties:
     
     - This field identifies a concrete Hall setting, not only an IT space-group type.
     - The same value is normally used as the key of the containing `spacegroups` map.
+    
+    The normalization is `hall.strip().replace(" ", "_").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.
+    The key is a coordinate-setting identifier, not a numeric spglib Hall number.
+    Different conventional H-M entry labels can resolve to the same Hall-entry record.
 
 
 * **[Hermann-Mauguin entry (hm_entry)](../properties/spacegroups/hm_entry.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/hm_entry`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/hm_entry.md)  
@@ -309,6 +344,10 @@ This entrytype defines the following properties:
     
     - The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.
     - The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.
+    
+    This lookup key preserves capitalization and spaces: unlike `hall_entry`, it is not lowercased or underscore-normalized.
+    H-M entries and their aliases are resolved through the dataset's H-M-entry index; more than one conventional label can identify the same generated Hall record.
+    This label selects a setting convention; use the embedded affine operations to perform coordinate transformations.
 
 
 * **[Harker planes (harker_planes)](../properties/spacegroups/harker_planes.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/harker_planes`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/harker_planes.md)  
@@ -320,6 +359,13 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Each entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.
+    
+    A Harker plane contains Patterson displacement vectors between symmetry-related sites.
+    For a contributing operation `(W,w)`, those displacements are parameterized by `(W-I)*x+w`; the algebraic rendering may reverse parameter signs without changing the plane.
+    The current generator emits the cctbx plane descriptors `algebraic`, `normal`, and `point`; the optional `xyz` and `const` fields are retained but are not emitted.
+    Here `normal` is the direct-lattice direction returned by cctbx for the rotation axis, and `point` is a fractional point on the plane.
+    For lattice metric g, a displacement u lies in that plane when `normal^T*g*(u-point) = 0`; the fractional components of `normal` must not be treated as a Cartesian unit normal or a reciprocal covector.
+    The list covers planes constructed by cctbx's Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.
 
 
 * **[Universal cctbx Hermann-Mauguin symbol (hm_cctbx_universal)](../properties/spacegroups/hm_cctbx_universal.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/hm_cctbx_universal`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/hm_cctbx_universal.md)  
@@ -487,7 +533,9 @@ This entrytype defines the following properties:
 
 
 * **[is centric (is_centric)](../properties/spacegroups/is_centric.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric.md)  
-  Boolean flag indicating whether the space group is centric.
+  Whether the space group contains an inversion operation `(W,w)` with `W = -I`.
+The inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.
+This tests the space-group symmetry, not the centricity of an individual diffraction reflection.
 
     **Requirements/Conventions:**  
 
@@ -496,7 +544,10 @@ This entrytype defines the following properties:
     - **Response:** MAY be included by default in the response.
 
 * **[is chiral (is_chiral)](../properties/spacegroups/is_chiral.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral.md)  
-  Boolean flag indicating whether the space group is chiral.
+  Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.
+This is cctbx's `is_chiral()` convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.
+It does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by `is_enantiomorphic`.
+It does not by itself determine the handedness or chirality of a molecular motif.
 
     **Requirements/Conventions:**  
 
@@ -512,9 +563,14 @@ This entrytype defines the following properties:
     - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
+    This identifies the 22 space-group types belonging to 11 pairs of distinct enantiomorphic types.
+    The partner IT number is given by `it_number_enantiomorphic`; membership is more restrictive than the Sohncke-group flag `is_chiral`.
+
 
 * **[is reference setting (is_reference_setting)](../properties/spacegroups/is_reference_setting.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting.md)  
-  Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.
+  Whether cctbx identifies this Hall setting as its reference setting for the space-group type.
+This is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.
+For the pipeline's selected IT-standard setting, use `index_it_number_to_std_spacegroups` in the dataset's companion `indicies` structure.
 
     **Requirements/Conventions:**  
 
@@ -564,6 +620,9 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     The Laue class groups point groups that become equivalent when inversion symmetry is included.
+    
+    It is the centrosymmetric point-group type generated by the original point group together with inversion.
+    Its use as diffraction symmetry invokes the usual Friedel-pair equivalence; anomalous-scattering measurements need not have that intensity symmetry.
 
 
 * **[Number of centering translations (n_centering_translations)](../properties/spacegroups/n_centering_translations.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_centering_translations`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_centering_translations.md)  
@@ -577,7 +636,7 @@ This entrytype defines the following properties:
     When the entry contains a `centering_translations` list, this value MUST equal its length.
 
 
-* **[Number of pointgroup symops (n_pointgroup_symops)](../properties/pointgroups/n_pointgroup_symops.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops.md)  
+* **[Number of point-group operations (n_pointgroup_symops)](../properties/pointgroups/n_pointgroup_symops.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops.md)  
   Number of point-group symmetry operations.
 
     **Requirements/Conventions:**  
@@ -586,6 +645,10 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     For a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.
+    
+    For a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.
+    For a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.
+    Inversion and other improper point operations are included.
 
 
 * **[Number of symops (n_symops)](../properties/spacegroups/n_symops.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_symops`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_symops.md)  
@@ -609,6 +672,9 @@ This entrytype defines the following properties:
     - **Response:** MAY be included by default in the response.
     This field identifies the crystallographic point group obtained from the space group by removing translational components.
     The value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.
+    
+    Removing translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.
+    The pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.
 
 
 * **[Schoenflies symbol (schoenflies)](../properties/spacegroups/schoenflies.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/schoenflies`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/schoenflies.md)  
@@ -652,7 +718,7 @@ This entrytype defines the following properties:
     - Triclinic, hexagonal, and many unique settings use only the IT number, for example `1`.
     - Monoclinic settings use qualifiers such as `b1`, `-b1`, `c2`, or `a3`.
     - Orthorhombic settings use qualifiers such as `abc`, `cab`, `1abc`, or `2bca` when needed.
-    - Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `h` and `r`.
+    - Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `H` and `R`.
 
 
 * **[International Tables setting-code aliases (setting_it_nc_aliases)](../properties/spacegroups/setting_it_nc_aliases.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/setting_it_nc_aliases`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/setting_it_nc_aliases.md)  
@@ -719,19 +785,27 @@ This entrytype defines the following properties:
 
 
 * **[Structure seminvariants (structure_seminvariants)](../properties/spacegroups/structure_seminvariants.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants.md)  
-  Structure seminvariant vectors and moduli for the space-group setting.
+  Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.
 
     **Requirements/Conventions:**  
 
     - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
-    These characterize phase restrictions and FFT grid constraints associated with the symmetry.
-    They are on format of a list of dictionaries.
-    The dictionaries MUST contain the fields:
+    These are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx's FFT gridding restrictions.
+    For a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair `(v,m)` satisfies `v dot h = 0 (mod m)` for `m > 0`, or `v dot h = 0` as an ordinary equality for `m = 0`.
+    A positive modulus describes a discrete allowed origin shift `v/m`; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.
+    These restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.
     
-    - vector: List of Integer. One structure-seminvariant condition vector.
-    - modulus: Integer. Modulus for the seminvariant congruence.
+    **Requirements/Conventions**:
+    
+    - It MUST be a list of dictionaries, each with the following keys:
+    
+        - **vector**: REQUIRED; List of 3 Integers.
+          Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.
+    
+        - **modulus**: REQUIRED; Integer.
+          Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.
 
 
 * **[Symmetry operations (symops)](../properties/spacegroups/symops.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops.md)  
@@ -743,6 +817,11 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Each list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op
+    
+    The infinite space group is represented by a finite list modulo integer translations of the recorded cell.
+    Centering translations, inversion, and screw/glide translations are included in this list.
+    Adding arbitrary integer translations to the listed translation vectors recovers the full space group.
+    Consequently `n_symops` is the general-position multiplicity in this cell, not the order of the infinite group.
 
 
 * **[Symmetry operations modulo centering translations (symops_mod_centering)](../properties/spacegroups/symops_mod_centering.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_mod_centering`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_mod_centering.md)  
@@ -754,10 +833,19 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Each list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op
+    
+    Two listed full operations are equivalent here when their matrices agree and their translation vectors differ by a centering translation modulo integer cell translations.
+    There is one representative for each point-group operation, including inversion-related operations.
+    For a space-group record, the list length MUST equal `n_pointgroup_symops`.
+    Combining each representative with every `centering_translations` vector and reducing translations modulo integers recovers `symops` as a set.
 
 
 * **[Symmetry operation generators (symops_generators)](../properties/spacegroups/symops_generators.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_generators`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_generators.md)  
-  Minimal generator subset of the full symmetry-operation group for a space-group setting.
+  Generator subset of the finite symmetry-operation list for a space-group setting.
+Composition of these operations, with translations reduced modulo integer cell translations, generates `symops`, including the centering translations.
+Integer cell translations are implicit generators of the infinite space group.
+The generator selects operations greedily; the list is not promised to have the smallest possible cardinality.
+Identity is omitted, so the P1 list is empty.
 
     **Requirements/Conventions:**  
 
@@ -776,6 +864,9 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Each list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op
+    
+    This is a convenience copy of `symops_mod_centering` and MUST equal that list, including its order and operation descriptors.
+    It is not cctbx's internal list additionally factored by inversion.
 
 
 * **[Wyckoff positions (wyckoff)](../properties/spacegroups/wyckoff.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff.md)  
@@ -796,6 +887,10 @@ This entrytype defines the following properties:
     - Each item MUST include `letter`, identifying the Wyckoff letter for that position in the setting.
     - `orbit` contains the full orbit as affine transformations from Wyckoff-position parameters to fractional coordinates.
     - `orbit_mod_centering` contains one representative modulo centering translations in the same representation.
+    
+    Letters identify positions only together with the space-group setting; do not join different settings by letter alone.
+    The general position and the special positions use a common fractional coordinate basis, but each position has its own parameterization.
+    Multiplicities refer to the stored setting's cell, including rhombohedral-axis cells where applicable.
 
 
 * **[Wyckoff sets (wyckoff_sets)](../properties/spacegroups/wyckoff_sets.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff_sets`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/wyckoff_sets.md)  
@@ -807,6 +902,11 @@ This entrytype defines the following properties:
     - **Query:** Support for queries on this property is OPTIONAL.
     - **Response:** MAY be included by default in the response.
     Each inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.
+    
+    The generator forms these classes using the finite group obtained by expanding cctbx's additional Euclidean-normalizer generators in the recorded Hall setting.
+    Every Wyckoff letter occurs in exactly one inner list, including singleton lists.
+    A normalizer-induced permutation preserves multiplicity and the conjugacy type of site symmetry, although the oriented site-symmetry symbols can change.
+    This grouping describes the generated Euclidean-normalizer action; it is not a claim to enumerate equivalence under the full affine normalizer or its continuous freedoms.
 
 
 * **[Asymmetric unit markups (asu_markup)](../properties/spacegroups/asu_markup.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_markup`](https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu_markup.md)  
@@ -1102,7 +1202,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "object",
                 "null"
             ],
-            "description": "Direct-space asymmetric unit for the space-group setting, represented as a bounded non-recursive set of half-space cuts and boundary ownership rules.\n\nThe representation is equivalent to the recursive cctbx direct-space ASU cut expression documented by Grosse-Kunstleve et al., Acta Cryst. A67, 269 (2011), but stores the volume, face, edge, and vertex rules in separate fixed-depth tables.\nThe recursive node shape of that source representation is described by `/defs/v0.1/properties/spacegroups/asu_cut`.\nA point is inside the ASU volume only if all `volume_cuts` pass.\nEach volume cut tests an oriented plane from `planes`: a positive plane value includes the point, a negative value excludes it, and an exactly zero value uses `when_zero`.\nBoundary rules are disjunctive normal form rule tables: the outer `dnf` list is OR, each inner list is AND, and each term tests one oriented plane and uses its own `on_zero` action.\nFace rules may descend to edge rules on equality, edge rules may descend to vertex rules on equality, and vertex rules terminate with include or exclude actions.\n\nThe original cctbx-style recursive data structure can be recovered from this bounded representation with the following routine:\n\n```python\ndef bounded_asu_to_cctbx_recursive_data(bounded):\n    planes = {plane[\"id\"]: plane for plane in bounded[\"planes\"]}\n    rules = {level: {rule[\"id\"]: rule for rule in bounded[f\"{level}_rules\"]}\n             for level in (\"face\", \"edge\", \"vertex\")}\n\n    def expr_from_terms(terms, op):\n        out = terms[0] if terms else None\n        for term in terms[1:]:\n            out = {\"kind\": \"expr\", \"op\": op, \"lhs\": out, \"rhs\": term}\n        return out\n\n    def expr_from_rule(level, rule_id):\n        clauses = []\n        for clause in rules[level][rule_id][\"dnf\"]:\n            terms = [cut_from_action(t[\"plane_id\"], t[\"on_zero\"], level)\n                     for t in clause]\n            clauses.append(expr_from_terms(terms, \"&\"))\n        return expr_from_terms(clauses, \"|\")\n\n    def cut_from_action(plane_id, action, level):\n        plane = planes[plane_id]\n        if action[\"action\"] in (\"include\", \"exclude\"):\n            condition = None\n            inclusive = action[\"action\"] == \"include\"\n        else:\n            next_level = {\"volume\": \"face\", \"face\": \"edge\", \"edge\": \"vertex\"}[level]\n            condition = expr_from_rule(next_level, action[\"rule_id\"])\n            inclusive = True\n        return {\n            \"kind\": \"cut\",\n            \"normal\": plane[\"normal\"],\n            \"const\": plane[\"const\"],\n            \"inclusive\": inclusive,\n            \"condition\": condition,\n        }\n\n    return {\n        \"cuts\": [cut_from_action(cut[\"plane_id\"], cut[\"when_zero\"], \"volume\")\n                 for cut in bounded[\"volume_cuts\"]],\n        \"shape_only_cuts\": [\n            {\n                \"kind\": \"cut\",\n                \"normal\": planes[cut[\"plane_id\"]][\"normal\"],\n                \"const\": planes[cut[\"plane_id\"]][\"const\"],\n                \"inclusive\": True,\n                \"condition\": None,\n            }\n            for cut in bounded[\"volume_cuts\"]\n        ],\n    }\n```\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **planes**: REQUIRED; List of dictionaries.\n      Registry of all oriented affine planes used by volume cuts and boundary rules.\n      The plane value is `normal[0]*x + normal[1]*y + normal[2]*z + const` in fractional coordinates.\n      The positive side of the plane is the inside half-space for the corresponding cut term.\n\n    - **volume\\_cuts**: REQUIRED; List of dictionaries.\n      Top-level volume cuts combined as one conjunction.\n      Each volume cut references one plane and gives explicit actions for positive, negative, and zero plane values.\n\n    - **face\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for two-dimensional face-boundary ownership.\n      Face rules are evaluated only when a volume cut plane value is exactly zero.\n\n    - **edge\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for one-dimensional edge-boundary ownership.\n      Edge rules are evaluated only after a volume cut and a face-level term both evaluate exactly to zero.\n\n    - **vertex\\_rules**: REQUIRED; List of dictionaries.\n      Terminal rule table for zero-dimensional vertex-boundary ownership.\n      Vertex rules cannot descend to another rule level.",
+            "description": "Direct-space asymmetric unit for the space-group setting, represented as a bounded non-recursive set of half-space cuts and boundary ownership rules.\n\nThe representation is equivalent to the recursive cctbx direct-space ASU cut expression documented by Grosse-Kunstleve et al., Acta Cryst. A67, 269 (2011), but stores the volume, face, edge, and vertex rules in separate fixed-depth tables.\nThe recursive node shape of that source representation is described by `/defs/v0.1/properties/spacegroups/asu_cut`.\nA point is inside the ASU volume only if all `volume_cuts` pass.\nEach volume cut tests an oriented plane from `planes`: a positive plane value includes the point, a negative value excludes it, and an exactly zero value uses `when_zero`.\nBoundary rules are disjunctive normal form rule tables: the outer `dnf` list is OR, each inner list is AND, and each term tests one oriented plane and uses its own `on_zero` action.\nFace rules may descend to edge rules on equality, edge rules may descend to vertex rules on equality, and vertex rules terminate with include or exclude actions.\n\nThe original cctbx-style recursive data structure can be recovered from this bounded representation with the following routine:\n\n```python\ndef bounded_asu_to_cctbx_recursive_data(bounded):\n    planes = {plane[\"id\"]: plane for plane in bounded[\"planes\"]}\n    rules = {level: {rule[\"id\"]: rule for rule in bounded[f\"{level}_rules\"]}\n             for level in (\"face\", \"edge\", \"vertex\")}\n\n    def expr_from_terms(terms, op):\n        out = terms[0] if terms else None\n        for term in terms[1:]:\n            out = {\"kind\": \"expr\", \"op\": op, \"lhs\": out, \"rhs\": term}\n        return out\n\n    def expr_from_rule(level, rule_id):\n        clauses = []\n        for clause in rules[level][rule_id][\"dnf\"]:\n            terms = [cut_from_action(t[\"plane_id\"], t[\"on_zero\"], level)\n                     for t in clause]\n            clauses.append(expr_from_terms(terms, \"&\"))\n        return expr_from_terms(clauses, \"|\")\n\n    def cut_from_action(plane_id, action, level):\n        plane = planes[plane_id]\n        if action[\"action\"] in (\"include\", \"exclude\"):\n            condition = None\n            inclusive = action[\"action\"] == \"include\"\n        else:\n            next_level = {\"volume\": \"face\", \"face\": \"edge\", \"edge\": \"vertex\"}[level]\n            condition = expr_from_rule(next_level, action[\"rule_id\"])\n            inclusive = True\n        return {\n            \"kind\": \"cut\",\n            \"normal\": plane[\"normal\"],\n            \"const\": plane[\"const\"],\n            \"inclusive\": inclusive,\n            \"condition\": condition,\n        }\n\n    return {\n        \"cuts\": [cut_from_action(cut[\"plane_id\"], cut[\"when_zero\"], \"volume\")\n                 for cut in bounded[\"volume_cuts\"]],\n        \"shape_only_cuts\": [\n            {\n                \"kind\": \"cut\",\n                \"normal\": planes[cut[\"plane_id\"]][\"normal\"],\n                \"const\": planes[cut[\"plane_id\"]][\"const\"],\n                \"inclusive\": True,\n                \"condition\": None,\n            }\n            for cut in bounded[\"volume_cuts\"]\n        ],\n    }\n```\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **planes**: REQUIRED; List of dictionaries.\n      Registry of all oriented affine planes used by volume cuts and boundary rules.\n      The plane value is `normal[0]*x + normal[1]*y + normal[2]*z + const` in fractional coordinates.\n      The positive side of the plane is the inside half-space for the corresponding cut term.\n\n    - **volume\\_cuts**: REQUIRED; List of dictionaries.\n      Top-level volume cuts combined as one conjunction.\n      Each volume cut references one plane and gives explicit actions for positive, negative, and zero plane values.\n\n    - **face\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for two-dimensional face-boundary ownership.\n      Face rules are evaluated only when a volume cut plane value is exactly zero.\n\n    - **edge\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for one-dimensional edge-boundary ownership.\n      Edge rules are evaluated only after a volume cut and a face-level term both evaluate exactly to zero.\n\n    - **vertex\\_rules**: REQUIRED; List of dictionaries.\n      Terminal rule table for zero-dimensional vertex-boundary ownership.\n      Vertex rules cannot descend to another rule level.\n\nPlane coefficients are covector components in the fractional basis; `normal` is not generally a Cartesian unit normal.\nAll signs and equality tests refer to `normal dot (x,y,z) + const`, with exact rational coefficients.\nA zero-boundary action is consulted only on the plane: a false boundary condition never includes a point on the negative side.\nPlane and rule identifiers are local to this ASU record; every reference MUST resolve in the appropriate registry and every registry identifier MUST be unique within its table.\nThe `include` and `exclude` actions return true and false for the current cut or term; all top-level cuts must still pass.\nThe shape-only representation closes all top-level boundaries and omits their ownership refinements, so it is unsuitable for assigning boundary points uniquely.\nThe example below is the full half-open unit-cube ASU of P1.",
             "properties": {
                 "planes": {
                     "x-optimade-type": "list",
@@ -1622,6 +1722,42 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "0"
                             ],
                             "const": "1"
+                        },
+                        {
+                            "id": "p2",
+                            "normal": [
+                                "0",
+                                "1",
+                                "0"
+                            ],
+                            "const": "0"
+                        },
+                        {
+                            "id": "p3",
+                            "normal": [
+                                "0",
+                                "-1",
+                                "0"
+                            ],
+                            "const": "1"
+                        },
+                        {
+                            "id": "p4",
+                            "normal": [
+                                "0",
+                                "0",
+                                "1"
+                            ],
+                            "const": "0"
+                        },
+                        {
+                            "id": "p5",
+                            "normal": [
+                                "0",
+                                "0",
+                                "-1"
+                            ],
+                            "const": "1"
                         }
                     ],
                     "volume_cuts": [
@@ -1637,6 +1773,42 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                         {
                             "id": "v1",
                             "plane_id": "p1",
+                            "when_positive": "include",
+                            "when_negative": "exclude",
+                            "when_zero": {
+                                "action": "exclude"
+                            }
+                        },
+                        {
+                            "id": "v2",
+                            "plane_id": "p2",
+                            "when_positive": "include",
+                            "when_negative": "exclude",
+                            "when_zero": {
+                                "action": "include"
+                            }
+                        },
+                        {
+                            "id": "v3",
+                            "plane_id": "p3",
+                            "when_positive": "include",
+                            "when_negative": "exclude",
+                            "when_zero": {
+                                "action": "exclude"
+                            }
+                        },
+                        {
+                            "id": "v4",
+                            "plane_id": "p4",
+                            "when_positive": "include",
+                            "when_negative": "exclude",
+                            "when_zero": {
+                                "action": "include"
+                            }
+                        },
+                        {
+                            "id": "v5",
+                            "plane_id": "p5",
                             "when_positive": "include",
                             "when_negative": "exclude",
                             "when_zero": {
@@ -1671,7 +1843,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "Plain string rendering of the asymmetric-unit restrictions for the space-group setting.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.",
+            "description": "Plain string rendering of the asymmetric-unit restrictions for the space-group setting.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.\n\nSemicolon-separated cuts are combined by AND.\nA bracketed condition following a cut is evaluated only on that cut's zero plane; positive values pass without it and negative values fail regardless of it.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 "x>=0; x<1; y>=0; y<1; z>=0; z<1",
@@ -1699,7 +1871,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "Plain string rendering of the geometric shape part of the asymmetric-unit restrictions, without conditional refinements.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.",
+            "description": "Plain string rendering of the geometric shape part of the asymmetric-unit restrictions, without conditional refinements.\n\nThe structured representation in `asu` is canonical; this string is a rendering for display and quick inspection.\n\nThis is the closure of the volume shape: all top-level boundaries are included and lower-dimensional ownership rules are discarded.\nIt MUST NOT be used as a substitute for `asu` when assigning symmetry-equivalent boundary points to an ASU.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 "x>=0; x<=1; y>=0; y<=1; z>=0; z<=1",
@@ -1730,7 +1902,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The Bravais type of the translational lattice.\n\nThe symbol consists of a lower-case crystal-system letter followed by an upper-case centring symbol.\nSide-centred settings (`A`, `B`, or `C` centring) are normalized to the setting-independent `S` symbol for monoclinic and orthorhombic lattices.\nBody-centred monoclinic settings keep the symbol `mI`, which describes the same lattice type as `mS` in a different conventional cell choice.",
+            "description": "The Bravais type of the translational lattice.\n\nThe symbol consists of a lower-case crystal-family letter followed by an upper-case centring symbol.\nSide-centred settings (`A`, `B`, or `C` centring) are normalized to the setting-independent `S` symbol for monoclinic and orthorhombic lattices.\nBody-centred monoclinic settings keep the symbol `mI`, which describes the same lattice type as `mS` in a different conventional cell choice.\n\nThe first character follows the crystal-family notation: `a` denotes triclinic (anorthic), and `h` covers the hexagonal family, which includes trigonal and hexagonal crystal systems.\nRhombohedral lattices have `hR` in both hexagonal-axis and primitive rhombohedral-axis descriptions; `centring_type: P` in rhombohedral axes does not imply `hP`.\nThe retained `mI` alternative means the vocabulary has 15 symbols for 14 Bravais lattice types.",
             "x-optimade-unit": "inapplicable",
             "enum": [
                 "aP",
@@ -1762,7 +1934,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "query-support": "none",
                 "response-level": "may"
             },
-            "title": "Cctbx FFT grid factors",
+            "title": "cctbx FFT grid factors",
             "x-optimade-type": "dictionary",
             "x-optimade-definition": {
                 "kind": "property",
@@ -1775,7 +1947,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "object",
                 "null"
             ],
-            "description": "FFT grid-factor requirements derived from cctbx for the space group, its structure seminvariants, and its Euclidean normalizer.\n\nEach value is a list of three positive integers, one per crystallographic axis, giving the factors that the corresponding FFT grid dimension must be divisible by for symmetry-adapted sampling.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **space\\_group**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors required by the space-group translations.\n\n    - **seminvariant**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors required by the structure-seminvariant vectors and moduli.\n\n    - **euclidean**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors obtained by refining the seminvariant factors against the Euclidean normalizer.",
+            "description": "FFT grid-factor requirements derived from cctbx for the space group, its structure seminvariants, and its Euclidean normalizer.\n\nEach value is a list of three positive integers, one per crystallographic axis, giving the factors that the corresponding FFT grid dimension must be divisible by for symmetry-adapted sampling.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **space\\_group**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors required by the space-group translations.\n\n    - **seminvariant**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors required by the structure-seminvariant vectors and moduli.\n\n    - **euclidean**: REQUIRED; List of 3 Integers.\n      Per-axis grid factors obtained by refining the seminvariant factors against the Euclidean normalizer.\n\nThese factors impose divisibility constraints; they are not grid dimensions or a resolution prescription.\nChoose grid dimensions as appropriate multiples and also enforce rotational compatibility, including relations between axes mixed by the symmetry.\nPer-axis factors alone do not certify that an arbitrary three-dimensional grid is invariant under all rotations.\nThe `euclidean` factors are computed by refining the seminvariant gridding with the finite cctbx Euclidean-normalizer group in this same setting.",
             "x-optimade-unit": "inapplicable",
             "properties": {
                 "space_group": {
@@ -1861,13 +2033,16 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 {
                     "space_group": [
                         1,
+                        1,
                         1
                     ],
                     "seminvariant": [
                         1,
+                        1,
                         1
                     ],
                     "euclidean": [
+                        1,
                         1,
                         1
                     ]
@@ -1875,13 +2050,16 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 {
                     "space_group": [
                         1,
+                        1,
                         1
                     ],
                     "seminvariant": [
                         2,
+                        2,
                         2
                     ],
                     "euclidean": [
+                        2,
                         2,
                         2
                     ]
@@ -1927,7 +2105,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "array",
                     "null"
                 ],
-                "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.",
+                "description": "One centering translation of a conventional crystallographic cell.\n\nThe translation is represented in fractional coordinates using exact fraction strings.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of three exact fractional-coordinate components.\n- The zero translation is included in centering-translation lists and is normally listed first.\n\nThe components are coefficients of the recorded cell basis vectors, not Cartesian lengths.\nTranslations differing by an integer vector represent the same centering class; the generated list uses representatives modulo integer cell translations.",
                 "x-optimade-dimensions": {
                     "names": [
                         "dim_lattice"
@@ -2019,10 +2197,9 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.",
+            "description": "The lattice centring symbol for the crystallographic setting.\n\nThis setting-dependent symbol identifies primitive, face-centred, body-centred, rhombohedral, or hexagonal centring as represented in the setting record.\nThe value `Rrev` denotes the reverse rhombohedral setting.\n\nThe symbol describes the recorded coordinate cell, whereas `bravais_type` describes its lattice type.\nA rhombohedral lattice in primitive rhombohedral axes has centring symbol `P`; in hexagonal axes it has rhombohedral centring.\nNull denotes unavailable classification, not an additional centring type.",
             "x-optimade-unit": "inapplicable",
             "enum": [
-                null,
                 "P",
                 "A",
                 "B",
@@ -2062,10 +2239,9 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
+            "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.\n\nThis classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.\nTrigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.\nNull denotes unavailable classification, not an additional crystal system.",
             "x-optimade-unit": "inapplicable",
             "enum": [
-                null,
                 "triclinic",
                 "monoclinic",
                 "orthorhombic",
@@ -2172,7 +2348,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.",
+            "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.\n\nThe normalization is `hall.strip().replace(\" \", \"_\").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.\nThe key is a coordinate-setting identifier, not a numeric spglib Hall number.\nDifferent conventional H-M entry labels can resolve to the same Hall-entry record.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 "p_1",
@@ -2200,7 +2376,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.",
+            "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.\n\nThis lookup key preserves capitalization and spaces: unlike `hall_entry`, it is not lowercased or underscore-normalized.\nH-M entries and their aliases are resolved through the dataset's H-M-entry index; more than one conventional label can identify the same generated Hall record.\nThis label selects a setting convention; use the embedded affine operations to perform coordinate transformations.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 "P 1",
@@ -2230,7 +2406,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.",
+            "description": "Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.\n\nA Harker plane contains Patterson displacement vectors between symmetry-related sites.\nFor a contributing operation `(W,w)`, those displacements are parameterized by `(W-I)*x+w`; the algebraic rendering may reverse parameter signs without changing the plane.\nThe current generator emits the cctbx plane descriptors `algebraic`, `normal`, and `point`; the optional `xyz` and `const` fields are retained but are not emitted.\nHere `normal` is the direct-lattice direction returned by cctbx for the rotation axis, and `point` is a fractional point on the plane.\nFor lattice metric g, a displacement u lies in that plane when `normal^T*g*(u-point) = 0`; the fractional components of `normal` must not be treated as a Cartesian unit normal or a reciprocal covector.\nThe list covers planes constructed by cctbx's Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.",
             "items": {
                 "x-optimade-type": "dictionary",
                 "x-optimade-unit": "inapplicable",
@@ -2256,7 +2432,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "string",
                             "null"
                         ],
-                        "description": "Plane equation in `x,y,z` notation when available."
+                        "description": "Optional plane expression in `x,y,z` notation; not emitted by the current generator."
                     },
                     "normal": {
                         "x-optimade-type": "list",
@@ -2273,7 +2449,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "array",
                             "null"
                         ],
-                        "description": "Integer normal vector of the plane.",
+                        "description": "Integer direct-lattice direction normal to the plane in the physical metric, following cctbx's rotation-axis convention.",
                         "items": {
                             "x-optimade-type": "integer",
                             "x-optimade-unit": "inapplicable",
@@ -2775,7 +2951,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "boolean",
                 "null"
             ],
-            "description": "Boolean flag indicating whether the space group is centric.",
+            "description": "Whether the space group contains an inversion operation `(W,w)` with `W = -I`.\nThe inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.\nThis tests the space-group symmetry, not the centricity of an individual diffraction reflection.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 false,
@@ -2803,7 +2979,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "boolean",
                 "null"
             ],
-            "description": "Boolean flag indicating whether the space group is chiral.",
+            "description": "Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.\nThis is cctbx's `is_chiral()` convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.\nIt does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by `is_enantiomorphic`.\nIt does not by itself determine the handedness or chirality of a molecular motif.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 true,
@@ -2831,7 +3007,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "boolean",
                 "null"
             ],
-            "description": "Boolean flag indicating whether the space-group type belongs to an enantiomorphic pair.",
+            "description": "Boolean flag indicating whether the space-group type belongs to an enantiomorphic pair.\n\nThis identifies the 22 space-group types belonging to 11 pairs of distinct enantiomorphic types.\nThe partner IT number is given by `it_number_enantiomorphic`; membership is more restrictive than the Sohncke-group flag `is_chiral`.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 false,
@@ -2859,7 +3035,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "boolean",
                 "null"
             ],
-            "description": "Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.",
+            "description": "Whether cctbx identifies this Hall setting as its reference setting for the space-group type.\nThis is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.\nFor the pipeline's selected IT-standard setting, use `index_it_number_to_std_spacegroups` in the dataset's companion `indicies` structure.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 true,
@@ -2980,7 +3156,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The Laue class associated with the space group or point group.\n\nThe Laue class groups point groups that become equivalent when inversion symmetry is included.",
+            "description": "The Laue class associated with the space group or point group.\n\nThe Laue class groups point groups that become equivalent when inversion symmetry is included.\n\nIt is the centrosymmetric point-group type generated by the original point group together with inversion.\nIts use as diffraction symmetry invokes the usual Friedel-pair equivalence; anomalous-scattering measurements need not have that intensity symmetry.",
             "x-optimade-unit": "inapplicable",
             "enum": [
                 "-1",
@@ -3036,7 +3212,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "query-support": "none",
                 "response-level": "may"
             },
-            "title": "Number of pointgroup symops",
+            "title": "Number of point-group operations",
             "x-optimade-type": "integer",
             "x-optimade-definition": {
                 "kind": "property",
@@ -3049,7 +3225,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "integer",
                 "null"
             ],
-            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.",
+            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 1,
@@ -3108,7 +3284,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.",
+            "description": "The Hermann-Mauguin point-group symbol for the crystallographic point group of the space group.\n\nThis field identifies the crystallographic point group obtained from the space group by removing translational components.\nThe value uses the same Hermann-Mauguin symbol vocabulary as the `hm_symbol` key of the pointgroups entries, defined by `/defs/v0.1/properties/pointgroups/hm_symbol`, and can be used to look up the corresponding pointgroups entry.\n\nRemoving translations means taking the quotient by the full translation subgroup and identifying the resulting linear point group.\nThe pointgroups table uses its own reference coordinate frame; equality of the symbol does not assert equality of the fractional matrices in different Hall settings.",
             "x-optimade-unit": "inapplicable",
             "enum": [
                 "1",
@@ -3462,7 +3638,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "string",
                 "null"
             ],
-            "description": "International Tables setting identifier in `n:c` notation.\n\nThe part before the colon is the International Tables space-group number.\nThe part after the colon is the coordinate-system or origin-choice qualifier used to distinguish settings that share the same IT number.\n\n**Requirements/Conventions**:\n\n- Triclinic, hexagonal, and many unique settings use only the IT number, for example `1`.\n- Monoclinic settings use qualifiers such as `b1`, `-b1`, `c2`, or `a3`.\n- Orthorhombic settings use qualifiers such as `abc`, `cab`, `1abc`, or `2bca` when needed.\n- Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `h` and `r`.",
+            "description": "International Tables setting identifier in `n:c` notation.\n\nThe part before the colon is the International Tables space-group number.\nThe part after the colon is the coordinate-system or origin-choice qualifier used to distinguish settings that share the same IT number.\n\n**Requirements/Conventions**:\n\n- Triclinic, hexagonal, and many unique settings use only the IT number, for example `1`.\n- Monoclinic settings use qualifiers such as `b1`, `-b1`, `c2`, or `a3`.\n- Orthorhombic settings use qualifiers such as `abc`, `cab`, `1abc`, or `2bca` when needed.\n- Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `H` and `R`.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 "1",
@@ -3585,7 +3761,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "string",
                             "null"
                         ],
-                        "description": "International Tables setting identifier in `n:c` notation.\n\nThe part before the colon is the International Tables space-group number.\nThe part after the colon is the coordinate-system or origin-choice qualifier used to distinguish settings that share the same IT number.\n\n**Requirements/Conventions**:\n\n- Triclinic, hexagonal, and many unique settings use only the IT number, for example `1`.\n- Monoclinic settings use qualifiers such as `b1`, `-b1`, `c2`, or `a3`.\n- Orthorhombic settings use qualifiers such as `abc`, `cab`, `1abc`, or `2bca` when needed.\n- Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `h` and `r`.",
+                        "description": "International Tables setting identifier in `n:c` notation.\n\nThe part before the colon is the International Tables space-group number.\nThe part after the colon is the coordinate-system or origin-choice qualifier used to distinguish settings that share the same IT number.\n\n**Requirements/Conventions**:\n\n- Triclinic, hexagonal, and many unique settings use only the IT number, for example `1`.\n- Monoclinic settings use qualifiers such as `b1`, `-b1`, `c2`, or `a3`.\n- Orthorhombic settings use qualifiers such as `abc`, `cab`, `1abc`, or `2bca` when needed.\n- Tetragonal and cubic origin choices use qualifiers such as `1` and `2`; trigonal axis choices use qualifiers such as `H` and `R`.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             "1",
@@ -3607,7 +3783,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "string",
                             "null"
                         ],
-                        "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.",
+                        "description": "Normalized Hall-table entry key used internally by the generated datasets.\n\nThe value is derived from the Hall symbol by using lowercase letters and underscores in place of spaces. It is stable for lookup within these data files, while the display Hall symbol is provided separately by `hall` and its formatted variants.\n\n**Requirements/Conventions**:\n\n- This field identifies a concrete Hall setting, not only an IT space-group type.\n- The same value is normally used as the key of the containing `spacegroups` map.\n\nThe normalization is `hall.strip().replace(\" \", \"_\").lower()`; signs, quotes, asterisks, and origin-shift notation are retained.\nThe key is a coordinate-setting identifier, not a numeric spglib Hall number.\nDifferent conventional H-M entry labels can resolve to the same Hall-entry record.",
                         "x-optimade-unit": "inapplicable",
                         "examples": [
                             "p_1",
@@ -3908,7 +4084,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Structure seminvariant vectors and moduli for the space-group setting.\n\nThese characterize phase restrictions and FFT grid constraints associated with the symmetry.\nThey are on format of a list of dictionaries.\nThe dictionaries MUST contain the fields:\n\n- vector: List of Integer. One structure-seminvariant condition vector.\n- modulus: Integer. Modulus for the seminvariant congruence. ",
+            "description": "Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.\n\nThese are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx's FFT gridding restrictions.\nFor a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair `(v,m)` satisfies `v dot h = 0 (mod m)` for `m > 0`, or `v dot h = 0` as an ordinary equality for `m = 0`.\nA positive modulus describes a discrete allowed origin shift `v/m`; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.\nThese restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries, each with the following keys:\n\n    - **vector**: REQUIRED; List of 3 Integers.\n      Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.\n\n    - **modulus**: REQUIRED; Integer.\n      Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.",
             "x-optimade-unit": "inapplicable",
             "items": {
                 "x-optimade-type": "dictionary",
@@ -3950,7 +4126,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Modulus for the seminvariant congruence.",
+                        "description": "Positive modulus for the discrete seminvariant congruence, or zero for an exact equality associated with a continuous allowed shift.",
                         "x-optimade-unit": "inapplicable"
                     }
                 },
@@ -3961,21 +4137,24 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     {
                         "vector": [
                             1,
+                            0,
                             0
                         ],
                         "modulus": 0
                     },
                     {
                         "vector": [
+                            0,
+                            1,
+                            0
+                        ],
+                        "modulus": 0
+                    },
+                    {
+                        "vector": [
+                            0,
                             0,
                             1
-                        ],
-                        "modulus": 0
-                    },
-                    {
-                        "vector": [
-                            0,
-                            0
                         ],
                         "modulus": 0
                     }
@@ -3984,21 +4163,24 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     {
                         "vector": [
                             1,
+                            0,
                             0
                         ],
                         "modulus": 2
                     },
                     {
                         "vector": [
+                            0,
+                            1,
+                            0
+                        ],
+                        "modulus": 2
+                    },
+                    {
+                        "vector": [
+                            0,
                             0,
                             1
-                        ],
-                        "modulus": 2
-                    },
-                    {
-                        "vector": [
-                            0,
-                            0
                         ],
                         "modulus": 2
                     }
@@ -4027,7 +4209,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Full list of symmetry-operation descriptors for a space-group setting.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+            "description": "Full list of symmetry-operation descriptors for a space-group setting.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op\n\nThe infinite space group is represented by a finite list modulo integer translations of the recorded cell.\nCentering translations, inversion, and screw/glide translations are included in this list.\nAdding arbitrary integer translations to the listed translation vectors recovers the full space group.\nConsequently `n_symops` is the general-position multiplicity in this cell, not the order of the infinite group.",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                 "title": "Operation",
@@ -4044,7 +4226,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -4062,7 +4244,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -4198,7 +4380,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -4207,7 +4389,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -4239,6 +4421,17 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -4293,7 +4486,12 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -4498,7 +4696,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+            "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op\n\nTwo listed full operations are equivalent here when their matrices agree and their translation vectors differ by a centering translation modulo integer cell translations.\nThere is one representative for each point-group operation, including inversion-related operations.\nFor a space-group record, the list length MUST equal `n_pointgroup_symops`.\nCombining each representative with every `centering_translations` vector and reducing translations modulo integers recovers `symops` as a set.",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                 "title": "Operation",
@@ -4515,7 +4713,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -4533,7 +4731,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -4669,7 +4867,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -4678,7 +4876,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -4710,6 +4908,17 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -4764,7 +4973,12 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -4969,7 +5183,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Minimal generator subset of the full symmetry-operation group for a space-group setting.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+            "description": "Generator subset of the finite symmetry-operation list for a space-group setting.\nComposition of these operations, with translations reduced modulo integer cell translations, generates `symops`, including the centering translations.\nInteger cell translations are implicit generators of the infinite space group.\nThe generator selects operations greedily; the list is not promised to have the smallest possible cardinality.\nIdentity is omitted, so the P1 list is empty.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                 "title": "Operation",
@@ -4986,7 +5200,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -5004,7 +5218,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -5140,7 +5354,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -5149,7 +5363,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -5181,6 +5395,17 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -5235,7 +5460,12 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -5370,38 +5600,14 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 ]
             },
             "examples": [
+                [],
                 [
                     {
-                        "affine_transformation": {
-                            "matrix": [
-                                [
-                                    "1",
-                                    "0",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "1",
-                                    "0"
-                                ],
-                                [
-                                    "0",
-                                    "0",
-                                    "1"
-                                ]
-                            ],
-                            "vector": [
-                                "0",
-                                "0",
-                                "0"
-                            ],
-                            "xyz": "x,y,z"
-                        },
-                        "rot_type": "1",
+                        "rot_type": "2",
                         "sense": 0,
                         "axis": [
                             0,
-                            0,
+                            1,
                             0
                         ],
                         "screw_glide": [
@@ -5413,7 +5619,34 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "0",
                             "0",
                             "0"
-                        ]
+                        ],
+                        "affine_transformation": {
+                            "matrix": [
+                                [
+                                    "-1",
+                                    "0",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "1",
+                                    "0"
+                                ],
+                                [
+                                    "0",
+                                    "0",
+                                    "-1"
+                                ]
+                            ],
+                            "vector": [
+                                "0",
+                                "0",
+                                "0"
+                            ],
+                            "xyz": "-x,y,-z",
+                            "det": 1,
+                            "is_orthogonal": true
+                        }
                     }
                 ]
             ]
@@ -5440,7 +5673,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+            "description": "Representative symmetry-operation descriptors modulo centering translations: one full-group operation (including inversion-related operations where present) per coset of the centring translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op\n\nThis is a convenience copy of `symops_mod_centering` and MUST equal that list, including its order and operation descriptors.\nIt is not cctbx's internal list additionally factored by inversion.",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                 "title": "Operation",
@@ -5457,7 +5690,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -5475,7 +5708,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -5611,7 +5844,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -5620,7 +5853,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -5652,6 +5885,17 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -5706,7 +5950,12 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -5911,7 +6160,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Wyckoff-position table for a specific space-group setting.\n\nEach list item describes one Wyckoff position and includes the Wyckoff letter as ordinary data.\nThis list representation avoids using JSON dictionary keys as crystallographic data.\nItems follow `/properties/symmetry/wyckoff_position`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each item MUST include `letter`, identifying the Wyckoff letter for that position in the setting.\n- `orbit` contains the full orbit as affine transformations from Wyckoff-position parameters to fractional coordinates.\n- `orbit_mod_centering` contains one representative modulo centering translations in the same representation.",
+            "description": "Wyckoff-position table for a specific space-group setting.\n\nEach list item describes one Wyckoff position and includes the Wyckoff letter as ordinary data.\nThis list representation avoids using JSON dictionary keys as crystallographic data.\nItems follow `/properties/symmetry/wyckoff_position`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each item MUST include `letter`, identifying the Wyckoff letter for that position in the setting.\n- `orbit` contains the full orbit as affine transformations from Wyckoff-position parameters to fractional coordinates.\n- `orbit_mod_centering` contains one representative modulo centering translations in the same representation.\n\nLetters identify positions only together with the space-group setting; do not join different settings by letter alone.\nThe general position and the special positions use a common fractional coordinate basis, but each position has its own parameterization.\nMultiplicities refer to the stored setting's cell, including rhombohedral-axis cells where applicable.",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/wyckoff_position",
                 "title": "Wyckoff position",
@@ -5928,7 +6177,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                     "object",
                     "null"
                 ],
-                "description": "Information related to a Wyckoff position in a space-group setting.\n\nWyckoff positions represent symmetry-equivalent sites partitioned by multiplicity and site symmetry in a given space group.\nThe property is a dictionary containing information about the multiplicity, oriented site-symmetry symbol, representative coordinate, full orbit, and orbit factorized modulo centering translations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **letter**: REQUIRED; String.\n      Wyckoff letter for this position in the setting.\n\n    - **multiplicity**: REQUIRED; Integer.\n      Multiplicity of the Wyckoff position in the conventional cell.\n      It MUST equal the length of `orbit`.\n\n    - **sitesym**: REQUIRED; String.\n      Oriented site-symmetry symbol.\n\n    - **hasfreedom**: REQUIRED; List of booleans.\n      Flags indicating whether each fractional coordinate has a free parameter.\n\n    - **first\\_orbit**: REQUIRED; String.\n      First representative coordinate expression used by the generator.\n      It MUST equal the `xyz` field of `orbit[0]`.\n\n    - **orbit**: REQUIRED; List.\n      Full orbit as a list of affine transformations from Wyckoff-position parameters to fractional coordinates.\n      The first item is the canonical representative whose degrees of freedom can be chosen to place it inside the asymmetric unit.\n\n    - **orbit\\_mod\\_centering**: REQUIRED; List.\n      Orbit representatives modulo centering translations, represented in the same form as `orbit`.",
+                "description": "Information related to a Wyckoff position in a space-group setting.\n\nA Wyckoff position is a family of point orbits whose site-symmetry subgroups are conjugate within the space group.\nDistinct choices of free parameters generally give distinct orbits belonging to the same Wyckoff position; multiplicity and an unoriented site-symmetry symbol alone need not identify the position uniquely.\nThe property is a dictionary containing information about the multiplicity, oriented site-symmetry symbol, representative coordinate, full orbit, and orbit factorized modulo centering translations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **letter**: REQUIRED; String.\n      Wyckoff letter for this position in the setting.\n\n    - **multiplicity**: REQUIRED; Integer.\n      Multiplicity of the Wyckoff position in the unit cell of the recorded setting, including its centering translations.\n      It MUST equal the length of `orbit`.\n\n    - **sitesym**: REQUIRED; String.\n      Oriented site-symmetry symbol.\n\n    - **hasfreedom**: REQUIRED; List of booleans.\n      Flags identifying the generator's parameter slots `x`, `y`, and `z` in its Wyckoff parameterization.\n      A repeated parameter in two output coordinates does not represent two independent freedoms.\n\n    - **first\\_orbit\\_ita**: OPTIONAL; String.\n      Source-convention representative retained for comparison with `first_orbit`, including when the two expressions agree.\n\n    - **first\\_orbit**: REQUIRED; String.\n      First representative coordinate expression used by the generator.\n      It MUST equal the `xyz` field of `orbit[0]`.\n\n    - **orbit**: REQUIRED; List.\n      Full orbit as a list of affine transformations from Wyckoff-position parameters to fractional coordinates.\n      The first item is the canonical representative whose degrees of freedom can be chosen to place it inside the asymmetric unit.\n\n    - **orbit\\_mod\\_centering**: REQUIRED; List.\n      Orbit representatives modulo centering translations, represented in the same form as `orbit`.",
                 "properties": {
                     "letter": {
                         "$id": "https://schemas.optimade.org/defs/v1.3/properties/optimade/common/wyckoff_position",
@@ -5987,7 +6236,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "integer",
                             "null"
                         ],
-                        "description": "Multiplicity of the Wyckoff position in the conventional cell."
+                        "description": "Multiplicity of the Wyckoff position in the unit cell of the recorded setting, including its centering translations."
                     },
                     "sitesym": {
                         "x-optimade-type": "string",
@@ -6016,14 +6265,14 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "array",
                             "null"
                         ],
-                        "description": "A list of three booleans indicating whether each fractional coordinate contains a free parameter.",
+                        "description": "Three booleans identifying the parameter slots `x`, `y`, and `z` introduced when simplifying the source special-position projector.\nThey are not flags for independent motions along the three spatial axes; several output coordinates may depend on the same parameter.\nUse the stored affine maps to determine coordinate dependence and use their matrix rank for the dimension of the parameterized manifold.",
                         "items": {
                             "x-optimade-type": "boolean",
                             "x-optimade-unit": "inapplicable",
                             "type": [
                                 "boolean"
                             ],
-                            "description": "A boolean indicating if the corresponding coordinate is free."
+                            "description": "Whether the corresponding parameter slot is used by the source parameterization."
                         }
                     },
                     "first_orbit_ita": {
@@ -6033,7 +6282,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "string",
                             "null"
                         ],
-                        "description": "Representative coordinate expression following the source convention in the International Tables of Crystallography Volume A (2006), when distinct from `first_orbit`."
+                        "description": "Representative coordinate expression following the source convention in the International Tables of Crystallography Volume A (2006), before selection of the ASU-intersecting orbit member.\nIt may equal `first_orbit`; its parameter and letter conventions include the generator's documented editorial choices."
                     },
                     "first_orbit": {
                         "x-optimade-type": "string",
@@ -6051,7 +6300,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "array",
                             "null"
                         ],
-                        "description": "Full orbit of the Wyckoff position.\nEach item is an affine transformation from the Wyckoff-position parameter vector `(x, y, z)` to one fractional coordinate in the orbit.\nThe matrix part may be singular because special Wyckoff positions can constrain or identify parameters.",
+                        "description": "Full orbit of the Wyckoff position.\nEach item is an affine transformation from the Wyckoff-position parameter vector `(x, y, z)` to one fractional coordinate in the orbit.\nThe same parameter vector MUST be used for every item to construct one complete orbit.\nThe matrix part may be singular because special Wyckoff positions can constrain or identify parameters.\nMultiplicity counts distinct points modulo integer cell translations at generic parameter values; special parameter values can increase site symmetry and collapse orbit points.\nThe chosen first member intersects the ASU for some parameter values, not necessarily for every substitution.",
                         "items": {
                             "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
                             "title": "Affine transformation",
@@ -6068,7 +6317,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "object",
                                 "null"
                             ],
-                            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                             "properties": {
                                 "matrix": {
                                     "x-optimade-type": "list",
@@ -6204,7 +6453,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                         "integer",
                                         "null"
                                     ],
-                                    "description": "Determinant of the matrix part when emitted by the generator."
+                                    "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                 },
                                 "is_orthogonal": {
                                     "x-optimade-type": "boolean",
@@ -6213,7 +6462,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                         "boolean",
                                         "null"
                                     ],
-                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                 }
                             },
                             "examples": [
@@ -6254,7 +6503,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                             "array",
                             "null"
                         ],
-                        "description": "Representatives of the Wyckoff-position orbit modulo centering translations.\nEach item has the same affine-transformation representation as an item in `orbit`.",
+                        "description": "Representatives of the Wyckoff-position orbit modulo centering translations.\nEach item has the same affine-transformation representation as an item in `orbit`.\nIts length MUST equal `multiplicity / n_centering_translations` for the containing space-group setting.\nAdding every centering translation to these orbit members and reducing modulo integer cell translations recovers the full orbit as a set at generic parameter values.",
                         "items": {
                             "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
                             "title": "Affine transformation",
@@ -6271,7 +6520,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                 "object",
                                 "null"
                             ],
-                            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                            "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                             "properties": {
                                 "matrix": {
                                     "x-optimade-type": "list",
@@ -6407,7 +6656,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                         "integer",
                                         "null"
                                     ],
-                                    "description": "Determinant of the matrix part when emitted by the generator."
+                                    "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                                 },
                                 "is_orthogonal": {
                                     "x-optimade-type": "boolean",
@@ -6416,7 +6665,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                         "boolean",
                                         "null"
                                     ],
-                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                    "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                                 }
                             },
                             "examples": [
@@ -6606,6 +6855,31 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "0"
                                 ],
                                 "xyz": "x,y,z"
+                            },
+                            {
+                                "matrix": [
+                                    [
+                                        "-1",
+                                        "0",
+                                        "0"
+                                    ],
+                                    [
+                                        "0",
+                                        "1",
+                                        "0"
+                                    ],
+                                    [
+                                        "0",
+                                        "0",
+                                        "-1"
+                                    ]
+                                ],
+                                "vector": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "xyz": "-x,y,-z"
                             }
                         ],
                         "orbit_mod_centering": [
@@ -6633,6 +6907,31 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                                     "0"
                                 ],
                                 "xyz": "x,y,z"
+                            },
+                            {
+                                "matrix": [
+                                    [
+                                        "-1",
+                                        "0",
+                                        "0"
+                                    ],
+                                    [
+                                        "0",
+                                        "1",
+                                        "0"
+                                    ],
+                                    [
+                                        "0",
+                                        "0",
+                                        "-1"
+                                    ]
+                                ],
+                                "vector": [
+                                    "0",
+                                    "0",
+                                    "0"
+                                ],
+                                "xyz": "-x,y,-z"
                             }
                         ]
                     }
@@ -6660,7 +6959,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
                 "array",
                 "null"
             ],
-            "description": "Sets of Wyckoff letters related by normalizer operations.\n\nEach inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.",
+            "description": "Sets of Wyckoff letters related by normalizer operations.\n\nEach inner list groups Wyckoff positions that can be interchanged by the relevant normalizer action.\n\nThe generator forms these classes using the finite group obtained by expanding cctbx's additional Euclidean-normalizer generators in the recorded Hall setting.\nEvery Wyckoff letter occurs in exactly one inner list, including singleton lists.\nA normalizer-induced permutation preserves multiplicity and the conjugacy type of site symmetry, although the oriented site-symmetry symbols can change.\nThis grouping describes the generated Euclidean-normalizer action; it is not a claim to enumerate equivalence under the full affine normalizer or its continuous freedoms.",
             "x-optimade-unit": "inapplicable",
             "items": {
                 "x-optimade-type": "list",

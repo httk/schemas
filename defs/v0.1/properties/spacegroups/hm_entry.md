@@ -19,6 +19,10 @@ The symbol is a full Hermann-Mauguin-style setting label, except that:
 - The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.
 - The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.
 
+This lookup key preserves capitalization and spaces: unlike `hall_entry`, it is not lowercased or underscore-normalized.
+H-M entries and their aliases are resolved through the dataset's H-M-entry index; more than one conventional label can identify the same generated Hall record.
+This label selects a setting convention; use the embedded affine operations to perform coordinate transformations.
+
 **Examples:**
 
 - `"P 1"`
@@ -46,7 +50,7 @@ The symbol is a full Hermann-Mauguin-style setting label, except that:
         "string",
         "null"
     ],
-    "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.",
+    "description": "The Hermann-Mauguin entry label for a conventional space-group setting from table A1.4.2.7 of the [International Tables for Crystallography (2006). Volume B, Reciprocal space. ISBN: 978-0-7923-6592-1, doi:10.1107/97809553602060000102](https://doi.org/10.1107/97809553602060000102).\n\nThe symbol is a full Hermann-Mauguin-style setting label, except that:\n\n* The older glide-plane letters are used, rather than the newer `e` notation introduced in the Fourth Edition of the International Tables for Crystallography (1995) for the space groups Aem2 (39), Aea2 (41), Cmce (64), Cmme (67) and Ccce (68).\n* When necessary to disambiguate the 530 conventional settings, an origin-choice suffix (`:1`, `:2`) is used.\n\n**Requirements/Conventions**:\n\n- The value MUST be written as a plain string with spaces between Hermann-Mauguin symbol parts.\n- The disambiguation suffix MUST be a colon `:`  and an integer appended to the string without whitespace, for example `:1` or `:2`.\n\nThis lookup key preserves capitalization and spaces: unlike `hall_entry`, it is not lowercased or underscore-normalized.\nH-M entries and their aliases are resolved through the dataset's H-M-entry index; more than one conventional label can identify the same generated Hall record.\nThis label selects a setting convention; use the embedded affine operations to perform coordinate transformations.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         "P 1",

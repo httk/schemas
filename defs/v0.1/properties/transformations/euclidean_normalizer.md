@@ -52,9 +52,16 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
       This keeps one operation for each linear part and translation class modulo centering, while `symops` keeps the complete operation list.
       Each item follows `/defs/v0.1/properties/symmetry/op`.
 
+This is the finite operation list of the group obtained by expanding cctbx's additional Euclidean-normalizer generators, represented modulo integer translations of the recorded cell.
+It includes the original space-group operations and the identity, unlike the nontrivial coset lists in the two affine-normalizer properties.
+The normalizer's `n_centering_translations` counts its own pure-translation representatives, which can outnumber the centering translations of the original space group.
+Its `n_pointgroup_symops` equals `n_linear_parts`, and `n_symops = n_centering_translations * n_pointgroup_symops`.
+However, `symops_mod_centering` is factored by the original space group's `centering_translations` supplied in the containing H-M record.
+Its length is therefore `n_symops` divided by the length of that outer list and need not equal the normalizer's `n_pointgroup_symops`.
+
 **Examples:**
 
-- `{"normalizer_kind": "euclidean", "n_centering_translations": 1, "n_pointgroup_symops": 1, "n_symops": 2, "n_linear_parts": 2, "symops": [{"affine_transformation": {"xyz": "-x,-y,-z", "matrix": [["-1", "0", "0"], ["0", "-1", "0"], ["0", "0", "-1"]], "vector": ["0", "0", "0"], "det": -1, "is_orthogonal": true}, "rot_type": "-1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean"}], "symops_mod_centering": [{"affine_transformation": {"xyz": "-x,-y,-z", "matrix": [["-1", "0", "0"], ["0", "-1", "0"], ["0", "0", "-1"]], "vector": ["0", "0", "0"], "det": -1, "is_orthogonal": true}, "rot_type": "-1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean"}]}`
+- `{"normalizer_kind": "euclidean", "n_centering_translations": 1, "n_pointgroup_symops": 2, "n_symops": 2, "n_linear_parts": 2, "symops": [{"rot_type": "-1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean", "affine_transformation": {"matrix": [["-1", "0", "0"], ["0", "-1", "0"], ["0", "0", "-1"]], "vector": ["0", "0", "0"], "xyz": "-x,-y,-z", "det": -1, "is_orthogonal": true}}, {"rot_type": "1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean", "affine_transformation": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]], "vector": ["0", "0", "0"], "xyz": "x,y,z", "det": 1, "is_orthogonal": true}}], "symops_mod_centering": [{"rot_type": "-1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean", "affine_transformation": {"matrix": [["-1", "0", "0"], ["0", "-1", "0"], ["0", "0", "-1"]], "vector": ["0", "0", "0"], "xyz": "-x,-y,-z", "det": -1, "is_orthogonal": true}}, {"rot_type": "1", "sense": 0, "axis": [0, 0, 0], "screw_glide": ["0", "0", "0"], "origin_shift": ["0", "0", "0"], "operation_kind": "euclidean", "affine_transformation": {"matrix": [["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]], "vector": ["0", "0", "0"], "xyz": "x,y,z", "det": 1, "is_orthogonal": true}}]}`
 
 **Formats:** [[JSON](euclidean_normalizer.json)] [[MD](euclidean_normalizer.md)]
 
@@ -78,7 +85,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
         "object",
         "null"
     ],
-    "description": "Finite Euclidean normalizer operations for one crystallographic space-group setting.\n\nThe Euclidean normalizer consists of metric-preserving affine operations that normalize the space group in the chosen setting.\nThese operations are useful for algorithms that need to compare or enumerate equivalent descriptions of the same setting under rigid crystallographic changes of coordinates.\n\nThis object is generated from the finite Euclidean normalizer operations exposed by cctbx.\nIt is not a bounded candidate search table.\nTherefore fields such as `candidate_set`, `candidate_sets`, and bounded-search `bounds` do not belong to this property.\n\nThis property is one of three related normalizer tables for a setting:\nthis property holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded coset table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded coset table generated from unimodular integer linear parts.\nContinuous origin-shift freedoms are described separately by `continuous_normalizer`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n      For this property the value is `euclidean`.\n\n    - **n\\_centering\\_translations**: REQUIRED; Integer.\n      Number of centering translations represented in the underlying Euclidean normalizer operation construction.\n\n    - **n\\_pointgroup\\_symops**: REQUIRED; Integer.\n      Number of point-group symmetry operations represented before centering translations are combined with them.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of Euclidean normalizer operations listed in `symops`.\n      This value MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Finite Euclidean normalizer operations for the setting.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\n    - **symops\\_mod\\_centering**: REQUIRED; List of dictionaries.\n      Euclidean normalizer operations factorized modulo the centering translations of the setting.\n      This keeps one operation for each linear part and translation class modulo centering, while `symops` keeps the complete operation list.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.",
+    "description": "Finite Euclidean normalizer operations for one crystallographic space-group setting.\n\nThe Euclidean normalizer consists of metric-preserving affine operations that normalize the space group in the chosen setting.\nThese operations are useful for algorithms that need to compare or enumerate equivalent descriptions of the same setting under rigid crystallographic changes of coordinates.\n\nThis object is generated from the finite Euclidean normalizer operations exposed by cctbx.\nIt is not a bounded candidate search table.\nTherefore fields such as `candidate_set`, `candidate_sets`, and bounded-search `bounds` do not belong to this property.\n\nThis property is one of three related normalizer tables for a setting:\nthis property holds the finite Euclidean normalizer operations obtained from cctbx,\n`orthogonal_affine_normalizer` holds the older bounded coset table restricted to signed-permutation linear parts,\nand `affine_normalizer` holds the bounded coset table generated from unimodular integer linear parts.\nContinuous origin-shift freedoms are described separately by `continuous_normalizer`.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **normalizer\\_kind**: REQUIRED; String.\n      Kind label for this normalizer contribution.\n      For this property the value is `euclidean`.\n\n    - **n\\_centering\\_translations**: REQUIRED; Integer.\n      Number of centering translations represented in the underlying Euclidean normalizer operation construction.\n\n    - **n\\_pointgroup\\_symops**: REQUIRED; Integer.\n      Number of point-group symmetry operations represented before centering translations are combined with them.\n\n    - **n\\_symops**: REQUIRED; Integer.\n      Number of Euclidean normalizer operations listed in `symops`.\n      This value MUST equal the length of `symops`.\n\n    - **n\\_linear\\_parts**: REQUIRED; Integer.\n      Number of distinct linear matrix parts represented in `symops`.\n\n    - **symops**: REQUIRED; List of dictionaries.\n      Finite Euclidean normalizer operations for the setting.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\n    - **symops\\_mod\\_centering**: REQUIRED; List of dictionaries.\n      Euclidean normalizer operations factorized modulo the centering translations of the setting.\n      This keeps one operation for each linear part and translation class modulo centering, while `symops` keeps the complete operation list.\n      Each item follows `/defs/v0.1/properties/symmetry/op`.\n\nThis is the finite operation list of the group obtained by expanding cctbx's additional Euclidean-normalizer generators, represented modulo integer translations of the recorded cell.\nIt includes the original space-group operations and the identity, unlike the nontrivial coset lists in the two affine-normalizer properties.\nThe normalizer's `n_centering_translations` counts its own pure-translation representatives, which can outnumber the centering translations of the original space group.\nIts `n_pointgroup_symops` equals `n_linear_parts`, and `n_symops = n_centering_translations * n_pointgroup_symops`.\nHowever, `symops_mod_centering` is factored by the original space group's `centering_translations` supplied in the containing H-M record.\nIts length is therefore `n_symops` divided by the length of that outer list and need not equal the normalizer's `n_pointgroup_symops`.",
     "properties": {
         "normalizer_kind": {
             "x-optimade-type": "string",
@@ -87,7 +94,10 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                 "string",
                 "null"
             ],
-            "description": "Kind label for this normalizer contribution."
+            "description": "Kind label for this normalizer contribution.",
+            "enum": [
+                "euclidean"
+            ]
         },
         "n_centering_translations": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/spacegroups/n_centering_translations",
@@ -113,7 +123,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
         },
         "n_pointgroup_symops": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops",
-            "title": "Number of pointgroup symops",
+            "title": "Number of point-group operations",
             "x-optimade-type": "integer",
             "x-optimade-definition": {
                 "kind": "property",
@@ -126,7 +136,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                 "integer",
                 "null"
             ],
-            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.",
+            "description": "Number of point-group symmetry operations.\n\nFor a space-group entry this is the number of operations of the point group of the space group, and it MUST equal the length of the `symops_representative` list when present.\n\nFor a point-group entry it MUST equal `order` and the length of `symops` when those fields are present.\nFor a space-group entry it is the order of the quotient by the full translation subgroup and MUST equal `n_symops / n_centering_translations`.\nInversion and other improper point operations are included.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 1,
@@ -170,7 +180,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                 "integer",
                 "null"
             ],
-            "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.",
+            "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.\n\nThis value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.",
             "x-optimade-unit": "inapplicable",
             "examples": [
                 2,
@@ -201,7 +211,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -219,7 +229,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -355,7 +365,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -364,7 +374,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -396,6 +406,17 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -450,7 +471,12 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -601,7 +627,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                 "array",
                 "null"
             ],
-            "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
+            "description": "Representative symmetry-operation descriptors modulo centering translations.\n\nEach list member is an operation on the format defined by the property definition: https://schemas.httk.org/defs/v0.1/properties/symmetry/op\n\nTwo listed full operations are equivalent here when their matrices agree and their translation vectors differ by a centering translation modulo integer cell translations.\nThere is one representative for each point-group operation, including inversion-related operations.\nFor a space-group record, the list length MUST equal `n_pointgroup_symops`.\nCombining each representative with every `centering_translations` vector and reducing translations modulo integers recovers `symops` as a set.",
             "items": {
                 "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/op",
                 "title": "Operation",
@@ -618,7 +644,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                     "object",
                     "null"
                 ],
-                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.",
+                "description": "Information related to a crystallographic operation acting within one coordinate setting.\n\nRepresents an affine_transformation that is a crystallographic operation within one setting.\nThe affine map itself is stored in the embedded `affine_transformation` field.\nThe remaining fields classify the operation crystallographically, for example by rotation type, axis, sense, and screw or glide component.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **affine\\_transformation**: REQUIRED; Dictionary.\n      Exact affine map for the operation.\n      It MUST follow `/defs/v0.1/properties/symmetry/affine_transformation`.\n\n    - **operation\\_kind**: OPTIONAL; String.\n      The value `euclidean` identifies an operation emitted within a Euclidean-normalizer table; ordinary point-group and space-group operation records omit it.\n\n    - **rot\\_type**: OPTIONAL; String.\n      Crystallographic operation-type label for the linear part.\n\n    - **axis**: OPTIONAL; List of 3 Integers.\n      Operation axis or invariant direction using the integer-vector convention returned by the generator.\n\n    - **sense**: OPTIONAL; Integer.\n      Rotation sense/sign convention returned by the generator; `0` is used when no handed rotation sense is applicable.\n\n    - **screw\\_glide**: OPTIONAL; List of 3 Fractions (String).\n      Screw-axis or glide-plane component associated with a space-group affine operation.\n\n    - **origin\\_shift**: OPTIONAL; List of 3 Fractions (String).\n      Origin shift associated with the screw/glide decomposition of a space-group affine operation.\n\n- Whether the operation is proper follows from the sign of the `det` field of `affine_transformation`; no separate properness flag is stored.\n\nWriting the affine part as `(W,w)`, the intrinsic translation `screw_glide = v` is defined by `(W,w)^n = (I,n*v)`, where `n` is the order of `W`.\nThe reported `origin_shift = q` satisfies `(I-W)*q = w-v`; moving the coordinate origin to `q` leaves the intrinsic translation `v`.\nIt locates the symmetry element and is not a second translation to add to `w`.\nFor a proper rotation, `axis` is the integer direction fixed by `W`; for a rotoinversion it is the rotation axis fixed by `-W`, hence for a mirror it is the plane-normal direction.\nThese are direct-lattice direction components, not Cartesian unit vectors or reciprocal-plane indices.\nThe identity and inversion use `[0,0,0]` because neither has a unique axis.\nThe signed `sense` follows cctbx's rotation/rotoinversion convention about that reported axis; converting a rotoinversion to a Schoenflies rotation-reflection symbol can reverse the rotation sense.",
                 "properties": {
                     "affine_transformation": {
                         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
@@ -636,7 +662,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "object",
                             "null"
                         ],
-                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                        "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                         "properties": {
                             "matrix": {
                                 "x-optimade-type": "list",
@@ -772,7 +798,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "integer",
                                     "null"
                                 ],
-                                "description": "Determinant of the matrix part when emitted by the generator."
+                                "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                             },
                             "is_orthogonal": {
                                 "x-optimade-type": "boolean",
@@ -781,7 +807,7 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                     "boolean",
                                     "null"
                                 ],
-                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                                "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                             }
                         },
                         "examples": [
@@ -813,6 +839,17 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                                 "is_orthogonal": true
                             }
                         ]
+                    },
+                    "operation_kind": {
+                        "x-optimade-type": "string",
+                        "x-optimade-unit": "inapplicable",
+                        "type": [
+                            "string"
+                        ],
+                        "enum": [
+                            "euclidean"
+                        ],
+                        "description": "Euclidean-normalizer context when present; this does not change the operation's affine action."
                     },
                     "rot_type": {
                         "x-optimade-type": "string",
@@ -867,7 +904,12 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "integer",
                             "null"
                         ],
-                        "description": "Rotation sense/sign convention returned by the generator."
+                        "description": "Rotation sense/sign convention returned by the generator; zero for identity, inversion, twofold rotation, and mirror operations.",
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ]
                     },
                     "screw_glide": {
                         "x-optimade-type": "list",
@@ -1055,13 +1097,30 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
         {
             "normalizer_kind": "euclidean",
             "n_centering_translations": 1,
-            "n_pointgroup_symops": 1,
+            "n_pointgroup_symops": 2,
             "n_symops": 2,
             "n_linear_parts": 2,
             "symops": [
                 {
+                    "rot_type": "-1",
+                    "sense": 0,
+                    "axis": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "screw_glide": [
+                        "0",
+                        "0",
+                        "0"
+                    ],
+                    "origin_shift": [
+                        "0",
+                        "0",
+                        "0"
+                    ],
+                    "operation_kind": "euclidean",
                     "affine_transformation": {
-                        "xyz": "-x,-y,-z",
                         "matrix": [
                             [
                                 "-1",
@@ -1084,10 +1143,13 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "0",
                             "0"
                         ],
+                        "xyz": "-x,-y,-z",
                         "det": -1,
                         "is_orthogonal": true
-                    },
-                    "rot_type": "-1",
+                    }
+                },
+                {
+                    "rot_type": "1",
                     "sense": 0,
                     "axis": [
                         0,
@@ -1104,13 +1166,57 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                         "0",
                         "0"
                     ],
-                    "operation_kind": "euclidean"
+                    "operation_kind": "euclidean",
+                    "affine_transformation": {
+                        "matrix": [
+                            [
+                                "1",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "1",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "0",
+                                "1"
+                            ]
+                        ],
+                        "vector": [
+                            "0",
+                            "0",
+                            "0"
+                        ],
+                        "xyz": "x,y,z",
+                        "det": 1,
+                        "is_orthogonal": true
+                    }
                 }
             ],
             "symops_mod_centering": [
                 {
+                    "rot_type": "-1",
+                    "sense": 0,
+                    "axis": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "screw_glide": [
+                        "0",
+                        "0",
+                        "0"
+                    ],
+                    "origin_shift": [
+                        "0",
+                        "0",
+                        "0"
+                    ],
+                    "operation_kind": "euclidean",
                     "affine_transformation": {
-                        "xyz": "-x,-y,-z",
                         "matrix": [
                             [
                                 "-1",
@@ -1133,10 +1239,13 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                             "0",
                             "0"
                         ],
+                        "xyz": "-x,-y,-z",
                         "det": -1,
                         "is_orthogonal": true
-                    },
-                    "rot_type": "-1",
+                    }
+                },
+                {
+                    "rot_type": "1",
                     "sense": 0,
                     "axis": [
                         0,
@@ -1153,7 +1262,34 @@ Continuous origin-shift freedoms are described separately by `continuous_normali
                         "0",
                         "0"
                     ],
-                    "operation_kind": "euclidean"
+                    "operation_kind": "euclidean",
+                    "affine_transformation": {
+                        "matrix": [
+                            [
+                                "1",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "1",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "0",
+                                "1"
+                            ]
+                        ],
+                        "vector": [
+                            "0",
+                            "0",
+                            "0"
+                        ],
+                        "xyz": "x,y,z",
+                        "det": 1,
+                        "is_orthogonal": true
+                    }
                 }
             ]
         }

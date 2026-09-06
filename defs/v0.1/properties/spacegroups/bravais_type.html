@@ -97,9 +97,12 @@ overflow-wrap: break-word;
 <p><strong>Property name:</strong> Bravais type<br>
 <strong>Description:</strong> The Bravais type of the translational lattice.<br>
 <strong>Type:</strong> string  </p>
-<p>The symbol consists of a lower-case crystal-system letter followed by an upper-case centring symbol.
+<p>The symbol consists of a lower-case crystal-family letter followed by an upper-case centring symbol.
 Side-centred settings (<code>A</code>, <code>B</code>, or <code>C</code> centring) are normalized to the setting-independent <code>S</code> symbol for monoclinic and orthorhombic lattices.
 Body-centred monoclinic settings keep the symbol <code>mI</code>, which describes the same lattice type as <code>mS</code> in a different conventional cell choice.</p>
+<p>The first character follows the crystal-family notation: <code>a</code> denotes triclinic (anorthic), and <code>h</code> covers the hexagonal family, which includes trigonal and hexagonal crystal systems.
+Rhombohedral lattices have <code>hR</code> in both hexagonal-axis and primitive rhombohedral-axis descriptions; <code>centring_type: P</code> in rhombohedral axes does not imply <code>hP</code>.
+The retained <code>mI</code> alternative means the vocabulary has 15 symbols for 14 Bravais lattice types.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>"aP"</code></li>
@@ -126,7 +129,7 @@ Body-centred monoclinic settings keep the symbol <code>mI</code>, which describe
 <span class="w">        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Bravais type of the translational lattice.\n\nThe symbol consists of a lower-case crystal-system letter followed by an upper-case centring symbol.\nSide-centred settings (`A`, `B`, or `C` centring) are normalized to the setting-independent `S` symbol for monoclinic and orthorhombic lattices.\nBody-centred monoclinic settings keep the symbol `mI`, which describes the same lattice type as `mS` in a different conventional cell choice.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The Bravais type of the translational lattice.\n\nThe symbol consists of a lower-case crystal-family letter followed by an upper-case centring symbol.\nSide-centred settings (`A`, `B`, or `C` centring) are normalized to the setting-independent `S` symbol for monoclinic and orthorhombic lattices.\nBody-centred monoclinic settings keep the symbol `mI`, which describes the same lattice type as `mS` in a different conventional cell choice.\n\nThe first character follows the crystal-family notation: `a` denotes triclinic (anorthic), and `h` covers the hexagonal family, which includes trigonal and hexagonal crystal systems.\nRhombohedral lattices have `hR` in both hexagonal-axis and primitive rhombohedral-axis descriptions; `centring_type: P` in rhombohedral axes does not imply `hP`.\nThe retained `mI` alternative means the vocabulary has 15 symbols for 14 Bravais lattice types.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="s2">&quot;aP&quot;</span><span class="p">,</span>

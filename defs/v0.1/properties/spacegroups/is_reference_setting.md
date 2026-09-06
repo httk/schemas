@@ -6,7 +6,9 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `is_reference_setting`
 
 **Property name:** is reference setting  
-**Description:** Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.  
+**Description:** Whether cctbx identifies this Hall setting as its reference setting for the space-group type.
+This is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.
+For the pipeline's selected IT-standard setting, use `index_it_number_to_std_spacegroups` in the dataset's companion `indicies` structure.  
 **Type:** boolean  
 
 
@@ -37,7 +39,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "boolean",
         "null"
     ],
-    "description": "Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.",
+    "description": "Whether cctbx identifies this Hall setting as its reference setting for the space-group type.\nThis is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.\nFor the pipeline's selected IT-standard setting, use `index_it_number_to_std_spacegroups` in the dataset's companion `indicies` structure.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         true,

@@ -10,12 +10,23 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Type:** list  
 
 Rows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.
-Characters are exact complex rational values stored as dictionaries with `re` and `im` fraction strings, so that they round-trip without floating-point loss.
+Each character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.
+Components can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.
+For example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: "-1/2"` and `im: "sqrt(3)/2"`, preserving its algebraic value without replacing the radical by a decimal approximation.
+
+For a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.
+Each row's character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.
+The number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.
+The row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.
+Conjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.
+The current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.
+In particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.
 
 **Examples:**
 
-- `[{"label": "A", "dimension": 1, "characters": [1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}]`
-- `[{"label": "Ag", "dimension": 1, "characters": [1, 1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]`
+- `[{"label": "A", "dimension": 1, "characters": [{"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}]`
+- `[{"label": "Ag", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]`
+- `[{"label": "A", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "1", "im": "0"}, {"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}, {"label": "E_a", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1/2", "im": "sqrt(3)/2"}, {"re": "-1/2", "im": "-sqrt(3)/2"}], "frobenius_schur_indicator": 0, "label_markup": {"latex": "E", "unicode": "E"}}, {"label": "E_b", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1/2", "im": "-sqrt(3)/2"}, {"re": "-1/2", "im": "sqrt(3)/2"}], "frobenius_schur_indicator": 0, "label_markup": {"latex": "E", "unicode": "E"}}]`
 
 **Formats:** [[JSON](character_table_complex.json)] [[MD](character_table_complex.md)]
 
@@ -26,7 +37,6 @@ Characters are exact complex rational values stored as dictionaries with `re` an
     "$id": "https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex",
     "$schema": "https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json",
     "title": "Complex character table",
-    "$comment": "Generated from data-generators JSON-LD fields without external definition URLs.",
     "x-optimade-type": "list",
     "x-optimade-definition": {
         "kind": "property",
@@ -39,7 +49,7 @@ Characters are exact complex rational values stored as dictionaries with `re` an
         "array",
         "null"
     ],
-    "description": "Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters are exact complex rational values stored as dictionaries with `re` and `im` fraction strings, so that they round-trip without floating-point loss.",
+    "description": "Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nEach character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.\nComponents can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.\nFor example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: \"-1/2\"` and `im: \"sqrt(3)/2\"`, preserving its algebraic value without replacing the radical by a decimal approximation.\n\nFor a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.\nEach row's character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.\nThe number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.\nThe row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.\nConjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.\nThe current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.\nIn particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.",
     "x-optimade-unit": "inapplicable",
     "items": {
         "x-optimade-type": "dictionary",
@@ -143,7 +153,7 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                                 "string",
                                 "null"
                             ],
-                            "description": "Exact real part represented as a string.",
+                            "description": "Real component serialized as an integer or rational string for the generated crystallographic tables.",
                             "x-optimade-unit": "inapplicable"
                         },
                         "im": {
@@ -152,7 +162,7 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                                 "string",
                                 "null"
                             ],
-                            "description": "Exact imaginary part represented as a string.",
+                            "description": "Imaginary component serialized as a symbolic real-number string, including signed radicals such as `-sqrt(3)/2`; `0` denotes a real character.",
                             "x-optimade-unit": "inapplicable"
                         }
                     }
@@ -161,11 +171,15 @@ Characters are exact complex rational values stored as dictionaries with `re` an
             },
             "frobenius_schur_indicator": {
                 "x-optimade-type": "integer",
+                "enum": [
+                    0,
+                    1
+                ],
                 "type": [
                     "integer",
                     "null"
                 ],
-                "description": "Frobenius-Schur indicator of the representation.",
+                "description": "The complex-irrep indicator `nu = sum_g chi(g^2)/order`.\nThe emitted value 1 means the irrep admits a real realization; 0 means it is of complex type and has a distinct complex-conjugate partner.\nThe crystallographic point groups covered here have no quaternionic-type irreps (whose indicator would be -1).",
                 "x-optimade-unit": "inapplicable"
             },
             "basis_linear": {
@@ -174,7 +188,7 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                     "array",
                     "null"
                 ],
-                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
+                "description": "Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.",
                 "items": {
                     "x-optimade-type": "string",
                     "type": [
@@ -231,7 +245,10 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                 "label": "A",
                 "dimension": 1,
                 "characters": [
-                    1
+                    {
+                        "re": "1",
+                        "im": "0"
+                    }
                 ],
                 "frobenius_schur_indicator": 1,
                 "label_markup": {
@@ -245,8 +262,14 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                 "label": "Ag",
                 "dimension": 1,
                 "characters": [
-                    1,
-                    1
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "1",
+                        "im": "0"
+                    }
                 ],
                 "frobenius_schur_indicator": 1,
                 "label_markup": {
@@ -258,13 +281,90 @@ Characters are exact complex rational values stored as dictionaries with `re` an
                 "label": "Au",
                 "dimension": 1,
                 "characters": [
-                    1,
-                    -1
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "-1",
+                        "im": "0"
+                    }
                 ],
                 "frobenius_schur_indicator": 1,
                 "label_markup": {
                     "latex": "A_{u}",
                     "unicode": "Au"
+                }
+            }
+        ],
+        [
+            {
+                "label": "A",
+                "dimension": 1,
+                "characters": [
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "1",
+                        "im": "0"
+                    }
+                ],
+                "frobenius_schur_indicator": 1,
+                "label_markup": {
+                    "latex": "A",
+                    "unicode": "A"
+                }
+            },
+            {
+                "label": "E_a",
+                "dimension": 1,
+                "characters": [
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "-1/2",
+                        "im": "sqrt(3)/2"
+                    },
+                    {
+                        "re": "-1/2",
+                        "im": "-sqrt(3)/2"
+                    }
+                ],
+                "frobenius_schur_indicator": 0,
+                "label_markup": {
+                    "latex": "E",
+                    "unicode": "E"
+                }
+            },
+            {
+                "label": "E_b",
+                "dimension": 1,
+                "characters": [
+                    {
+                        "re": "1",
+                        "im": "0"
+                    },
+                    {
+                        "re": "-1/2",
+                        "im": "-sqrt(3)/2"
+                    },
+                    {
+                        "re": "-1/2",
+                        "im": "sqrt(3)/2"
+                    }
+                ],
+                "frobenius_schur_indicator": 0,
+                "label_markup": {
+                    "latex": "E",
+                    "unicode": "E"
                 }
             }
         ]

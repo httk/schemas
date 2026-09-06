@@ -98,6 +98,10 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Subgroup or transform index.<br>
 <strong>Type:</strong> integer  </p>
 <p>For subgroup transforms it is the crystallographic subgroup index <code>[G:H]</code>, equal to the determinant factor of the basis transformation when applicable.</p>
+<p>For the column-vector convention <code>x_G = P*x_H + p</code>, the exact index formula is <code>[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)</code>.
+Equivalently it is the product of the translation index <code>i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)</code> and the point-group index <code>i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)</code>.
+Thus a point-symmetry reduction can have index greater than one even when <code>det(P) = 1</code>.
+In <code>hall_to_it_std_transform</code> the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.</p>
 <p><strong>Examples:</strong></p>
 <ul>
 <li><code>2</code></li>
@@ -121,7 +125,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.\n\nFor the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.\nEquivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.\nThus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.\nIn `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="mi">2</span><span class="p">,</span>

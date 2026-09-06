@@ -9,7 +9,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Description:** Boolean flag indicating whether the space-group type belongs to an enantiomorphic pair.  
 **Type:** boolean  
 
-
+This identifies the 22 space-group types belonging to 11 pairs of distinct enantiomorphic types.
+The partner IT number is given by `it_number_enantiomorphic`; membership is more restrictive than the Sohncke-group flag `is_chiral`.
 
 **Examples:**
 
@@ -37,7 +38,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "boolean",
         "null"
     ],
-    "description": "Boolean flag indicating whether the space-group type belongs to an enantiomorphic pair.",
+    "description": "Boolean flag indicating whether the space-group type belongs to an enantiomorphic pair.\n\nThis identifies the 22 space-group types belonging to 11 pairs of distinct enantiomorphic types.\nThe partner IT number is given by `it_number_enantiomorphic`; membership is more restrictive than the Sohncke-group flag `is_chiral`.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         false,

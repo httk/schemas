@@ -11,6 +11,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 This value MUST equal the length of the `affine_normalizer_cosets` list of the containing record.
 
+The trivial space-group coset is excluded; the count is for the bounded, metric-filtered list and is not the cardinality of the full affine-normalizer quotient.
+
 **Examples:**
 
 - `63`
@@ -37,7 +39,7 @@ This value MUST equal the length of the `affine_normalizer_cosets` list of the c
         "integer",
         "null"
     ],
-    "description": "Number of affine normalizer coset representatives stored for the setting.\n\nThis value MUST equal the length of the `affine_normalizer_cosets` list of the containing record.",
+    "description": "Number of affine normalizer coset representatives stored for the setting.\n\nThis value MUST equal the length of the `affine_normalizer_cosets` list of the containing record.\n\nThe trivial space-group coset is excluded; the count is for the bounded, metric-filtered list and is not the cardinality of the full affine-normalizer quotient.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         63,

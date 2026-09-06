@@ -6,7 +6,10 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `is_chiral`
 
 **Property name:** is chiral  
-**Description:** Boolean flag indicating whether the space group is chiral.  
+**Description:** Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.
+This is cctbx's `is_chiral()` convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.
+It does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by `is_enantiomorphic`.
+It does not by itself determine the handedness or chirality of a molecular motif.  
 **Type:** boolean  
 
 
@@ -37,7 +40,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "boolean",
         "null"
     ],
-    "description": "Boolean flag indicating whether the space group is chiral.",
+    "description": "Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.\nThis is cctbx's `is_chiral()` convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.\nIt does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by `is_enantiomorphic`.\nIt does not by itself determine the handedness or chirality of a molecular motif.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         true,

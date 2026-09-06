@@ -11,6 +11,13 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 Each entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.
 
+A Harker plane contains Patterson displacement vectors between symmetry-related sites.
+For a contributing operation `(W,w)`, those displacements are parameterized by `(W-I)*x+w`; the algebraic rendering may reverse parameter signs without changing the plane.
+The current generator emits the cctbx plane descriptors `algebraic`, `normal`, and `point`; the optional `xyz` and `const` fields are retained but are not emitted.
+Here `normal` is the direct-lattice direction returned by cctbx for the rotation axis, and `point` is a fractional point on the plane.
+For lattice metric g, a displacement u lies in that plane when `normal^T*g*(u-point) = 0`; the fractional components of `normal` must not be treated as a Cartesian unit normal or a reciprocal covector.
+The list covers planes constructed by cctbx's Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.
+
 **Examples:**
 
 - `[{"algebraic": "2*x,0,2*z", "normal": [0, 1, 0], "point": ["0", "0", "0"]}]`
@@ -37,7 +44,7 @@ Each entry describes one plane or special-position condition with an expression 
         "array",
         "null"
     ],
-    "description": "Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.",
+    "description": "Harker planes of the space group in fractional Patterson coordinates.\n\nEach entry describes one plane or special-position condition with an expression and optional exact normal, point, and constant data.\n\nA Harker plane contains Patterson displacement vectors between symmetry-related sites.\nFor a contributing operation `(W,w)`, those displacements are parameterized by `(W-I)*x+w`; the algebraic rendering may reverse parameter signs without changing the plane.\nThe current generator emits the cctbx plane descriptors `algebraic`, `normal`, and `point`; the optional `xyz` and `const` fields are retained but are not emitted.\nHere `normal` is the direct-lattice direction returned by cctbx for the rotation axis, and `point` is a fractional point on the plane.\nFor lattice metric g, a displacement u lies in that plane when `normal^T*g*(u-point) = 0`; the fractional components of `normal` must not be treated as a Cartesian unit normal or a reciprocal covector.\nThe list covers planes constructed by cctbx's Harker-plane routine; it is not an enumeration of all Patterson peaks, Harker lines, or special points.",
     "items": {
         "x-optimade-type": "dictionary",
         "x-optimade-unit": "inapplicable",
@@ -63,7 +70,7 @@ Each entry describes one plane or special-position condition with an expression 
                     "string",
                     "null"
                 ],
-                "description": "Plane equation in `x,y,z` notation when available."
+                "description": "Optional plane expression in `x,y,z` notation; not emitted by the current generator."
             },
             "normal": {
                 "x-optimade-type": "list",
@@ -80,7 +87,7 @@ Each entry describes one plane or special-position condition with an expression 
                     "array",
                     "null"
                 ],
-                "description": "Integer normal vector of the plane.",
+                "description": "Integer direct-lattice direction normal to the plane in the physical metric, following cctbx's rotation-axis convention.",
                 "items": {
                     "x-optimade-type": "integer",
                     "x-optimade-unit": "inapplicable",

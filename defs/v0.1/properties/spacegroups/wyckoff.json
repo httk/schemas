@@ -15,7 +15,7 @@
         "array",
         "null"
     ],
-    "description": "Wyckoff-position table for a specific space-group setting.\n\nEach list item describes one Wyckoff position and includes the Wyckoff letter as ordinary data.\nThis list representation avoids using JSON dictionary keys as crystallographic data.\nItems follow `/properties/symmetry/wyckoff_position`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each item MUST include `letter`, identifying the Wyckoff letter for that position in the setting.\n- `orbit` contains the full orbit as affine transformations from Wyckoff-position parameters to fractional coordinates.\n- `orbit_mod_centering` contains one representative modulo centering translations in the same representation.",
+    "description": "Wyckoff-position table for a specific space-group setting.\n\nEach list item describes one Wyckoff position and includes the Wyckoff letter as ordinary data.\nThis list representation avoids using JSON dictionary keys as crystallographic data.\nItems follow `/properties/symmetry/wyckoff_position`.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries.\n- Each item MUST include `letter`, identifying the Wyckoff letter for that position in the setting.\n- `orbit` contains the full orbit as affine transformations from Wyckoff-position parameters to fractional coordinates.\n- `orbit_mod_centering` contains one representative modulo centering translations in the same representation.\n\nLetters identify positions only together with the space-group setting; do not join different settings by letter alone.\nThe general position and the special positions use a common fractional coordinate basis, but each position has its own parameterization.\nMultiplicities refer to the stored setting's cell, including rhombohedral-axis cells where applicable.",
     "items": {
         "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/wyckoff_position",
         "title": "Wyckoff position",
@@ -32,7 +32,7 @@
             "object",
             "null"
         ],
-        "description": "Information related to a Wyckoff position in a space-group setting.\n\nWyckoff positions represent symmetry-equivalent sites partitioned by multiplicity and site symmetry in a given space group.\nThe property is a dictionary containing information about the multiplicity, oriented site-symmetry symbol, representative coordinate, full orbit, and orbit factorized modulo centering translations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **letter**: REQUIRED; String.\n      Wyckoff letter for this position in the setting.\n\n    - **multiplicity**: REQUIRED; Integer.\n      Multiplicity of the Wyckoff position in the conventional cell.\n      It MUST equal the length of `orbit`.\n\n    - **sitesym**: REQUIRED; String.\n      Oriented site-symmetry symbol.\n\n    - **hasfreedom**: REQUIRED; List of booleans.\n      Flags indicating whether each fractional coordinate has a free parameter.\n\n    - **first\\_orbit**: REQUIRED; String.\n      First representative coordinate expression used by the generator.\n      It MUST equal the `xyz` field of `orbit[0]`.\n\n    - **orbit**: REQUIRED; List.\n      Full orbit as a list of affine transformations from Wyckoff-position parameters to fractional coordinates.\n      The first item is the canonical representative whose degrees of freedom can be chosen to place it inside the asymmetric unit.\n\n    - **orbit\\_mod\\_centering**: REQUIRED; List.\n      Orbit representatives modulo centering translations, represented in the same form as `orbit`.",
+        "description": "Information related to a Wyckoff position in a space-group setting.\n\nA Wyckoff position is a family of point orbits whose site-symmetry subgroups are conjugate within the space group.\nDistinct choices of free parameters generally give distinct orbits belonging to the same Wyckoff position; multiplicity and an unoriented site-symmetry symbol alone need not identify the position uniquely.\nThe property is a dictionary containing information about the multiplicity, oriented site-symmetry symbol, representative coordinate, full orbit, and orbit factorized modulo centering translations.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **letter**: REQUIRED; String.\n      Wyckoff letter for this position in the setting.\n\n    - **multiplicity**: REQUIRED; Integer.\n      Multiplicity of the Wyckoff position in the unit cell of the recorded setting, including its centering translations.\n      It MUST equal the length of `orbit`.\n\n    - **sitesym**: REQUIRED; String.\n      Oriented site-symmetry symbol.\n\n    - **hasfreedom**: REQUIRED; List of booleans.\n      Flags identifying the generator's parameter slots `x`, `y`, and `z` in its Wyckoff parameterization.\n      A repeated parameter in two output coordinates does not represent two independent freedoms.\n\n    - **first\\_orbit\\_ita**: OPTIONAL; String.\n      Source-convention representative retained for comparison with `first_orbit`, including when the two expressions agree.\n\n    - **first\\_orbit**: REQUIRED; String.\n      First representative coordinate expression used by the generator.\n      It MUST equal the `xyz` field of `orbit[0]`.\n\n    - **orbit**: REQUIRED; List.\n      Full orbit as a list of affine transformations from Wyckoff-position parameters to fractional coordinates.\n      The first item is the canonical representative whose degrees of freedom can be chosen to place it inside the asymmetric unit.\n\n    - **orbit\\_mod\\_centering**: REQUIRED; List.\n      Orbit representatives modulo centering translations, represented in the same form as `orbit`.",
         "properties": {
             "letter": {
                 "$id": "https://schemas.optimade.org/defs/v1.3/properties/optimade/common/wyckoff_position",
@@ -91,7 +91,7 @@
                     "integer",
                     "null"
                 ],
-                "description": "Multiplicity of the Wyckoff position in the conventional cell."
+                "description": "Multiplicity of the Wyckoff position in the unit cell of the recorded setting, including its centering translations."
             },
             "sitesym": {
                 "x-optimade-type": "string",
@@ -120,14 +120,14 @@
                     "array",
                     "null"
                 ],
-                "description": "A list of three booleans indicating whether each fractional coordinate contains a free parameter.",
+                "description": "Three booleans identifying the parameter slots `x`, `y`, and `z` introduced when simplifying the source special-position projector.\nThey are not flags for independent motions along the three spatial axes; several output coordinates may depend on the same parameter.\nUse the stored affine maps to determine coordinate dependence and use their matrix rank for the dimension of the parameterized manifold.",
                 "items": {
                     "x-optimade-type": "boolean",
                     "x-optimade-unit": "inapplicable",
                     "type": [
                         "boolean"
                     ],
-                    "description": "A boolean indicating if the corresponding coordinate is free."
+                    "description": "Whether the corresponding parameter slot is used by the source parameterization."
                 }
             },
             "first_orbit_ita": {
@@ -137,7 +137,7 @@
                     "string",
                     "null"
                 ],
-                "description": "Representative coordinate expression following the source convention in the International Tables of Crystallography Volume A (2006), when distinct from `first_orbit`."
+                "description": "Representative coordinate expression following the source convention in the International Tables of Crystallography Volume A (2006), before selection of the ASU-intersecting orbit member.\nIt may equal `first_orbit`; its parameter and letter conventions include the generator's documented editorial choices."
             },
             "first_orbit": {
                 "x-optimade-type": "string",
@@ -155,7 +155,7 @@
                     "array",
                     "null"
                 ],
-                "description": "Full orbit of the Wyckoff position.\nEach item is an affine transformation from the Wyckoff-position parameter vector `(x, y, z)` to one fractional coordinate in the orbit.\nThe matrix part may be singular because special Wyckoff positions can constrain or identify parameters.",
+                "description": "Full orbit of the Wyckoff position.\nEach item is an affine transformation from the Wyckoff-position parameter vector `(x, y, z)` to one fractional coordinate in the orbit.\nThe same parameter vector MUST be used for every item to construct one complete orbit.\nThe matrix part may be singular because special Wyckoff positions can constrain or identify parameters.\nMultiplicity counts distinct points modulo integer cell translations at generic parameter values; special parameter values can increase site symmetry and collapse orbit points.\nThe chosen first member intersects the ASU for some parameter values, not necessarily for every substitution.",
                 "items": {
                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
                     "title": "Affine transformation",
@@ -172,7 +172,7 @@
                         "object",
                         "null"
                     ],
-                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                     "properties": {
                         "matrix": {
                             "x-optimade-type": "list",
@@ -308,7 +308,7 @@
                                 "integer",
                                 "null"
                             ],
-                            "description": "Determinant of the matrix part when emitted by the generator."
+                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                         },
                         "is_orthogonal": {
                             "x-optimade-type": "boolean",
@@ -317,7 +317,7 @@
                                 "boolean",
                                 "null"
                             ],
-                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                         }
                     },
                     "examples": [
@@ -358,7 +358,7 @@
                     "array",
                     "null"
                 ],
-                "description": "Representatives of the Wyckoff-position orbit modulo centering translations.\nEach item has the same affine-transformation representation as an item in `orbit`.",
+                "description": "Representatives of the Wyckoff-position orbit modulo centering translations.\nEach item has the same affine-transformation representation as an item in `orbit`.\nIts length MUST equal `multiplicity / n_centering_translations` for the containing space-group setting.\nAdding every centering translation to these orbit members and reducing modulo integer cell translations recovers the full orbit as a set at generic parameter values.",
                 "items": {
                     "$id": "https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation",
                     "title": "Affine transformation",
@@ -375,7 +375,7 @@
                         "object",
                         "null"
                     ],
-                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn affine transformation is a geometric transformation preserving points, straight lines, and parallelism (collinearity), but may not preserve Euclidean distances and angles.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether `matrix` is orthogonal in the exact representation used by the generator.",
+                    "description": "An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.",
                     "properties": {
                         "matrix": {
                             "x-optimade-type": "list",
@@ -511,7 +511,7 @@
                                 "integer",
                                 "null"
                             ],
-                            "description": "Determinant of the matrix part when emitted by the generator."
+                            "description": "Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."
                         },
                         "is_orthogonal": {
                             "x-optimade-type": "boolean",
@@ -520,7 +520,7 @@
                                 "boolean",
                                 "null"
                             ],
-                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
+                            "description": "Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."
                         }
                     },
                     "examples": [
@@ -710,6 +710,31 @@
                             "0"
                         ],
                         "xyz": "x,y,z"
+                    },
+                    {
+                        "matrix": [
+                            [
+                                "-1",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "1",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "0",
+                                "-1"
+                            ]
+                        ],
+                        "vector": [
+                            "0",
+                            "0",
+                            "0"
+                        ],
+                        "xyz": "-x,y,-z"
                     }
                 ],
                 "orbit_mod_centering": [
@@ -737,6 +762,31 @@
                             "0"
                         ],
                         "xyz": "x,y,z"
+                    },
+                    {
+                        "matrix": [
+                            [
+                                "-1",
+                                "0",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "1",
+                                "0"
+                            ],
+                            [
+                                "0",
+                                "0",
+                                "-1"
+                            ]
+                        ],
+                        "vector": [
+                            "0",
+                            "0",
+                            "0"
+                        ],
+                        "xyz": "-x,y,-z"
                     }
                 ]
             }

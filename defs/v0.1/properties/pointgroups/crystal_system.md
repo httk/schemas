@@ -11,6 +11,10 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 Values use the conventional crystallographic system names.
 
+This classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.
+Trigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.
+Null denotes unavailable classification, not an additional crystal system.
+
 **Examples:**
 
 - `"triclinic"`
@@ -40,10 +44,9 @@ Values use the conventional crystallographic system names.
         "string",
         "null"
     ],
-    "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.",
+    "description": "The crystal system of the space group or point group.\n\nValues use the conventional crystallographic system names.\n\nThis classifies the crystallographic point symmetry, not a measured set of lattice lengths and angles.\nTrigonal groups remain trigonal whether described in hexagonal or rhombohedral axes; use `bravais_type` on a space-group record for the translational lattice type.\nNull denotes unavailable classification, not an additional crystal system.",
     "x-optimade-unit": "inapplicable",
     "enum": [
-        null,
         "triclinic",
         "monoclinic",
         "orthorhombic",

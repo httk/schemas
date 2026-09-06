@@ -14,7 +14,7 @@
         "boolean",
         "null"
     ],
-    "description": "Boolean flag indicating whether the space group is centric.",
+    "description": "Whether the space group contains an inversion operation `(W,w)` with `W = -I`.\nThe inversion center need not be the coordinate origin; one such center is at `w/2` in fractional coordinates.\nThis tests the space-group symmetry, not the centricity of an individual diffraction reflection.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         false,

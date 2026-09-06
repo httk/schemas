@@ -95,7 +95,10 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral</code></a></strong><br>
 <strong>Definition name:</strong> <code>is_chiral</code></p>
 <p><strong>Property name:</strong> is chiral<br>
-<strong>Description:</strong> Boolean flag indicating whether the space group is chiral.<br>
+<strong>Description:</strong> Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.
+This is cctbx's <code>is_chiral()</code> convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.
+It does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by <code>is_enantiomorphic</code>.
+It does not by itself determine the handedness or chirality of a molecular motif.<br>
 <strong>Type:</strong> boolean  </p>
 <p><strong>Examples:</strong></p>
 <ul>
@@ -120,7 +123,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boolean flag indicating whether the space group is chiral.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.\nThis is cctbx&#39;s `is_chiral()` convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.\nIt does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by `is_enantiomorphic`.\nIt does not by itself determine the handedness or chirality of a molecular motif.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="kc">true</span><span class="p">,</span>

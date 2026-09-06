@@ -11,6 +11,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 Distinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.
 
+This value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.
+
 **Examples:**
 
 - `2`
@@ -37,7 +39,7 @@ Distinctness is determined by exact element-wise comparison of the 3 by 3 matrix
         "integer",
         "null"
     ],
-    "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.",
+    "description": "Number of distinct linear matrix parts represented in a normalizer or transform table.\n\nDistinctness is determined by exact element-wise comparison of the 3 by 3 matrix parts of the listed operations.\n\nThis value MUST equal the number of distinct `affine_transformation.matrix` values in the containing `symops` list when that list is present; translation differences do not increase it.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         2,

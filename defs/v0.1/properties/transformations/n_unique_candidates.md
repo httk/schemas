@@ -11,6 +11,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 The counted candidate set itself is not stored; this value documents the size of the bounded search.
 
+The current composed normalizer generator omits this legacy field; it must not be inferred from `n_raw_candidates` or a final coset count.
+
 **Examples:**
 
 - `48`
@@ -37,7 +39,7 @@ The counted candidate set itself is not stored; this value documents the size of
         "integer",
         "null"
     ],
-    "description": "Number of candidate affine operations remaining after exact duplicate removal.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.",
+    "description": "Number of candidate affine operations remaining after exact duplicate removal.\n\nThe counted candidate set itself is not stored; this value documents the size of the bounded search.\n\nThe current composed normalizer generator omits this legacy field; it must not be inferred from `n_raw_candidates` or a final coset count.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         48,

@@ -11,6 +11,8 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 
 This count is taken before metric-compatibility filtering, so it MAY exceed the length of the stored `symops` list of the containing record.
 
+The pre-filter representative list itself is not stored in this record; the trivial space-group coset is already excluded.
+
 **Examples:**
 
 - `47`
@@ -37,7 +39,7 @@ This count is taken before metric-compatibility filtering, so it MAY exceed the 
         "integer",
         "null"
     ],
-    "description": "Number of nontrivial coset representatives retained after deduplication modulo the space group.\n\nThis count is taken before metric-compatibility filtering, so it MAY exceed the length of the stored `symops` list of the containing record.",
+    "description": "Number of nontrivial coset representatives retained after deduplication modulo the space group.\n\nThis count is taken before metric-compatibility filtering, so it MAY exceed the length of the stored `symops` list of the containing record.\n\nThe pre-filter representative list itself is not stored in this record; the trivial space-group coset is already excluded.",
     "x-optimade-unit": "inapplicable",
     "examples": [
         47,

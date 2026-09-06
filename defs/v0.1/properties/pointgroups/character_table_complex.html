@@ -98,11 +98,21 @@ overflow-wrap: break-word;
 <strong>Description:</strong> Complex irreducible character table of the crystallographic point group.<br>
 <strong>Type:</strong> list  </p>
 <p>Rows correspond to complex irreducible representations and columns follow the order of <code>conjugacy_classes</code>.
-Characters are exact complex rational values stored as dictionaries with <code>re</code> and <code>im</code> fraction strings, so that they round-trip without floating-point loss.</p>
+Each character is stored as a dictionary with string fields <code>re</code> and <code>im</code> representing its real and imaginary components.
+Components can be integers, rational fractions, or algebraic expressions such as <code>sqrt(3)/2</code>; they are not restricted to rational fraction strings.
+For example, the C3 eigenvalue <code>exp(2*pi*i/3)</code> is represented by <code>re: "-1/2"</code> and <code>im: "sqrt(3)/2"</code>, preserving its algebraic value without replacing the radical by a decimal approximation.</p>
+<p>For a representation D and class representative g, the character is <code>trace(D(g))</code>; every member of a conjugacy class has the same character.
+Each row's character list MUST have length <code>n_conjugacy_classes</code>, and its identity-class character MUST equal <code>dimension</code>.
+The number of complex irreducible rows MUST equal <code>n_conjugacy_classes</code>, and the sum of their squared dimensions MUST equal <code>order</code>.
+The row inner product is weighted by class size: <code>sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab</code>.
+Conjugate one-dimensional rows use distinct <code>_a</code> and <code>_b</code> label suffixes even when their <code>label_markup</code> renderings coincide; join rows by <code>label</code>, not by markup.
+The current generator places polynomial bases only in <code>character_table_real</code>; the optional basis fields retained here are not emitted.
+In particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.</p>
 <p><strong>Examples:</strong></p>
 <ul>
-<li><code>[{"label": "A", "dimension": 1, "characters": [1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}]</code></li>
-<li><code>[{"label": "Ag", "dimension": 1, "characters": [1, 1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [1, -1], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]</code></li>
+<li><code>[{"label": "A", "dimension": 1, "characters": [{"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}]</code></li>
+<li><code>[{"label": "Ag", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{g}", "unicode": "Ag"}}, {"label": "Au", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A_{u}", "unicode": "Au"}}]</code></li>
+<li><code>[{"label": "A", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "1", "im": "0"}, {"re": "1", "im": "0"}], "frobenius_schur_indicator": 1, "label_markup": {"latex": "A", "unicode": "A"}}, {"label": "E_a", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1/2", "im": "sqrt(3)/2"}, {"re": "-1/2", "im": "-sqrt(3)/2"}], "frobenius_schur_indicator": 0, "label_markup": {"latex": "E", "unicode": "E"}}, {"label": "E_b", "dimension": 1, "characters": [{"re": "1", "im": "0"}, {"re": "-1/2", "im": "-sqrt(3)/2"}, {"re": "-1/2", "im": "sqrt(3)/2"}], "frobenius_schur_indicator": 0, "label_markup": {"latex": "E", "unicode": "E"}}]</code></li>
 </ul>
 <p><strong>Formats:</strong> [<a href="character_table_complex.json">JSON</a>] [<a href="character_table_complex.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
@@ -110,7 +120,6 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complex character table&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;$comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generated from data-generators JSON-LD fields without external definition URLs.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
@@ -123,7 +132,7 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">&quot;null&quot;</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nCharacters are exact complex rational values stored as dictionaries with `re` and `im` fraction strings, so that they round-trip without floating-point loss.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nEach character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.\nComponents can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.\nFor example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: \&quot;-1/2\&quot;` and `im: \&quot;sqrt(3)/2\&quot;`, preserving its algebraic value without replacing the radical by a decimal approximation.\n\nFor a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.\nEach row&#39;s character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.\nThe number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.\nThe row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.\nConjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.\nThe current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.\nIn particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
@@ -227,7 +236,7 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact real part represented as a string.&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Real component serialized as an integer or rational string for the generated crystallographic tables.&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">                        </span><span class="p">},</span>
 <span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -236,7 +245,7 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                                </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact imaginary part represented as a string.&quot;</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Imaginary component serialized as a symbolic real-number string, including signed radicals such as `-sqrt(3)/2`; `0` denotes a real character.&quot;</span><span class="p">,</span>
 <span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">                        </span><span class="p">}</span>
 <span class="w">                    </span><span class="p">}</span>
@@ -245,11 +254,15 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="mi">1</span>
+<span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Frobenius-Schur indicator of the representation.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The complex-irrep indicator `nu = sum_g chi(g^2)/order`.\nThe emitted value 1 means the irrep admits a real realization; 0 means it is of complex type and has a distinct complex-conjugate partner.\nThe crystallographic point groups covered here have no quaternionic-type irreps (whose indicator would be -1).&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="nt">&quot;basis_linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -258,7 +271,7 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="s2">&quot;null&quot;</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`. The listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
@@ -315,7 +328,10 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">1</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -329,8 +345,14 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ag&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">1</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -342,13 +364,90 @@ Characters are exact complex rational values stored as dictionaries with <code>r
 <span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Au&quot;</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                    </span><span class="mi">-1</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{u}&quot;</span><span class="p">,</span>
 <span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Au&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E_a&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqrt(3)/2&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-sqrt(3)/2&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E_b&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-sqrt(3)/2&quot;</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqrt(3)/2&quot;</span>
+<span class="w">                    </span><span class="p">}</span>
+<span class="w">                </span><span class="p">],</span>
+<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">]</span>

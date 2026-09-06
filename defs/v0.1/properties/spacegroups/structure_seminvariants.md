@@ -6,20 +6,28 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `structure_seminvariants`
 
 **Property name:** Structure seminvariants  
-**Description:** Structure seminvariant vectors and moduli for the space-group setting.  
+**Description:** Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.  
 **Type:** list  
 
-These characterize phase restrictions and FFT grid constraints associated with the symmetry.
-They are on format of a list of dictionaries.
-The dictionaries MUST contain the fields:
+These are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx's FFT gridding restrictions.
+For a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair `(v,m)` satisfies `v dot h = 0 (mod m)` for `m > 0`, or `v dot h = 0` as an ordinary equality for `m = 0`.
+A positive modulus describes a discrete allowed origin shift `v/m`; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.
+These restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.
 
-- vector: List of Integer. One structure-seminvariant condition vector.
-- modulus: Integer. Modulus for the seminvariant congruence.
+**Requirements/Conventions**:
+
+- It MUST be a list of dictionaries, each with the following keys:
+
+    - **vector**: REQUIRED; List of 3 Integers.
+      Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.
+
+    - **modulus**: REQUIRED; Integer.
+      Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.
 
 **Examples:**
 
-- `[{"vector": [1, 0], "modulus": 0}, {"vector": [0, 1], "modulus": 0}, {"vector": [0, 0], "modulus": 0}]`
-- `[{"vector": [1, 0], "modulus": 2}, {"vector": [0, 1], "modulus": 2}, {"vector": [0, 0], "modulus": 2}]`
+- `[{"vector": [1, 0, 0], "modulus": 0}, {"vector": [0, 1, 0], "modulus": 0}, {"vector": [0, 0, 1], "modulus": 0}]`
+- `[{"vector": [1, 0, 0], "modulus": 2}, {"vector": [0, 1, 0], "modulus": 2}, {"vector": [0, 0, 1], "modulus": 2}]`
 
 **Formats:** [[JSON](structure_seminvariants.json)] [[MD](structure_seminvariants.md)]
 
@@ -42,7 +50,7 @@ The dictionaries MUST contain the fields:
         "array",
         "null"
     ],
-    "description": "Structure seminvariant vectors and moduli for the space-group setting.\n\nThese characterize phase restrictions and FFT grid constraints associated with the symmetry.\nThey are on format of a list of dictionaries.\nThe dictionaries MUST contain the fields:\n\n- vector: List of Integer. One structure-seminvariant condition vector.\n- modulus: Integer. Modulus for the seminvariant congruence. ",
+    "description": "Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.\n\nThese are useful for phase-origin constraints in structure determination and for comparing origin choices; they also enter cctbx's FFT gridding restrictions.\nFor a Miller-index column h, the phase of a reflection is a structure seminvariant precisely when every listed pair `(v,m)` satisfies `v dot h = 0 (mod m)` for `m > 0`, or `v dot h = 0` as an ordinary equality for `m = 0`.\nA positive modulus describes a discrete allowed origin shift `v/m`; modulus zero describes arbitrary continuous shifts parallel to v, not division by zero.\nThese restrictions concern phase changes under allowed origins; they are not systematic-absence conditions on reflection intensities.\n\n**Requirements/Conventions**:\n\n- It MUST be a list of dictionaries, each with the following keys:\n\n    - **vector**: REQUIRED; List of 3 Integers.\n      Structure-seminvariant vector in the fractional-coordinate basis, paired with Miller indices in its reciprocal basis.\n\n    - **modulus**: REQUIRED; Integer.\n      Positive modulus for a discrete shift, or zero for a continuous origin-shift direction.",
     "x-optimade-unit": "inapplicable",
     "items": {
         "x-optimade-type": "dictionary",
@@ -84,7 +92,7 @@ The dictionaries MUST contain the fields:
                     "integer",
                     "null"
                 ],
-                "description": "Modulus for the seminvariant congruence.",
+                "description": "Positive modulus for the discrete seminvariant congruence, or zero for an exact equality associated with a continuous allowed shift.",
                 "x-optimade-unit": "inapplicable"
             }
         },
@@ -95,21 +103,24 @@ The dictionaries MUST contain the fields:
             {
                 "vector": [
                     1,
+                    0,
                     0
                 ],
                 "modulus": 0
             },
             {
                 "vector": [
+                    0,
+                    1,
+                    0
+                ],
+                "modulus": 0
+            },
+            {
+                "vector": [
+                    0,
                     0,
                     1
-                ],
-                "modulus": 0
-            },
-            {
-                "vector": [
-                    0,
-                    0
                 ],
                 "modulus": 0
             }
@@ -118,21 +129,24 @@ The dictionaries MUST contain the fields:
             {
                 "vector": [
                     1,
+                    0,
                     0
                 ],
                 "modulus": 2
             },
             {
                 "vector": [
+                    0,
+                    1,
+                    0
+                ],
+                "modulus": 2
+            },
+            {
+                "vector": [
+                    0,
                     0,
                     1
-                ],
-                "modulus": 2
-            },
-            {
-                "vector": [
-                    0,
-                    0
                 ],
                 "modulus": 2
             }

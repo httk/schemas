@@ -264,7 +264,7 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
 <p>Number of conjugacy classes in the crystallographic point group.</p>
 </li>
 <li>
-<p><strong><a href="v0.1/properties/pointgroups/n_pointgroup_symops">Number of pointgroup symops</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops"><code>https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops</code></a></p>
+<p><strong><a href="v0.1/properties/pointgroups/n_pointgroup_symops">Number of point-group operations</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops"><code>https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops</code></a></p>
 <p>Number of point-group symmetry operations.</p>
 </li>
 <li>
@@ -320,7 +320,7 @@ Point-group operations have a zero translation part, so the <code>screw_glide</c
 <p>The Bravais type of the translational lattice.</p>
 </li>
 <li>
-<p><strong><a href="v0.1/properties/spacegroups/cctbx_fft_grid_factors">Cctbx FFT grid factors</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors</code></a></p>
+<p><strong><a href="v0.1/properties/spacegroups/cctbx_fft_grid_factors">cctbx FFT grid factors</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/cctbx_fft_grid_factors</code></a></p>
 <p>FFT grid-factor requirements derived from cctbx for the space group, its structure seminvariants, and its Euclidean normalizer.</p>
 </li>
 <li>
@@ -453,11 +453,16 @@ Point-group operations have a zero translation part, so the <code>screw_glide</c
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/is_centric">is centric</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_centric</code></a></p>
-<p>Boolean flag indicating whether the space group is centric.</p>
+<p>Whether the space group contains an inversion operation <code>(W,w)</code> with <code>W = -I</code>.
+The inversion center need not be the coordinate origin; one such center is at <code>w/2</code> in fractional coordinates.
+This tests the space-group symmetry, not the centricity of an individual diffraction reflection.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/is_chiral">is chiral</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_chiral</code></a></p>
-<p>Boolean flag indicating whether the space group is chiral.</p>
+<p>Whether every operation of the space group preserves handedness, i.e. every linear part has determinant +1.
+This is cctbx's <code>is_chiral()</code> convention and identifies the 65 Sohncke space-group types, excluding mirrors, inversion, glide reflections, and rotoinversions.
+It does not mean that the space-group type belongs to one of the 11 enantiomorphic pairs; that is recorded by <code>is_enantiomorphic</code>.
+It does not by itself determine the handedness or chirality of a molecular motif.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/is_enantiomorphic">is enantiomorphic</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_enantiomorphic"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_enantiomorphic</code></a></p>
@@ -465,7 +470,9 @@ Point-group operations have a zero translation part, so the <code>screw_glide</c
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/is_reference_setting">is reference setting</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/is_reference_setting</code></a></p>
-<p>Boolean flag indicating whether this Hall setting is the selected reference setting for its International Tables space-group number.</p>
+<p>Whether cctbx identifies this Hall setting as its reference setting for the space-group type.
+This is the reference used by cctbx's change-of-basis machinery; it must not be inferred solely from the setting-specific Hermann-Mauguin symbol.
+For the pipeline's selected IT-standard setting, use <code>index_it_number_to_std_spacegroups</code> in the dataset's companion <code>indicies</code> structure.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/it_coordinate_system_code">International Tables coordinate-system code</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/it_coordinate_system_code"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/it_coordinate_system_code</code></a></p>
@@ -488,7 +495,7 @@ Point-group operations have a zero translation part, so the <code>screw_glide</c
 <p>Number of centering translations in the conventional cell of the space-group setting.</p>
 </li>
 <li>
-<p><strong><a href="v0.1/properties/spacegroups/n_pointgroup_symops">Number of pointgroup symops</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops"><code>https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops</code></a></p>
+<p><strong><a href="v0.1/properties/spacegroups/n_pointgroup_symops">Number of point-group operations</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops"><code>https://schemas.httk.org/defs/v0.1/properties/pointgroups/n_pointgroup_symops</code></a></p>
 <p>Number of point-group symmetry operations.</p>
 </li>
 <li>
@@ -538,7 +545,7 @@ The plain string value is stored in the corresponding unsuffixed property; this 
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/structure_seminvariants">Structure seminvariants</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/structure_seminvariants</code></a></p>
-<p>Structure seminvariant vectors and moduli for the space-group setting.</p>
+<p>Structure-seminvariant vectors and moduli for the space-group setting, describing allowed changes of origin that preserve its symmetry description.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/symops">Symmetry operations</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops</code></a></p>
@@ -546,7 +553,11 @@ The plain string value is stored in the corresponding unsuffixed property; this 
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/symops_generators">Symmetry operation generators</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_generators"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_generators</code></a></p>
-<p>Minimal generator subset of the full symmetry-operation group for a space-group setting.</p>
+<p>Generator subset of the finite symmetry-operation list for a space-group setting.
+Composition of these operations, with translations reduced modulo integer cell translations, generates <code>symops</code>, including the centering translations.
+Integer cell translations are implicit generators of the infinite space group.
+The generator selects operations greedily; the list is not promised to have the smallest possible cardinality.
+Identity is omitted, so the P1 list is empty.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/spacegroups/symops_mod_centering">Symmetry operations modulo centering translations</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_mod_centering"><code>https://schemas.httk.org/defs/v0.1/properties/spacegroups/symops_mod_centering</code></a></p>
@@ -695,7 +706,8 @@ A <code>null</code> value indicates that the time step is unknown.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/transformations/n_raw_candidates">Number of raw candidates</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/n_raw_candidates"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/n_raw_candidates</code></a></p>
-<p>Number of candidate affine operations considered before filtering and deduplication.</p>
+<p>Number of accepted affine normalizer candidates generated before quotienting modulo the space group and before metric filtering.
+This is not the number of all linear matrices tested: candidates whose affine normalization equations have no solution are not counted.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/transformations/n_unique_candidates">Number of unique candidates</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/n_unique_candidates"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/n_unique_candidates</code></a></p>
@@ -710,7 +722,7 @@ A <code>null</code> value indicates that the time step is unknown.</p>
 <p>Runtime list of orthogonal signed-permutation affine normalizer coset representatives modulo the space group.</p>
 </li>
 <li>
-<p><strong><a href="v0.1/properties/transformations/same_space_group_affine_images_std">Same space group affine images std</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/same_space_group_affine_images_std"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/same_space_group_affine_images_std</code></a></p>
+<p><strong><a href="v0.1/properties/transformations/same_space_group_affine_images_std">Same-space-group affine images in the standard setting</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/same_space_group_affine_images_std"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/same_space_group_affine_images_std</code></a></p>
 <p>Same-space-group affine-image record for one International Tables standard setting.</p>
 </li>
 <li>
@@ -719,7 +731,7 @@ A <code>null</code> value indicates that the time step is unknown.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/transformations/target">Criterion target</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/target"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/target</code></a></p>
-<p>Exact target vector or scalar of a generated linear criterion.</p>
+<p>Exact right-hand side of a generated modular linear criterion, stored as a list of fraction strings.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/transformations/to_hall_entry">To Hall entry</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transformations/to_hall_entry"><code>https://schemas.httk.org/defs/v0.1/properties/transformations/to_hall_entry</code></a></p>
