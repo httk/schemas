@@ -105,53 +105,53 @@ Boundary rules are disjunctive normal form rule tables: the outer <code>dnf</cod
 Face rules may descend to edge rules on equality, edge rules may descend to vertex rules on equality, and vertex rules terminate with include or exclude actions.</p>
 <p>The original cctbx-style recursive data structure can be recovered from this bounded representation with the following routine:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bounded_asu_to_cctbx_recursive_data</span><span class="p">(</span><span class="n">bounded</span><span class="p">):</span>
-    <span class="n">planes</span> <span class="o">=</span> <span class="p">{</span><span class="n">plane</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]:</span> <span class="n">plane</span> <span class="k">for</span> <span class="n">plane</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">&quot;planes&quot;</span><span class="p">]}</span>
-    <span class="n">rules</span> <span class="o">=</span> <span class="p">{</span><span class="n">level</span><span class="p">:</span> <span class="p">{</span><span class="n">rule</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]:</span> <span class="n">rule</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">_rules&quot;</span><span class="p">]}</span>
-             <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">)}</span>
+    <span class="n">planes</span> <span class="o">=</span> <span class="p">{</span><span class="n">plane</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]:</span> <span class="n">plane</span> <span class="k">for</span> <span class="n">plane</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">"planes"</span><span class="p">]}</span>
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">{</span><span class="n">level</span><span class="p">:</span> <span class="p">{</span><span class="n">rule</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]:</span> <span class="n">rule</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">_rules"</span><span class="p">]}</span>
+             <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"face"</span><span class="p">,</span> <span class="s2">"edge"</span><span class="p">,</span> <span class="s2">"vertex"</span><span class="p">)}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">expr_from_terms</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">terms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">terms</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-            <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;expr&quot;</span><span class="p">,</span> <span class="s2">&quot;op&quot;</span><span class="p">:</span> <span class="n">op</span><span class="p">,</span> <span class="s2">&quot;lhs&quot;</span><span class="p">:</span> <span class="n">out</span><span class="p">,</span> <span class="s2">&quot;rhs&quot;</span><span class="p">:</span> <span class="n">term</span><span class="p">}</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"kind"</span><span class="p">:</span> <span class="s2">"expr"</span><span class="p">,</span> <span class="s2">"op"</span><span class="p">:</span> <span class="n">op</span><span class="p">,</span> <span class="s2">"lhs"</span><span class="p">:</span> <span class="n">out</span><span class="p">,</span> <span class="s2">"rhs"</span><span class="p">:</span> <span class="n">term</span><span class="p">}</span>
         <span class="k">return</span> <span class="n">out</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">expr_from_rule</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">rule_id</span><span class="p">):</span>
         <span class="n">clauses</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">clause</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">[</span><span class="n">level</span><span class="p">][</span><span class="n">rule_id</span><span class="p">][</span><span class="s2">&quot;dnf&quot;</span><span class="p">]:</span>
-            <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">cut_from_action</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;plane_id&quot;</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="s2">&quot;on_zero&quot;</span><span class="p">],</span> <span class="n">level</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">clause</span> <span class="ow">in</span> <span class="n">rules</span><span class="p">[</span><span class="n">level</span><span class="p">][</span><span class="n">rule_id</span><span class="p">][</span><span class="s2">"dnf"</span><span class="p">]:</span>
+            <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">cut_from_action</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s2">"plane_id"</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="s2">"on_zero"</span><span class="p">],</span> <span class="n">level</span><span class="p">)</span>
                      <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">clause</span><span class="p">]</span>
-            <span class="n">clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expr_from_terms</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="s2">&quot;&amp;&quot;</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">expr_from_terms</span><span class="p">(</span><span class="n">clauses</span><span class="p">,</span> <span class="s2">&quot;|&quot;</span><span class="p">)</span>
+            <span class="n">clauses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expr_from_terms</span><span class="p">(</span><span class="n">terms</span><span class="p">,</span> <span class="s2">"&amp;"</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">expr_from_terms</span><span class="p">(</span><span class="n">clauses</span><span class="p">,</span> <span class="s2">"|"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">cut_from_action</span><span class="p">(</span><span class="n">plane_id</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
         <span class="n">plane</span> <span class="o">=</span> <span class="n">planes</span><span class="p">[</span><span class="n">plane_id</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="s2">&quot;exclude&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span><span class="p">[</span><span class="s2">"action"</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"include"</span><span class="p">,</span> <span class="s2">"exclude"</span><span class="p">):</span>
             <span class="n">condition</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">inclusive</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;include&quot;</span>
+            <span class="n">inclusive</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="s2">"action"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"include"</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">next_level</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;volume&quot;</span><span class="p">:</span> <span class="s2">&quot;face&quot;</span><span class="p">,</span> <span class="s2">&quot;face&quot;</span><span class="p">:</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">:</span> <span class="s2">&quot;vertex&quot;</span><span class="p">}[</span><span class="n">level</span><span class="p">]</span>
-            <span class="n">condition</span> <span class="o">=</span> <span class="n">expr_from_rule</span><span class="p">(</span><span class="n">next_level</span><span class="p">,</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;rule_id&quot;</span><span class="p">])</span>
+            <span class="n">next_level</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"volume"</span><span class="p">:</span> <span class="s2">"face"</span><span class="p">,</span> <span class="s2">"face"</span><span class="p">:</span> <span class="s2">"edge"</span><span class="p">,</span> <span class="s2">"edge"</span><span class="p">:</span> <span class="s2">"vertex"</span><span class="p">}[</span><span class="n">level</span><span class="p">]</span>
+            <span class="n">condition</span> <span class="o">=</span> <span class="n">expr_from_rule</span><span class="p">(</span><span class="n">next_level</span><span class="p">,</span> <span class="n">action</span><span class="p">[</span><span class="s2">"rule_id"</span><span class="p">])</span>
             <span class="n">inclusive</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;cut&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;normal&quot;</span><span class="p">:</span> <span class="n">plane</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;const&quot;</span><span class="p">:</span> <span class="n">plane</span><span class="p">[</span><span class="s2">&quot;const&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;inclusive&quot;</span><span class="p">:</span> <span class="n">inclusive</span><span class="p">,</span>
-            <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="n">condition</span><span class="p">,</span>
+            <span class="s2">"kind"</span><span class="p">:</span> <span class="s2">"cut"</span><span class="p">,</span>
+            <span class="s2">"normal"</span><span class="p">:</span> <span class="n">plane</span><span class="p">[</span><span class="s2">"normal"</span><span class="p">],</span>
+            <span class="s2">"const"</span><span class="p">:</span> <span class="n">plane</span><span class="p">[</span><span class="s2">"const"</span><span class="p">],</span>
+            <span class="s2">"inclusive"</span><span class="p">:</span> <span class="n">inclusive</span><span class="p">,</span>
+            <span class="s2">"condition"</span><span class="p">:</span> <span class="n">condition</span><span class="p">,</span>
         <span class="p">}</span>
 
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;cuts&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">cut_from_action</span><span class="p">(</span><span class="n">cut</span><span class="p">[</span><span class="s2">&quot;plane_id&quot;</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="s2">&quot;when_zero&quot;</span><span class="p">],</span> <span class="s2">&quot;volume&quot;</span><span class="p">)</span>
-                 <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">&quot;volume_cuts&quot;</span><span class="p">]],</span>
-        <span class="s2">&quot;shape_only_cuts&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"cuts"</span><span class="p">:</span> <span class="p">[</span><span class="n">cut_from_action</span><span class="p">(</span><span class="n">cut</span><span class="p">[</span><span class="s2">"plane_id"</span><span class="p">],</span> <span class="n">cut</span><span class="p">[</span><span class="s2">"when_zero"</span><span class="p">],</span> <span class="s2">"volume"</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">"volume_cuts"</span><span class="p">]],</span>
+        <span class="s2">"shape_only_cuts"</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
-                <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;cut&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;normal&quot;</span><span class="p">:</span> <span class="n">planes</span><span class="p">[</span><span class="n">cut</span><span class="p">[</span><span class="s2">&quot;plane_id&quot;</span><span class="p">]][</span><span class="s2">&quot;normal&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;const&quot;</span><span class="p">:</span> <span class="n">planes</span><span class="p">[</span><span class="n">cut</span><span class="p">[</span><span class="s2">&quot;plane_id&quot;</span><span class="p">]][</span><span class="s2">&quot;const&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;inclusive&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">"kind"</span><span class="p">:</span> <span class="s2">"cut"</span><span class="p">,</span>
+                <span class="s2">"normal"</span><span class="p">:</span> <span class="n">planes</span><span class="p">[</span><span class="n">cut</span><span class="p">[</span><span class="s2">"plane_id"</span><span class="p">]][</span><span class="s2">"normal"</span><span class="p">],</span>
+                <span class="s2">"const"</span><span class="p">:</span> <span class="n">planes</span><span class="p">[</span><span class="n">cut</span><span class="p">[</span><span class="s2">"plane_id"</span><span class="p">]][</span><span class="s2">"const"</span><span class="p">],</span>
+                <span class="s2">"inclusive"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">"condition"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="p">}</span>
-            <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">&quot;volume_cuts&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">cut</span> <span class="ow">in</span> <span class="n">bounded</span><span class="p">[</span><span class="s2">"volume_cuts"</span><span class="p">]</span>
         <span class="p">],</span>
     <span class="p">}</span>
 </code></pre></div>
@@ -204,313 +204,313 @@ The example below is the full half-open unit-cube ASU of P1.</p>
 <p><strong>Formats:</strong> [<a href="asu.json">JSON</a>] [<a href="asu.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Asymmetric unit&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;asu&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;asu_spacegroups&quot;</span>
+<span class="w">    </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/spacegroups/asu"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Asymmetric unit"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asu"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asu_spacegroups"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"null"</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Direct-space asymmetric unit for the space-group setting, represented as a bounded non-recursive set of half-space cuts and boundary ownership rules.\n\nThe representation is equivalent to the recursive cctbx direct-space ASU cut expression documented by Grosse-Kunstleve et al., Acta Cryst. A67, 269 (2011), but stores the volume, face, edge, and vertex rules in separate fixed-depth tables.\nThe recursive node shape of that source representation is described by `/defs/v0.1/properties/spacegroups/asu_cut`.\nA point is inside the ASU volume only if all `volume_cuts` pass.\nEach volume cut tests an oriented plane from `planes`: a positive plane value includes the point, a negative value excludes it, and an exactly zero value uses `when_zero`.\nBoundary rules are disjunctive normal form rule tables: the outer `dnf` list is OR, each inner list is AND, and each term tests one oriented plane and uses its own `on_zero` action.\nFace rules may descend to edge rules on equality, edge rules may descend to vertex rules on equality, and vertex rules terminate with include or exclude actions.\n\nThe original cctbx-style recursive data structure can be recovered from this bounded representation with the following routine:\n\n```python\ndef bounded_asu_to_cctbx_recursive_data(bounded):\n    planes = {plane[\&quot;id\&quot;]: plane for plane in bounded[\&quot;planes\&quot;]}\n    rules = {level: {rule[\&quot;id\&quot;]: rule for rule in bounded[f\&quot;{level}_rules\&quot;]}\n             for level in (\&quot;face\&quot;, \&quot;edge\&quot;, \&quot;vertex\&quot;)}\n\n    def expr_from_terms(terms, op):\n        out = terms[0] if terms else None\n        for term in terms[1:]:\n            out = {\&quot;kind\&quot;: \&quot;expr\&quot;, \&quot;op\&quot;: op, \&quot;lhs\&quot;: out, \&quot;rhs\&quot;: term}\n        return out\n\n    def expr_from_rule(level, rule_id):\n        clauses = []\n        for clause in rules[level][rule_id][\&quot;dnf\&quot;]:\n            terms = [cut_from_action(t[\&quot;plane_id\&quot;], t[\&quot;on_zero\&quot;], level)\n                     for t in clause]\n            clauses.append(expr_from_terms(terms, \&quot;&amp;\&quot;))\n        return expr_from_terms(clauses, \&quot;|\&quot;)\n\n    def cut_from_action(plane_id, action, level):\n        plane = planes[plane_id]\n        if action[\&quot;action\&quot;] in (\&quot;include\&quot;, \&quot;exclude\&quot;):\n            condition = None\n            inclusive = action[\&quot;action\&quot;] == \&quot;include\&quot;\n        else:\n            next_level = {\&quot;volume\&quot;: \&quot;face\&quot;, \&quot;face\&quot;: \&quot;edge\&quot;, \&quot;edge\&quot;: \&quot;vertex\&quot;}[level]\n            condition = expr_from_rule(next_level, action[\&quot;rule_id\&quot;])\n            inclusive = True\n        return {\n            \&quot;kind\&quot;: \&quot;cut\&quot;,\n            \&quot;normal\&quot;: plane[\&quot;normal\&quot;],\n            \&quot;const\&quot;: plane[\&quot;const\&quot;],\n            \&quot;inclusive\&quot;: inclusive,\n            \&quot;condition\&quot;: condition,\n        }\n\n    return {\n        \&quot;cuts\&quot;: [cut_from_action(cut[\&quot;plane_id\&quot;], cut[\&quot;when_zero\&quot;], \&quot;volume\&quot;)\n                 for cut in bounded[\&quot;volume_cuts\&quot;]],\n        \&quot;shape_only_cuts\&quot;: [\n            {\n                \&quot;kind\&quot;: \&quot;cut\&quot;,\n                \&quot;normal\&quot;: planes[cut[\&quot;plane_id\&quot;]][\&quot;normal\&quot;],\n                \&quot;const\&quot;: planes[cut[\&quot;plane_id\&quot;]][\&quot;const\&quot;],\n                \&quot;inclusive\&quot;: True,\n                \&quot;condition\&quot;: None,\n            }\n            for cut in bounded[\&quot;volume_cuts\&quot;]\n        ],\n    }\n```\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **planes**: REQUIRED; List of dictionaries.\n      Registry of all oriented affine planes used by volume cuts and boundary rules.\n      The plane value is `normal[0]*x + normal[1]*y + normal[2]*z + const` in fractional coordinates.\n      The positive side of the plane is the inside half-space for the corresponding cut term.\n\n    - **volume\\_cuts**: REQUIRED; List of dictionaries.\n      Top-level volume cuts combined as one conjunction.\n      Each volume cut references one plane and gives explicit actions for positive, negative, and zero plane values.\n\n    - **face\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for two-dimensional face-boundary ownership.\n      Face rules are evaluated only when a volume cut plane value is exactly zero.\n\n    - **edge\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for one-dimensional edge-boundary ownership.\n      Edge rules are evaluated only after a volume cut and a face-level term both evaluate exactly to zero.\n\n    - **vertex\\_rules**: REQUIRED; List of dictionaries.\n      Terminal rule table for zero-dimensional vertex-boundary ownership.\n      Vertex rules cannot descend to another rule level.\n\nPlane coefficients are covector components in the fractional basis; `normal` is not generally a Cartesian unit normal.\nAll signs and equality tests refer to `normal dot (x,y,z) + const`, with exact rational coefficients.\nA zero-boundary action is consulted only on the plane: a false boundary condition never includes a point on the negative side.\nPlane and rule identifiers are local to this ASU record; every reference MUST resolve in the appropriate registry and every registry identifier MUST be unique within its table.\nThe `include` and `exclude` actions return true and false for the current cut or term; all top-level cuts must still pass.\nThe shape-only representation closes all top-level boundaries and omits their ownership refinements, so it is unsuitable for assigning boundary points uniquely.\nThe example below is the full half-open unit-cube ASU of P1.&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;planes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Direct-space asymmetric unit for the space-group setting, represented as a bounded non-recursive set of half-space cuts and boundary ownership rules.\n\nThe representation is equivalent to the recursive cctbx direct-space ASU cut expression documented by Grosse-Kunstleve et al., Acta Cryst. A67, 269 (2011), but stores the volume, face, edge, and vertex rules in separate fixed-depth tables.\nThe recursive node shape of that source representation is described by `/defs/v0.1/properties/spacegroups/asu_cut`.\nA point is inside the ASU volume only if all `volume_cuts` pass.\nEach volume cut tests an oriented plane from `planes`: a positive plane value includes the point, a negative value excludes it, and an exactly zero value uses `when_zero`.\nBoundary rules are disjunctive normal form rule tables: the outer `dnf` list is OR, each inner list is AND, and each term tests one oriented plane and uses its own `on_zero` action.\nFace rules may descend to edge rules on equality, edge rules may descend to vertex rules on equality, and vertex rules terminate with include or exclude actions.\n\nThe original cctbx-style recursive data structure can be recovered from this bounded representation with the following routine:\n\n```python\ndef bounded_asu_to_cctbx_recursive_data(bounded):\n    planes = {plane[\"id\"]: plane for plane in bounded[\"planes\"]}\n    rules = {level: {rule[\"id\"]: rule for rule in bounded[f\"{level}_rules\"]}\n             for level in (\"face\", \"edge\", \"vertex\")}\n\n    def expr_from_terms(terms, op):\n        out = terms[0] if terms else None\n        for term in terms[1:]:\n            out = {\"kind\": \"expr\", \"op\": op, \"lhs\": out, \"rhs\": term}\n        return out\n\n    def expr_from_rule(level, rule_id):\n        clauses = []\n        for clause in rules[level][rule_id][\"dnf\"]:\n            terms = [cut_from_action(t[\"plane_id\"], t[\"on_zero\"], level)\n                     for t in clause]\n            clauses.append(expr_from_terms(terms, \"&amp;\"))\n        return expr_from_terms(clauses, \"|\")\n\n    def cut_from_action(plane_id, action, level):\n        plane = planes[plane_id]\n        if action[\"action\"] in (\"include\", \"exclude\"):\n            condition = None\n            inclusive = action[\"action\"] == \"include\"\n        else:\n            next_level = {\"volume\": \"face\", \"face\": \"edge\", \"edge\": \"vertex\"}[level]\n            condition = expr_from_rule(next_level, action[\"rule_id\"])\n            inclusive = True\n        return {\n            \"kind\": \"cut\",\n            \"normal\": plane[\"normal\"],\n            \"const\": plane[\"const\"],\n            \"inclusive\": inclusive,\n            \"condition\": condition,\n        }\n\n    return {\n        \"cuts\": [cut_from_action(cut[\"plane_id\"], cut[\"when_zero\"], \"volume\")\n                 for cut in bounded[\"volume_cuts\"]],\n        \"shape_only_cuts\": [\n            {\n                \"kind\": \"cut\",\n                \"normal\": planes[cut[\"plane_id\"]][\"normal\"],\n                \"const\": planes[cut[\"plane_id\"]][\"const\"],\n                \"inclusive\": True,\n                \"condition\": None,\n            }\n            for cut in bounded[\"volume_cuts\"]\n        ],\n    }\n```\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **planes**: REQUIRED; List of dictionaries.\n      Registry of all oriented affine planes used by volume cuts and boundary rules.\n      The plane value is `normal[0]*x + normal[1]*y + normal[2]*z + const` in fractional coordinates.\n      The positive side of the plane is the inside half-space for the corresponding cut term.\n\n    - **volume\\_cuts**: REQUIRED; List of dictionaries.\n      Top-level volume cuts combined as one conjunction.\n      Each volume cut references one plane and gives explicit actions for positive, negative, and zero plane values.\n\n    - **face\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for two-dimensional face-boundary ownership.\n      Face rules are evaluated only when a volume cut plane value is exactly zero.\n\n    - **edge\\_rules**: REQUIRED; List of dictionaries.\n      Rule table for one-dimensional edge-boundary ownership.\n      Edge rules are evaluated only after a volume cut and a face-level term both evaluate exactly to zero.\n\n    - **vertex\\_rules**: REQUIRED; List of dictionaries.\n      Terminal rule table for zero-dimensional vertex-boundary ownership.\n      Vertex rules cannot descend to another rule level.\n\nPlane coefficients are covector components in the fractional basis; `normal` is not generally a Cartesian unit normal.\nAll signs and equality tests refer to `normal dot (x,y,z) + const`, with exact rational coefficients.\nA zero-boundary action is consulted only on the plane: a false boundary condition never includes a point on the negative side.\nPlane and rule identifiers are local to this ASU record; every reference MUST resolve in the appropriate registry and every registry identifier MUST be unique within its table.\nThe `include` and `exclude` actions return true and false for the current cut or term; all top-level cuts must still pass.\nThe shape-only representation closes all top-level boundaries and omits their ownership refinements, so it is unsuitable for assigning boundary points uniquely.\nThe example below is the full half-open unit-cube ASU of P1."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"planes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Registry of oriented affine planes used by the ASU cuts and rules.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Registry of oriented affine planes used by the ASU cuts and rules."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;normal&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;const&quot;</span>
+<span class="w">                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"normal"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"const"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One oriented affine plane in fractional coordinates.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One oriented affine plane in fractional coordinates."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stable identifier used by `volume_cuts` and rule terms to refer to this plane.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stable identifier used by `volume_cuts` and rule terms to refer to this plane."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-dimensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;dim_lattice&quot;</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-dimensions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"dim_lattice"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="nt">"sizes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                                </span><span class="mi">3</span>
 <span class="w">                            </span><span class="p">]</span>
 <span class="w">                        </span><span class="p">},</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"array"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The three exact rational coefficients multiplying `x`, `y`, and `z` in the plane equation.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction_core&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The three exact rational coefficients multiplying `x`, `y`, and `z` in the plane equation."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/fraction"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fraction"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction_core"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction"</span>
 <span class="w">                            </span><span class="p">},</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"null"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A numerical representation formed as the quotient of two numbers represented as a string.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;2/3&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;5/42&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A numerical representation formed as the quotient of two numbers represented as a string."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"2/3"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"5/42"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"10"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"0"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                        </span><span class="p">}</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction_core&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/fraction"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fraction"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction_core"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction"</span>
 <span class="w">                        </span><span class="p">},</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"null"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A numerical representation formed as the quotient of two numbers represented as a string.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;2/3&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;5/42&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A numerical representation formed as the quotient of two numbers represented as a string."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"2/3"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"5/42"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"10"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"0"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;volume_cuts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"volume_cuts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Top-level ASU volume cuts, combined as an AND-list.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Top-level ASU volume cuts, combined as an AND-list."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;plane_id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;when_positive&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;when_negative&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;when_zero&quot;</span>
+<span class="w">                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"plane_id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"when_positive"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"when_negative"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"when_zero"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One top-level oriented cut of the three-dimensional ASU volume.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One top-level oriented cut of the three-dimensional ASU volume."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stable identifier for this volume cut.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stable identifier for this volume cut."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the plane tested by this volume cut.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the plane tested by this volume cut."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;include&quot;</span>
+<span class="w">                        </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"include"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Action for positive plane values.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action for positive plane values."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;exclude&quot;</span>
+<span class="w">                        </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"exclude"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Action for negative plane values.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action for negative plane values."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"object"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;action&quot;</span>
+<span class="w">                        </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"action"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Action for points exactly on the volume-cut plane.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action for points exactly on the volume-cut plane."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"string"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;evaluate_face_rule&quot;</span>
+<span class="w">                                </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"evaluate_face_rule"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boundary action for this equality case.&quot;</span>
+<span class="w">                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Boundary action for this equality case."</span>
 <span class="w">                            </span><span class="p">},</span>
-<span class="w">                            </span><span class="nt">&quot;rule_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                            </span><span class="nt">"rule_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"null"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the face rule to evaluate when `action` is `evaluate_face_rule`.&quot;</span>
+<span class="w">                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the face rule to evaluate when `action` is `evaluate_face_rule`."</span>
 <span class="w">                            </span><span class="p">}</span>
 <span class="w">                        </span><span class="p">}</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;face_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"face_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Disjunctive-normal-form face-boundary ownership rules.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disjunctive-normal-form face-boundary ownership rules."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;dnf&quot;</span>
+<span class="w">                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"dnf"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One face-level ownership rule.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One face-level ownership rule."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stable identifier for this face rule.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stable identifier for this face rule."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;dnf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                    </span><span class="nt">"dnf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"array"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OR-list of AND-lists of face-level terms.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OR-list of AND-lists of face-level terms."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"array"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One AND-clause in the face-level rule.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One AND-clause in the face-level rule."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"object"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;plane_id&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;on_zero&quot;</span>
+<span class="w">                                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"plane_id"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"on_zero"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One face-level plane test.&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One face-level plane test."</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"string"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the plane tested by this term.&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the plane tested by this term."</span>
 <span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;on_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                                    </span><span class="nt">"on_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"object"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;action&quot;</span>
+<span class="w">                                        </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"action"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Action for points exactly on this face-level term plane.&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                            </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action for points exactly on this face-level term plane."</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"string"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;evaluate_edge_rule&quot;</span>
+<span class="w">                                                </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"evaluate_edge_rule"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boundary action for this equality case.&quot;</span>
+<span class="w">                                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Boundary action for this equality case."</span>
 <span class="w">                                            </span><span class="p">},</span>
-<span class="w">                                            </span><span class="nt">&quot;rule_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                                            </span><span class="nt">"rule_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"null"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the edge rule to evaluate when `action` is `evaluate_edge_rule`.&quot;</span>
+<span class="w">                                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the edge rule to evaluate when `action` is `evaluate_edge_rule`."</span>
 <span class="w">                                            </span><span class="p">}</span>
 <span class="w">                                        </span><span class="p">}</span>
 <span class="w">                                    </span><span class="p">}</span>
@@ -521,100 +521,100 @@ The example below is the full half-open unit-cube ASU of P1.</p>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;edge_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"edge_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Disjunctive-normal-form edge-boundary ownership rules.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disjunctive-normal-form edge-boundary ownership rules."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;dnf&quot;</span>
+<span class="w">                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"dnf"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One edge-level ownership rule.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One edge-level ownership rule."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stable identifier for this edge rule.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stable identifier for this edge rule."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;dnf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                    </span><span class="nt">"dnf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"array"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OR-list of AND-lists of edge-level terms.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OR-list of AND-lists of edge-level terms."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"array"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One AND-clause in the edge-level rule.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One AND-clause in the edge-level rule."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"object"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;plane_id&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;on_zero&quot;</span>
+<span class="w">                                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"plane_id"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"on_zero"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One edge-level plane test.&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One edge-level plane test."</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"string"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the plane tested by this term.&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the plane tested by this term."</span>
 <span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;on_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                                    </span><span class="nt">"on_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"object"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;action&quot;</span>
+<span class="w">                                        </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"action"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Action for points exactly on this edge-level term plane.&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                            </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Action for points exactly on this edge-level term plane."</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"string"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;evaluate_vertex_rule&quot;</span>
+<span class="w">                                                </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"evaluate_vertex_rule"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Boundary action for this equality case.&quot;</span>
+<span class="w">                                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Boundary action for this equality case."</span>
 <span class="w">                                            </span><span class="p">},</span>
-<span class="w">                                            </span><span class="nt">&quot;rule_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                                            </span><span class="nt">"rule_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"null"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the vertex rule to evaluate when `action` is `evaluate_vertex_rule`.&quot;</span>
+<span class="w">                                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the vertex rule to evaluate when `action` is `evaluate_vertex_rule`."</span>
 <span class="w">                                            </span><span class="p">}</span>
 <span class="w">                                        </span><span class="p">}</span>
 <span class="w">                                    </span><span class="p">}</span>
@@ -625,90 +625,90 @@ The example below is the full half-open unit-cube ASU of P1.</p>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;vertex_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"vertex_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Disjunctive-normal-form terminal vertex-boundary ownership rules.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Disjunctive-normal-form terminal vertex-boundary ownership rules."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;dnf&quot;</span>
+<span class="w">                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"id"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"dnf"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One terminal vertex-level ownership rule.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One terminal vertex-level ownership rule."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stable identifier for this vertex rule.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stable identifier for this vertex rule."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;dnf&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                    </span><span class="nt">"dnf"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"array"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OR-list of AND-lists of terminal vertex-level terms.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OR-list of AND-lists of terminal vertex-level terms."</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"array"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One AND-clause in the vertex-level rule.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One AND-clause in the vertex-level rule."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"object"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                    </span><span class="s2">&quot;plane_id&quot;</span><span class="p">,</span>
-<span class="w">                                    </span><span class="s2">&quot;on_zero&quot;</span>
+<span class="w">                                </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                    </span><span class="s2">"plane_id"</span><span class="p">,</span>
+<span class="w">                                    </span><span class="s2">"on_zero"</span>
 <span class="w">                                </span><span class="p">],</span>
-<span class="w">                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One terminal vertex-level plane test.&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One terminal vertex-level plane test."</span><span class="p">,</span>
+<span class="w">                                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"string"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier of the plane tested by this term.&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Identifier of the plane tested by this term."</span>
 <span class="w">                                    </span><span class="p">},</span>
-<span class="w">                                    </span><span class="nt">&quot;on_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;object&quot;</span>
+<span class="w">                                    </span><span class="nt">"on_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"object"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                            </span><span class="s2">&quot;action&quot;</span>
+<span class="w">                                        </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                            </span><span class="s2">"action"</span>
 <span class="w">                                        </span><span class="p">],</span>
-<span class="w">                                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Terminal action for points exactly on this vertex-level term plane.&quot;</span><span class="p">,</span>
-<span class="w">                                        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                            </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                                                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;string&quot;</span>
+<span class="w">                                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terminal action for points exactly on this vertex-level term plane."</span><span class="p">,</span>
+<span class="w">                                        </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                            </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                                                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"string"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                                    </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                                                    </span><span class="s2">&quot;exclude&quot;</span>
+<span class="w">                                                </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                                    </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                                                    </span><span class="s2">"exclude"</span>
 <span class="w">                                                </span><span class="p">],</span>
-<span class="w">                                                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Terminal boundary action for this equality case.&quot;</span>
+<span class="w">                                                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terminal boundary action for this equality case."</span>
 <span class="w">                                            </span><span class="p">}</span>
 <span class="w">                                        </span><span class="p">}</span>
 <span class="w">                                    </span><span class="p">}</span>
@@ -720,123 +720,123 @@ The example below is the full half-open unit-cube ASU of P1.</p>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;planes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="nt">"planes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p1&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"-1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p2&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p2"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"-1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p4&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p4"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"1"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p5&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;normal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;-1&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p5"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"normal"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"-1"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;const&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                    </span><span class="nt">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;volume_cuts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="nt">"volume_cuts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p1&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v2&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p2&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v2"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p2"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v4&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p4&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v4"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p4"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v5&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;plane_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;p5&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_positive&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;include&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_negative&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;when_zero&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;action&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;exclude&quot;</span>
+<span class="w">                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v5"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"plane_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"p5"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_positive"</span><span class="p">:</span><span class="w"> </span><span class="s2">"include"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_negative"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"when_zero"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;face_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">            </span><span class="nt">&quot;edge_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">            </span><span class="nt">&quot;vertex_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">            </span><span class="nt">"face_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">            </span><span class="nt">"edge_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">            </span><span class="nt">"vertex_rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>

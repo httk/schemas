@@ -117,338 +117,338 @@ In particular, the real two-dimensional span for a conjugate pair must not be in
 <p><strong>Formats:</strong> [<a href="character_table_complex.json">JSON</a>] [<a href="character_table_complex.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complex character table&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;character_table_complex&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;character_table_complex_pointgroups&quot;</span>
+<span class="w">    </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Complex character table"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"character_table_complex"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"character_table_complex_pointgroups"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"null"</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nEach character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.\nComponents can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.\nFor example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: \&quot;-1/2\&quot;` and `im: \&quot;sqrt(3)/2\&quot;`, preserving its algebraic value without replacing the radical by a decimal approximation.\n\nFor a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.\nEach row&#39;s character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.\nThe number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.\nThe row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.\nConjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.\nThe current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.\nIn particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row.&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">            </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Complex irreducible character table of the crystallographic point group.\n\nRows correspond to complex irreducible representations and columns follow the order of `conjugacy_classes`.\nEach character is stored as a dictionary with string fields `re` and `im` representing its real and imaginary components.\nComponents can be integers, rational fractions, or algebraic expressions such as `sqrt(3)/2`; they are not restricted to rational fraction strings.\nFor example, the C3 eigenvalue `exp(2*pi*i/3)` is represented by `re: \"-1/2\"` and `im: \"sqrt(3)/2\"`, preserving its algebraic value without replacing the radical by a decimal approximation.\n\nFor a representation D and class representative g, the character is `trace(D(g))`; every member of a conjugacy class has the same character.\nEach row's character list MUST have length `n_conjugacy_classes`, and its identity-class character MUST equal `dimension`.\nThe number of complex irreducible rows MUST equal `n_conjugacy_classes`, and the sum of their squared dimensions MUST equal `order`.\nThe row inner product is weighted by class size: `sum_C size(C)*conj(chi_a(C))*chi_b(C)/order = delta_ab`.\nConjugate one-dimensional rows use distinct `_a` and `_b` label suffixes even when their `label_markup` renderings coincide; join rows by `label`, not by markup.\nThe current generator places polynomial bases only in `character_table_real`; the optional basis fields retained here are not emitted.\nIn particular, the real two-dimensional span for a conjugate pair must not be interpreted as a basis for either single complex row."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">            </span><span class="s2">"null"</span>
 <span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One row of a point-group character table.&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One row of a point-group character table."</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Irreducible-representation label.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Irreducible-representation label."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/string_markups&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;String markups&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string_markups&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string_markups_core&quot;</span>
+<span class="w">            </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/string_markups"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"String markups"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string_markups"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string_markups_core"</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Strings with alternate markup and/or encoding for display rendering.\n\nThe object is intended for display-oriented variants only, a sibling property should be used for canonical plain string value.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **html**: OPTIONAL; String.\n      HTML rendering of the sibling string, using inline HTML elements where needed for typographic structure such as subscripts, superscripts, overlines, fractions, and line breaks.\n\n    - **latex**: OPTIONAL; String.\n      LaTeX rendering of the sibling string, suitable for use with a LaTeX or MathJax-like renderer.\n\n    - **unicode**: OPTIONAL; String.\n      Unicode rendering of the sibling string, using Unicode code points for display features where practical.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;html&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Strings with alternate markup and/or encoding for display rendering.\n\nThe object is intended for display-oriented variants only, a sibling property should be used for canonical plain string value.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **html**: OPTIONAL; String.\n      HTML rendering of the sibling string, using inline HTML elements where needed for typographic structure such as subscripts, superscripts, overlines, fractions, and line breaks.\n\n    - **latex**: OPTIONAL; String.\n      LaTeX rendering of the sibling string, suitable for use with a LaTeX or MathJax-like renderer.\n\n    - **unicode**: OPTIONAL; String.\n      Unicode rendering of the sibling string, using Unicode code points for display features where practical."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"null"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HTML rendering of the sibling string.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML rendering of the sibling string."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"null"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LaTeX rendering of the sibling string.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LaTeX rendering of the sibling string."</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                            </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                            </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="s2">"null"</span>
 <span class="w">                        </span><span class="p">],</span>
-<span class="w">                        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Unicode rendering of the sibling string.&quot;</span>
+<span class="w">                        </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Unicode rendering of the sibling string."</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;html&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;i&gt;P&lt;/i&gt; 2&lt;sub&gt;1&lt;/sub&gt;/&lt;i&gt;c&lt;/i&gt;&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;\\mathit{P}\\,2_{1}/c&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P2\u2081/c&quot;</span>
+<span class="w">                        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;i&gt;P&lt;/i&gt; 2&lt;sub&gt;1&lt;/sub&gt;/&lt;i&gt;c&lt;/i&gt;"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\\mathit{P}\\,2_{1}/c"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P2\u2081/c"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">]</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dimension of the irreducible representation.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dimension of the irreducible representation."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Characters for the conjugacy classes in table order.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Characters for the conjugacy classes in table order."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"null"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One complex character value represented as exact real and imaginary parts.&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One complex character value represented as exact real and imaginary parts."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"null"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Real component serialized as an integer or rational string for the generated crystallographic tables.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Real component serialized as an integer or rational string for the generated crystallographic tables."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                        </span><span class="p">},</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                                </span><span class="s2">"null"</span>
 <span class="w">                            </span><span class="p">],</span>
-<span class="w">                            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Imaginary component serialized as a symbolic real-number string, including signed radicals such as `-sqrt(3)/2`; `0` denotes a real character.&quot;</span><span class="p">,</span>
-<span class="w">                            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Imaginary component serialized as a symbolic real-number string, including signed radicals such as `-sqrt(3)/2`; `0` denotes a real character."</span><span class="p">,</span>
+<span class="w">                            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                        </span><span class="p">}</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">0</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">1</span><span class="p">,</span>
 <span class="w">                    </span><span class="kc">null</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;The complex-irrep indicator `nu = sum_g chi(g^2)/order`.\nThe emitted value 1 means the irrep admits a real realization; 0 means it is of complex type and has a distinct complex-conjugate partner.\nThe crystallographic point groups covered here have no quaternionic-type irreps (whose indicator would be -1).&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The complex-irrep indicator `nu = sum_g chi(g^2)/order`.\nThe emitted value 1 means the irrep admits a real realization; 0 means it is of complex type and has a distinct complex-conjugate partner.\nThe crystallographic point groups covered here have no quaternionic-type irreps (whose indicator would be -1)."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;basis_linear&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"basis_linear"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Linear basis polynomials spanning the isotypic component of this representation in the space of linear functions.\nPolynomials use an orthonormal Cartesian frame (x along a, z along c for hexagonal axes) with exact rational coefficients, e.g. `x`, `x+y`.\nThe listed polynomials are linearly independent; repeated copies of a representation are not separated into conventional multiplets."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"null"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One basis polynomial in Cartesian x, y, z with rational coefficients.&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One basis polynomial in Cartesian x, y, z with rational coefficients."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;basis_rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"basis_rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Axial-vector (rotation) basis polynomials spanning the isotypic component of this representation, in the same Cartesian frame as `basis_linear`, e.g. `Rz`, `Rx+Ry`.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Axial-vector (rotation) basis polynomials spanning the isotypic component of this representation, in the same Cartesian frame as `basis_linear`, e.g. `Rz`, `Rx+Ry`."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"null"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One basis polynomial in Rx, Ry, Rz with rational coefficients.&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One basis polynomial in Rx, Ry, Rz with rational coefficients."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;basis_quadratic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"basis_quadratic"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Quadratic basis polynomials spanning the isotypic component of this representation in the space of homogeneous quadratic functions, in the same Cartesian frame as `basis_linear`, e.g. `x^2+y^2`, `x^2-y^2`, `xz`.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Quadratic basis polynomials spanning the isotypic component of this representation in the space of homogeneous quadratic functions, in the same Cartesian frame as `basis_linear`, e.g. `x^2+y^2`, `x^2-y^2`, `xz`."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"null"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One quadratic basis polynomial in x^2, y^2, z^2, xy, xz, yz with rational coefficients.&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One quadratic basis polynomial in x^2, y^2, z^2, xy, xz, yz with rational coefficients."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">        </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">],</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ag&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ag"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{g}&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Ag&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A_{g}"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ag"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Au&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Au"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A_{u}&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Au&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A_{u}"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Au"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">],</span>
 <span class="w">        </span><span class="p">[</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E_a&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E_a"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqrt(3)/2&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1/2"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sqrt(3)/2"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-sqrt(3)/2&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1/2"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-sqrt(3)/2"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E_b&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;dimension&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;characters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E_b"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"dimension"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"characters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-sqrt(3)/2&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1/2"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-sqrt(3)/2"</span>
 <span class="w">                    </span><span class="p">},</span>
 <span class="w">                    </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;re&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-1/2&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;im&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sqrt(3)/2&quot;</span>
+<span class="w">                        </span><span class="nt">"re"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-1/2"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"im"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sqrt(3)/2"</span>
 <span class="w">                    </span><span class="p">}</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;frobenius_schur_indicator&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label_markup&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;latex&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;unicode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span>
+<span class="w">                </span><span class="nt">"frobenius_schur_indicator"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label_markup"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"latex"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"unicode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"E"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">]</span>

@@ -142,197 +142,197 @@ When used as a parametric coordinate map, the matrix may be singular because spe
 <p><strong>Formats:</strong> [<a href="affine_transformation.json">JSON</a>] [<a href="affine_transformation.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Affine transformation&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;dictionary&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;affine_transformation&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;affine_transformation_symmetry&quot;</span>
+<span class="w">    </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Affine transformation"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dictionary"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"affine_transformation"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"affine_transformation_symmetry"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"null"</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric.&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-dimensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;dim_lattice&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;dim_lattice&quot;</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"An affine transformation acting on fractional crystallographic coordinates.\n\nAn invertible affine transformation preserves collinearity and parallelism, but need not preserve Euclidean distances or angles.\nA singular affine map can collapse a line or plane to a lower-dimensional image.\nThe transformation is represented by a 3 by 3 matrix and a 3-vector, both serialized with exact string entries.\nWith column vectors, the map is `u_out = matrix * u_in + vector`; matrix rows specify the three output components.\nThe containing property identifies whether `u_in` denotes fractional coordinates or abstract Wyckoff parameters and identifies the input and output settings.\nNo wrapping modulo lattice translations is implicit in this equation; apply any required periodic reduction only in the specified output setting.\nThe transformation may, for example, represent an operation within one setting, a setting transform, a subgroup embedding, a normalizer representative, or a parametric coordinate map for a Wyckoff-position orbit representative.\nWhen used as a parametric coordinate map, the matrix may be singular because special Wyckoff positions can constrain or identify parameters.\n\n**Requirements/Conventions**:\n\n- It MUST be a dictionary with the following keys:\n\n    - **matrix**: REQUIRED; Exact 3x3 matrix.\n      Matrix part of the affine transformation.\n      It MUST be represented as a list of three row lists, each containing three exact rational entries represented as strings.\n\n    - **vector**: REQUIRED; List of 3 Fractions (String).\n      Translation or origin-shift vector of the affine transformation in fractional coordinates.\n\n    - **xyz**: OPTIONAL; String.\n      Coordinate expression for the affine transformation in `x,y,z` notation when available.\n      It MUST express the same affine map as `matrix` and `vector`, using `x,y,z` for the input components.\n\n    - **det**: OPTIONAL; Integer.\n      Determinant of `matrix` when the generator emits it.\n\n    - **is\\_orthogonal**: OPTIONAL; Boolean.\n      Whether the linear part preserves the crystallographic metric family specified by the containing setting; this is not a test of the fractional matrix against the Cartesian identity metric."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"matrix"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-dimensions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"dim_lattice"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"dim_lattice"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"sizes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">3</span><span class="p">,</span>
 <span class="w">                    </span><span class="mi">3</span>
 <span class="w">                </span><span class="p">]</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact 3 by 3 matrix part of the affine transformation.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-dimensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;dim_lattice&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exact 3 by 3 matrix part of the affine transformation."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-dimensions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"dim_lattice"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="nt">"sizes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                        </span><span class="mi">3</span>
 <span class="w">                    </span><span class="p">]</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;array&quot;</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"array"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;One row of the exact 3 by 3 matrix.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction_core&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"One row of the exact 3 by 3 matrix."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/fraction"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fraction"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction_core"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction"</span>
 <span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"null"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A numerical representation formed as the quotient of two numbers represented as a string.&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                        </span><span class="s2">&quot;2/3&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;5/42&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A numerical representation formed as the quotient of two numbers represented as a string."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">"2/3"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"5/42"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"10"</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">"0"</span>
 <span class="w">                    </span><span class="p">],</span>
-<span class="w">                    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-dimensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;dim_lattice&quot;</span>
+<span class="w">        </span><span class="nt">"vector"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-dimensions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"names"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"dim_lattice"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;sizes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="nt">"sizes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                    </span><span class="mi">3</span>
 <span class="w">                </span><span class="p">]</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;array&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Exact fractional-coordinate vector part of the affine transformation.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/core/fraction&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fraction&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction_core&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fraction&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Exact fractional-coordinate vector part of the affine transformation."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/fraction"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fraction"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction_core"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fraction"</span>
 <span class="w">                </span><span class="p">},</span>
-<span class="w">                </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;null&quot;</span>
+<span class="w">                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"null"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A numerical representation formed as the quotient of two numbers represented as a string.&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;2/3&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;5/42&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;10&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A numerical representation formed as the quotient of two numbers represented as a string."</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                    </span><span class="s2">"2/3"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"5/42"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"10"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">],</span>
-<span class="w">                </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span>
+<span class="w">                </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/symmetry/op_xyz&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Operation xyz&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-compatibility&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;https://schemas.optimade.org/defs/v1.2/properties/optimade/common/symmetry_operation_xyz&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;https://www.iucr.org/__data/iucr/cifdic_html/2/cif_sym.dic/Ispace_group_symop.operation_xyz.html&quot;</span>
+<span class="w">        </span><span class="nt">"xyz"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/symmetry/op_xyz"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Operation xyz"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-compatibility"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"https://schemas.optimade.org/defs/v1.2/properties/optimade/common/symmetry_operation_xyz"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"https://www.iucr.org/__data/iucr/cifdic_html/2/cif_sym.dic/Ispace_group_symop.operation_xyz.html"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;op_xyz&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;op_xyz_symmetry&quot;</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"op_xyz"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"op_xyz_symmetry"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;string&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Coordinate operation expressed in the algebraic xyz form, also known as Jones&#39; faithful representation (Bradley &amp; Cracknell, 1972: pp. 35-37; adapted for computer strings).\n\nThe following definition is adapted from (and meant to be compatible with) the IUCr symCIF version 1.0.1 dictionary definition of `_space_group_symop.operation_xyz` referenced to: International Tables for Crystallography (2002). Volume A, Space-group symmetry, edited by Th. Hahn, 5th. ed. (Kluwer Academic Publishers).\nIt is available at: https://www.iucr.org/__data/iucr/cifdic_html/2/cif_sym.dic/Ispace_group_symop.operation_xyz.html\n\nIf W is a matrix representation of the rotational part of the symmetry operation defined by the positions and signs of x, y and z, and w is a column of translations defined by the fractions, an equivalent position X&#39; is generated from a given position X by the equation: X&#39; = WX + w.&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-undef-pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?),([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?),([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?)$&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;-x,-y,z&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;x,1/2-y,1/2+z&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Coordinate operation expressed in the algebraic xyz form, also known as Jones' faithful representation (Bradley &amp; Cracknell, 1972: pp. 35-37; adapted for computer strings).\n\nThe following definition is adapted from (and meant to be compatible with) the IUCr symCIF version 1.0.1 dictionary definition of `_space_group_symop.operation_xyz` referenced to: International Tables for Crystallography (2002). Volume A, Space-group symmetry, edited by Th. Hahn, 5th. ed. (Kluwer Academic Publishers).\nIt is available at: https://www.iucr.org/__data/iucr/cifdic_html/2/cif_sym.dic/Ispace_group_symop.operation_xyz.html\n\nIf W is a matrix representation of the rotational part of the symmetry operation defined by the positions and signs of x, y and z, and w is a column of translations defined by the fractions, an equivalent position X' is generated from a given position X by the equation: X' = WX + w."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-undef-pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?),([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?),([-+]?[xyz]([-+][xyz])?([-+](1/2|[12]/3|[1-3]/4|[1-5]/6))?|[-+]?(1/2|[12]/3|[1-3]/4|[1-5]/6)([-+][xyz]([-+][xyz])?)?)$"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"-x,-y,z"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"x,1/2-y,1/2+z"</span>
 <span class="w">            </span><span class="p">]</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"det"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted.&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Determinant of the matrix part when emitted by the generator.\nThis optional integer annotation MUST equal the exact determinant of `matrix`; its absence does not imply determinant one.\nRational matrices can have noninteger determinants, in which case this integer annotation is omitted."</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;null&quot;</span>
+<span class="w">        </span><span class="nt">"is_orthogonal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"boolean"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Whether the matrix part is an isometry of the setting&#39;s metric, i.e. it preserves every metric tensor of the setting&#39;s crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not.&quot;</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Whether the matrix part is an isometry of the setting's metric, i.e. it preserves every metric tensor of the setting's crystal family expressed in this basis.\nFor a same-setting matrix `M` and metric tensor `g`, the criterion is `M^T g M = g` for every positive-definite metric in that family.\nThis is orthogonality with respect to the actual (generally non-Cartesian) lattice metric, not orthogonality of the matrix as a plain array: hexagonal sixfold rotations are isometries, whereas a cell-enlarging transform is not."</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;matrix&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="nt">"matrix"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="s2">"-1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;-1&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span>
+<span class="w">                    </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"-1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"0"</span>
 <span class="w">                </span><span class="p">],</span>
 <span class="w">                </span><span class="p">[</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="s2">&quot;1&quot;</span>
+<span class="w">                    </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                    </span><span class="s2">"1"</span>
 <span class="w">                </span><span class="p">]</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;vector&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="s2">&quot;0&quot;</span>
+<span class="w">            </span><span class="nt">"vector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"0"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"0"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">&quot;xyz&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-x,-y,z&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;det&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;is_orthogonal&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="nt">"xyz"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-x,-y,z"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"det"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"is_orthogonal"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>

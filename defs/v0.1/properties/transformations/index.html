@@ -110,24 +110,24 @@ In <code>hall_to_it_std_transform</code> the value is one even if the two cell c
 <p><strong>Formats:</strong> [<a href="index.json">JSON</a>] [<a href="index.md">MD</a>]</p>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;$id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.httk.org/defs/v0.1/properties/transformations/index&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Subgroup or transform index&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-definition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;kind&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;property&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.3&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;index&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;index_transformations&quot;</span>
+<span class="w">    </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/transformations/index"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/meta/v1.3/optimade/property_definition.json"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subgroup or transform index"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index_transformations"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s2">&quot;integer&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s2">&quot;null&quot;</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"integer"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"null"</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.\n\nFor the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.\nEquivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.\nThus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.\nIn `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property.&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;x-optimade-unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;inapplicable&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Subgroup or transform index.\n\nFor subgroup transforms it is the crystallographic subgroup index `[G:H]`, equal to the determinant factor of the basis transformation when applicable.\n\nFor the column-vector convention `x_G = P*x_H + p`, the exact index formula is `[G:H] = abs(det(P)) * n_symops(G) / n_symops(H)`.\nEquivalently it is the product of the translation index `i_T = abs(det(P))*n_centering_translations(G)/n_centering_translations(H)` and the point-group index `i_P = n_pointgroup_symops(G)/n_pointgroup_symops(H)`.\nThus a point-symmetry reduction can have index greater than one even when `det(P) = 1`.\nIn `hall_to_it_std_transform` the value is one even if the two cell conventions have different volumes; an ordinal index in another table must be interpreted as documented by that parent property."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="mi">2</span><span class="p">,</span>
 <span class="w">        </span><span class="mi">4</span>
 <span class="w">    </span><span class="p">]</span>

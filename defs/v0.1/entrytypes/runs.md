@@ -71,6 +71,18 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
     - **Query:** MUST be a queryable property.
     - **Response:** MUST be included by default in the response.
 
+* **[Workflow definition URI (workflow_definition_uri)](../properties/core/workflow_definition_uri.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri`](https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri.md)  
+  A URI identifying the workflow definition (the code that ran) behind a runs entry, as opposed to the workflow declaration identified by `workflow_declaration_uri`.
+A typical value is a git URI pinned to a full commit hash, of the form `git+https://host/path@<commit>#<subdir>`.
+No particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.
+Null is expected when the executed code is unknown, e.g., for legacy data.
+
+    **Requirements/Conventions:**  
+
+    - **Support:** MUST be supported by all implementations, MUST NOT be `null`.
+    - **Query:** MUST be a queryable property.
+    - **Response:** MUST be included by default in the response.
+
 * **[source ID (source_id)](../properties/core/source_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/source_id`](https://schemas.httk.org/defs/v0.1/properties/core/source_id.md)  
   The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.
 
@@ -240,6 +252,37 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
             "examples": [
                 "https://github.com/httk-workflows/vasp-relax/releases/tag/v1.0.0",
                 "https://schemas.httk.org/workflows/vasp-relax/v1.0"
+            ]
+        },
+        "workflow_definition_uri": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri",
+            "x-optimade-requirements": {
+                "support": "must",
+                "sortable": false,
+                "query-support": "partial",
+                "query-support-operators": [
+                    "=",
+                    "!="
+                ],
+                "response-level": "must"
+            },
+            "title": "Workflow definition URI",
+            "x-optimade-type": "string",
+            "x-optimade-definition": {
+                "kind": "property",
+                "version": "0.1.0",
+                "format": "1.3",
+                "name": "workflow_definition_uri",
+                "label": "workflow_definition_uri_property_httk"
+            },
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "A URI identifying the workflow definition (the code that ran) behind a runs entry, as opposed to the workflow declaration identified by `workflow_declaration_uri`.\nA typical value is a git URI pinned to a full commit hash, of the form `git+https://host/path@<commit>#<subdir>`.\nNo particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.\nNull is expected when the executed code is unknown, e.g., for legacy data.",
+            "examples": [
+                "git+https://github.com/httk/workflows-vasp@458aacb2493586faa2c9ac033334457569aeaf75#vasp-relax"
             ]
         },
         "source_id": {

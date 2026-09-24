@@ -90,6 +90,13 @@
                 Providers wanting two runs recognized as executions of the same declaration MUST use an identical URI.
                 Null is expected for ad-hoc scripts, interactive executions, and legacy data with no formal workflow identifier.
 
+            * **[Workflow definition URI](v0.1/properties/core/workflow_definition_uri.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri`](https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri.md)
+                
+                A URI identifying the workflow definition (the code that ran) behind a runs entry, as opposed to the workflow declaration identified by `workflow_declaration_uri`.
+                A typical value is a git URI pinned to a full commit hash, of the form `git+https://host/path@<commit>#<subdir>`.
+                No particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.
+                Null is expected when the executed code is unknown, e.g., for legacy data.
+
         * **electronic**
             * **[DFT band gap](v0.1/properties/electronic/dft_band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap.md)
                 

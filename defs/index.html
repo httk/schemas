@@ -200,6 +200,13 @@ No particular URI scheme, resolvability, or formalism is mandated.
 Providers wanting two runs recognized as executions of the same declaration MUST use an identical URI.
 Null is expected for ad-hoc scripts, interactive executions, and legacy data with no formal workflow identifier.</p>
 </li>
+<li>
+<p><strong><a href="v0.1/properties/core/workflow_definition_uri">Workflow definition URI</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri"><code>https://schemas.httk.org/defs/v0.1/properties/core/workflow_definition_uri</code></a></p>
+<p>A URI identifying the workflow definition (the code that ran) behind a runs entry, as opposed to the workflow declaration identified by <code>workflow_declaration_uri</code>.
+A typical value is a git URI pinned to a full commit hash, of the form <code>git+https://host/path@&lt;commit&gt;#&lt;subdir&gt;</code>.
+No particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.
+Null is expected when the executed code is unknown, e.g., for legacy data.</p>
+</li>
 </ul>
 </li>
 <li>
