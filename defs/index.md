@@ -58,6 +58,12 @@
                 The explicitly assigned net charge of the whole structure, as a dimensionless charge number, i.e., the charge in units of the elementary charge.
 
         * **core**
+            * **[Average total energy](v0.1/properties/core/average_total_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy`](https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy.md)
+                
+                The total energy of a simulated system averaged over the time evolution of a molecular dynamics run, in electronvolt.
+                It is the average the simulation code reports for the run where the code prints one (for example the averages table of a GROMACS md.log); otherwise it is the arithmetic mean of the total energies the code printed over the run's sampled steps.
+                The averaging window, the sampling interval and the ensemble are determined by the run, so values are comparable only between runs with the same protocol. The value is for the whole simulated system, kinetic plus potential energy. The reference/zero of the total energy scale is method-, force-field- and code-specific, so values are comparable only within one consistent computational setup.
+
             * **[Fraction](v0.1/properties/core/fraction.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/fraction`](https://schemas.httk.org/defs/v0.1/properties/core/fraction.md)
                 
                 A numerical representation formed as the quotient of two numbers represented as a string.
