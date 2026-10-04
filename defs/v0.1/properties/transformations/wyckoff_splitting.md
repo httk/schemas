@@ -44,7 +44,7 @@ Keep the exact affine offsets when evaluating the maps; wrapping parent coordina
     "x-optimade-type": "list",
     "x-optimade-definition": {
         "kind": "property",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "format": "1.3",
         "name": "wyckoff_splitting",
         "label": "wyckoff_splitting_transformations"
@@ -117,7 +117,7 @@ Keep the exact affine offsets when evaluating the maps; wrapping parent coordina
                             "x-optimade-dimensions": {
                                 "names": [
                                     "dim_lattice",
-                                    "dim_affine"
+                                    "_httk_dim_affine"
                                 ],
                                 "sizes": [
                                     3,
@@ -133,7 +133,7 @@ Keep the exact affine offsets when evaluating the maps; wrapping parent coordina
                                 "x-optimade-unit": "inapplicable",
                                 "x-optimade-dimensions": {
                                     "names": [
-                                        "dim_affine"
+                                        "_httk_dim_affine"
                                     ],
                                     "sizes": [
                                         4

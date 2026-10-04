@@ -293,6 +293,40 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 </ul>
 </li>
 <li>
+<p><strong>defects</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/defects/adsorption_energy">Adsorption energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/defects/adsorption_energy"><code>https://schemas.httk.org/defs/v0.1/properties/defects/adsorption_energy</code></a></p>
+<p>The adsorption energy E_ads = E(substrate+adsorbate) - E(substrate) - sum_i n_i E_ref,i, in electronvolt, with n_i the numbers of adsorbed atoms or molecules and E_ref,i their reference energies.
+Negative values mean favourable adsorption.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/defects/charge_transition_level">Charge transition level</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/defects/charge_transition_level"><code>https://schemas.httk.org/defs/v0.1/properties/defects/charge_transition_level</code></a></p>
+<p>The charge transition level q/q' of one defect, in electronvolt: the Fermi level (relative to the valence-band maximum) at which the formation energies of the two charge states are equal. For a single defect it is independent of the chemical potentials.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/defects/charged_defect_formation_energy">Charged defect formation energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/defects/charged_defect_formation_energy"><code>https://schemas.httk.org/defs/v0.1/properties/defects/charged_defect_formation_energy</code></a></p>
+<p>The formation energy of a charged point defect in one charge state, in electronvolt, together with all quantities that entered it. List members <code>elements</code>, <code>atom_changes</code> and <code>chemical_potentials</code> are parallel lists sharing the dimension <code>_httk_dim_elements</code>, since dictionaries cannot have free-form keys; they MUST have equal length.
+E_f = E_def - E_host - sum_i n_i mu_i + q (E_F + E_VBM + dV) + E_corr.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/defects/segregation_energy">Segregation energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/defects/segregation_energy"><code>https://schemas.httk.org/defs/v0.1/properties/defects/segregation_energy</code></a></p>
+<p>The segregation energy of a solute, in electronvolt: E(solute at the target site) - E(solute in a bulk-like reference site).
+Negative values mean that segregation to the target site is favoured.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/defects/surface_energy">Surface energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/defects/surface_energy"><code>https://schemas.httk.org/defs/v0.1/properties/defects/surface_energy</code></a></p>
+<p>The surface energy gamma = (E_slab - N E_bulk - sum_i dn_i mu_i) / A_total, in joule per square metre (J m^-2), with E_bulk the bulk energy per formula-unit-or-atom counted by N, dn_i the excess number of atoms of species i and mu_i their chemical potentials.
+A_total is the total exposed area: both faces of a symmetric slab are counted.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>electronic</strong></p>
 <ul>
 <li>
@@ -307,6 +341,32 @@ A null value means the quantity is not available or not recorded.</p>
 <li>
 <p><strong><a href="v0.1/properties/electronic/direct_band_gap">Direct band gap</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap</code></a></p>
 <p>The direct band gap in electronvolt: the minimum over the sampled k-points of the CBM - VBM separation at the same k-point, determined from occupations. A metal is represented by the value 0.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/electronic_density_of_states">Electronic density of states</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states</code></a></p>
+<p>Electronic density of states of a simulation cell.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/fermi_energy">Fermi energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/fermi_energy"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/fermi_energy</code></a></p>
+<p>The Fermi energy of a calculation, in electronvolt, on the absolute energy scale of that calculation (the same scale as its eigenvalues and total energy).
+The reference of that scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/high_frequency_relative_permittivity">High-frequency relative permittivity</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/high_frequency_relative_permittivity"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/high_frequency_relative_permittivity</code></a></p>
+<p>The high-frequency relative permittivity, dimensionless, as the isotropic mean (trace/3) of the high-frequency relative-permittivity tensor, which is the electronic contribution at clamped ions (ions held fixed).
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/relative_effective_mass">Relative effective mass</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/relative_effective_mass"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/relative_effective_mass</code></a></p>
+<p>The effective-mass tensor of one band at the wavevector <code>center</code>, relative to the free-electron mass: m*/m_e = m_e^-1 hbar^2 (d^2E/dk_i dk_j)^-1, the inverse of the band-energy curvature matrix at <code>center</code>. <code>center</code> is in angstrom^-1 (2 pi included); <code>tensor</code> is dimensionless.
+The tensor is signed: negative values correspond to hole-like (downward) curvature, and mixed-sign eigenvalues occur at saddle points. Where the curvature matrix is singular the effective mass is undefined and the value is null.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/static_relative_permittivity">Static relative permittivity</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/static_relative_permittivity"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/static_relative_permittivity</code></a></p>
+<p>The static relative permittivity (dielectric constant), dimensionless, as the isotropic mean (trace/3) of the static relative-permittivity tensor, which includes both the ionic and the electronic contributions.
 A null value means the quantity is not available or not recorded.</p>
 </li>
 </ul>
@@ -330,6 +390,32 @@ A null value means the quantity is not available or not recorded.</p>
 <p>The energy of a reaction in electronvolt, products minus reactants for the balanced reaction as written, weighted by the stoichiometric coefficients of that reaction. Extensive in those coefficients: it refers to the reaction as written, not per atom.
 A null value means the quantity is not available or not recorded.</p>
 </li>
+<li>
+<p><strong><a href="v0.1/properties/energetics/total_energy_per_atom">Total energy per atom</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/energetics/total_energy_per_atom"><code>https://schemas.httk.org/defs/v0.1/properties/energetics/total_energy_per_atom</code></a></p>
+<p>The total energy of the cell divided by the number of atoms in the cell, in electronvolt.
+The reference/zero of the energy scale is method- and code-specific, as for the total energy, so values are comparable only within one consistent computational setup.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>kinetics</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/kinetics/activation_energy">Activation energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy"><code>https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy</code></a></p>
+<p>The Arrhenius activation energy E_a, in electronvolt, obtained from the slope of ln k against 1/T (k = A exp(-E_a / (k_B T))).
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/kinetics/migration_barrier_forward">Forward migration barrier</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_forward"><code>https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_forward</code></a></p>
+<p>The forward migration barrier of a sampled minimum-energy path, in electronvolt: the highest sampled image energy minus the energy of the initial image. No interpolation between images is applied.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/kinetics/migration_barrier_reverse">Reverse migration barrier</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_reverse"><code>https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_reverse</code></a></p>
+<p>The reverse migration barrier of a sampled minimum-energy path, in electronvolt: the highest sampled image energy minus the energy of the final image. No interpolation between images is applied.
+A null value means the quantity is not available or not recorded.</p>
+</li>
 </ul>
 </li>
 <li>
@@ -346,6 +432,12 @@ A null value means the quantity is not available or not recorded.</p>
 <li>
 <p><strong><a href="v0.1/properties/magnetism/site_moments">Site magnetic moments</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments"><code>https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments</code></a></p>
 <p>The magnetic moment vector of each site, in Cartesian coordinates and Bohr magnetons.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/magnetism/total_magnetic_moment">Total magnetic moment</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/magnetism/total_magnetic_moment"><code>https://schemas.httk.org/defs/v0.1/properties/magnetism/total_magnetic_moment</code></a></p>
+<p>The total magnetic moment of the cell, in Bohr magnetons, as a vector over <code>dim_spatial</code>: the vector sum of the site moments in the Cartesian frame of the structure (the frame of <code>lattice_vectors</code> and <code>cartesian_site_positions</code>).
+Only the sum of the site moments is recorded; contributions outside the sites (interstitial regions) are not included unless the producing analysis states so.
+A null value means the quantity is not available or not recorded.</p>
 </li>
 </ul>
 </li>
@@ -771,6 +863,15 @@ Identity is omitted, so the P1 list is empty.</p>
 </ul>
 </li>
 <li>
+<p><strong>structure</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/structure/radial_distribution_function">Radial distribution function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function"><code>https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function</code></a></p>
+<p>Radial distribution function g(r) of a structure or trajectory, binned in distance.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>symmetry</strong></p>
 <ul>
 <li>
@@ -828,6 +929,10 @@ It is an intensive quantity of the referenced cell, at the temperature and press
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/properties/thermodynamics/quasiharmonic_thermodynamics">Quasiharmonic thermodynamics</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics</code></a></p>
+<p>Quasiharmonic equilibrium properties as a function of temperature at zero pressure.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/thermodynamics/vibrational_entropy">Vibrational entropy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_entropy"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_entropy</code></a></p>
 <p>The vibrational entropy, in electronvolt per kelvin (eV K^-1), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
 Extensive quantity of the whole simulated cell.
@@ -844,6 +949,10 @@ A null value means the quantity is not available or not recorded.</p>
 <p>The vibrational internal energy, in electronvolt (eV), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
 Extensive quantity of the whole simulated cell. It includes the zero-point energy.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/thermodynamics/vibrational_thermodynamics">Vibrational thermodynamics</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_thermodynamics"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_thermodynamics</code></a></p>
+<p>Harmonic phonon thermodynamics of the vibrational modes of the referenced cell, tabulated as a function of temperature.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/thermodynamics/volumetric_thermal_expansion">Volumetric thermal expansion</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/volumetric_thermal_expansion"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/volumetric_thermal_expansion</code></a></p>
@@ -1015,10 +1124,18 @@ The species or selection it refers to is recorded alongside.
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/properties/transport/diffusion_running_integral">Diffusion running integral</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_running_integral"><code>https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_running_integral</code></a></p>
+<p>Running integral of the velocity autocorrelation tensor, as a function of upper integration limit.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/transport/diffusion_tensor">Diffusion tensor</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_tensor"><code>https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_tensor</code></a></p>
 <p>The self-diffusion tensor D_ij, in square metre per second (m^2 s^-1), a 3x3 Cartesian tensor with both indices over <code>dim_spatial</code> in the Cartesian frame of the referenced cell.
 Obtained from Green-Kubo or Einstein relations. The tensor is not assumed to be symmetric. The species or selection it refers to is recorded alongside.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/transport/mean_squared_displacement">Mean squared displacement</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/mean_squared_displacement"><code>https://schemas.httk.org/defs/v0.1/properties/transport/mean_squared_displacement</code></a></p>
+<p>Mean squared displacement tensor as a function of lag time.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/transport/shear_viscosity">Shear viscosity</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity"><code>https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity</code></a></p>
@@ -1027,16 +1144,28 @@ Obtained from Green-Kubo or Einstein relations. By the Green-Kubo relation eta =
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/properties/transport/shear_viscosity_running_integral">Shear viscosity running integral</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity_running_integral"><code>https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity_running_integral</code></a></p>
+<p>Green-Kubo running integral of the shear stress autocorrelation, as a function of upper integration limit.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/transport/thermal_conductivity">Thermal conductivity</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity"><code>https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity</code></a></p>
 <p>The isotropic thermal conductivity, the mean of the diagonal of the thermal conductivity tensor, in watt per metre per kelvin (W m^-1 K^-1).
 Obtained from Green-Kubo or Einstein relations.
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/properties/transport/thermal_conductivity_running_integral">Thermal conductivity running integral</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_running_integral"><code>https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_running_integral</code></a></p>
+<p>Green-Kubo running integral of the heat-current autocorrelation, as a function of upper integration limit.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/transport/thermal_conductivity_tensor">Thermal conductivity tensor</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_tensor"><code>https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_tensor</code></a></p>
 <p>The thermal conductivity tensor kappa_ij, in watt per metre per kelvin (W m^-1 K^-1), a 3x3 Cartesian tensor with both indices over <code>dim_spatial</code> in the Cartesian frame of the referenced cell.
 Obtained from Green-Kubo or Einstein relations. By the Green-Kubo relation kappa_ij = 1 / (V kB T^2) times the time integral of <J_i(0) J_j(t)>, where J is the extensive heat current. The tensor is not assumed to be symmetric.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/transport/velocity_autocorrelation">Velocity autocorrelation</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/velocity_autocorrelation"><code>https://schemas.httk.org/defs/v0.1/properties/transport/velocity_autocorrelation</code></a></p>
+<p>Velocity autocorrelation tensor as a function of lag time.</p>
 </li>
 </ul>
 </li>

@@ -381,7 +381,7 @@ An absent transform means none is supplied within this generation scope, not a p
                             "x-optimade-type": "list",
                             "x-optimade-definition": {
                                 "kind": "property",
-                                "version": "0.1.0",
+                                "version": "0.2.0",
                                 "format": "1.3",
                                 "name": "wyckoff_splitting",
                                 "label": "wyckoff_splitting_transformations"
@@ -454,7 +454,7 @@ An absent transform means none is supplied within this generation scope, not a p
                                                     "x-optimade-dimensions": {
                                                         "names": [
                                                             "dim_lattice",
-                                                            "dim_affine"
+                                                            "_httk_dim_affine"
                                                         ],
                                                         "sizes": [
                                                             3,
@@ -470,7 +470,7 @@ An absent transform means none is supplied within this generation scope, not a p
                                                         "x-optimade-unit": "inapplicable",
                                                         "x-optimade-dimensions": {
                                                             "names": [
-                                                                "dim_affine"
+                                                                "_httk_dim_affine"
                                                             ],
                                                             "sizes": [
                                                                 4

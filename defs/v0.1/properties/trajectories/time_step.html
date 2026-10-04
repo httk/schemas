@@ -108,7 +108,7 @@ A <code>null</code> value indicates that the time step is unknown.<br>
 <span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"float"</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.1"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"time_step"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"time_step_trajectories_httk"</span>
@@ -116,17 +116,70 @@ A <code>null</code> value indicates that the time step is unknown.<br>
 <span class="w">    </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fs"</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"x-optimade-unit-definitions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/units/si/general/femtosecond"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femtosecond"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fs"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"display-symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fs"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A unit of time equal to 10^-15 seconds."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/defs/v1.2/prefixes/si/femto"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femto"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"display-symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The femto SI prefix defined as a dimensionless multiple of 10\u207b\u00b9\u2075, defined at the 12th CGPM Meeting in 1964, resolution 8."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Definition in the 12th CGPM Meeting in 1964, resolution 8"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.bipm.org/en/committees/cg/cgpm/12-1964/resolution-8"</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wikipedia article describing SI prefixes"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://en.wikipedia.org/wiki/Metric_prefix"</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"defining-relation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"base-units"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                </span><span class="nt">"base-units-expression"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"scale"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"exponent"</span><span class="p">:</span><span class="w"> </span><span class="mi">-15</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
 <span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femtosecond_si_general"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femto_prefix_si"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prefix"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femto"</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.optimade.org/defs/v1.2/units/si/general/second"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"display-symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A unit of time using the current, or one of the historical, definitions of the SI units.\n\nThe current definition in its most recent phrasing at the 26th CGPM Meeting in 2018, resolution 1 is: \"The second, symbol s, is the SI unit of time. It is defined by taking the fixed numerical value of the caesium frequency, \\(\\Delta \\nu_\\textrm{Cs}\\), the unperturbed ground-state hyperfine transition frequency of the caesium 133 atom, to be 9192631770 when expressed in the unit Hz, which is equal to s\u207b\u00b9.\"\n\nThis is a rephrasing of a definition at the 13th CGPM Meeting (1967), resolution 1: \"The second is the duration of 9192631770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the caesium 133 atom.\"\n\nThe earlier definition at the 11th CGPM Meeting in 1960, resolution 9 was: \"The second is the fraction 1/31556925.9747 of the tropical year for 1900 January 0 at 12 hours ephemeris time.\"\n\nThis is a generalized definition taken to reference the current, or one of the historical, SI unit definitions.\nThis definition is intended for situations when it is not possible to be more precise, e.g., in contexts where data have been collected that uses different historical SI definitions."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"compatibility"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"https://schemas.optimade.org/defs/v1.2/units/si/1960/base/second"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"https://schemas.optimade.org/defs/v1.2/units/si/1967/base/second"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"resources"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Definition in the 13th CGPM Meeting (1967), resolution 1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.bipm.org/en/committees/cg/cgpm/13-1967/resolution-1"</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rephrased definition in the 26th CGPM Meeting (2018), resolution 1"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.bipm.org/en/committees/cg/cgpm/26-2018/resolution-1"</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Definition at the 11th CGPM meeting (1960), resolution 6."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.bipm.org/en/committees/cg/cgpm/11-1960/resolution-6"</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"relation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wikipedia article describing the unit"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"resource-id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://en.wikipedia.org/wiki/Second"</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second_si_general"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unit"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2"</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"femtosecond"</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.2.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"second"</span>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
