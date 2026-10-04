@@ -19,6 +19,42 @@
             Each item describes transformations and normalizer information for one concrete International Tables H-M entry.
             In `transformations_hm_entry.json.gz`, items are keyed for lookup by the companion top-level `indicies.index_hm_entry_to_transformations_per_hm_entry` object; that index is not an OPTIMADE property.
 
+    * **derivations**
+        * **[Bias](v0.1/derivations/bias.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/bias`](https://schemas.httk.org/defs/v0.1/derivations/bias.md)
+            
+            The mean signed residual of the base property, predicted minus reference unless stated otherwise.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Mean absolute error](v0.1/derivations/mae.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/mae`](https://schemas.httk.org/defs/v0.1/derivations/mae.md)
+            
+            The mean of the absolute residuals of the base property, predicted minus reference unless stated otherwise.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Maximum absolute error](v0.1/derivations/maximum_absolute_error.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/maximum_absolute_error`](https://schemas.httk.org/defs/v0.1/derivations/maximum_absolute_error.md)
+            
+            The maximum of the absolute residuals of the base property, predicted minus reference unless stated otherwise.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Mean](v0.1/derivations/mean.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/mean`](https://schemas.httk.org/defs/v0.1/derivations/mean.md)
+            
+            The arithmetic mean of independent estimates of the base property.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Root-mean-square error](v0.1/derivations/rmse.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/rmse`](https://schemas.httk.org/defs/v0.1/derivations/rmse.md)
+            
+            The root-mean-square of the signed residuals of the base property, predicted minus reference unless stated otherwise.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Standard deviation](v0.1/derivations/standard_deviation.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/standard_deviation`](https://schemas.httk.org/defs/v0.1/derivations/standard_deviation.md)
+            
+            The sample standard deviation of estimates of the base property, with the degrees-of-freedom correction (ddof) as recorded by the producer.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
+        * **[Standard error](v0.1/derivations/standard_error.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/derivations/standard_error`](https://schemas.httk.org/defs/v0.1/derivations/standard_error.md)
+            
+            The standard error of an estimate of the base property: the sample standard deviation of independent estimates divided by the square root of their count. Independence of the estimates is the producer's responsibility.
+            The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
+
     * **entrytypes**
         * **[httk point group symmetry fields](v0.1/entrytypes/pointgroups.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups`](https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups.md)
             
@@ -64,6 +100,12 @@
                 It is the average the simulation code reports for the run where the code prints one (for example the averages table of a GROMACS md.log); otherwise it is the arithmetic mean of the total energies the code printed over the run's sampled steps.
                 The averaging window, the sampling interval and the ensemble are determined by the run, so values are comparable only between runs with the same protocol. The value is for the whole simulated system, kinetic plus potential energy. The reference/zero of the total energy scale is method-, force-field- and code-specific, so values are comparable only within one consistent computational setup.
 
+            * **[Enthalpy](v0.1/properties/core/enthalpy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/enthalpy`](https://schemas.httk.org/defs/v0.1/properties/core/enthalpy.md)
+                
+                The enthalpy H = E_total + P V in electronvolt, with P the applied (external) pressure and V the cell volume. Extensive: refers to the whole simulated cell, not per atom.
+                The reference/zero of the energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+                A null value means the quantity is not available or not recorded.
+
             * **[Fraction](v0.1/properties/core/fraction.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/fraction`](https://schemas.httk.org/defs/v0.1/properties/core/fraction.md)
                 
                 A numerical representation formed as the quotient of two numbers represented as a string.
@@ -72,22 +114,53 @@
                 
                 The absolute precision of a set of fractional coordinates, in fractional units.
 
+            * **[Kinetic energy](v0.1/properties/core/kinetic_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/kinetic_energy`](https://schemas.httk.org/defs/v0.1/properties/core/kinetic_energy.md)
+                
+                The nuclear kinetic energy of a system, in electronvolt. Extensive: refers to the whole simulated cell, not per atom.
+                A null value means the quantity is not available or not recorded.
+
             * **[Length precision](v0.1/properties/core/length_precision.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/length_precision`](https://schemas.httk.org/defs/v0.1/properties/core/length_precision.md)
                 
                 The absolute precision of a stated length, in ångström.
+
+            * **[Potential energy](v0.1/properties/core/potential_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/potential_energy`](https://schemas.httk.org/defs/v0.1/properties/core/potential_energy.md)
+                
+                The potential energy of a computed system from the energy model, in electronvolt. Extensive: refers to the whole simulated cell, not per atom.
+                The reference/zero of the energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Pressure](v0.1/properties/core/pressure.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/pressure`](https://schemas.httk.org/defs/v0.1/properties/core/pressure.md)
+                
+                The pressure of a system, in gigapascal (GPa; 1 GPa = 10^9 Pa). Pressure is positive in compression; stress is tensile-positive. For a hydrostatic state P = -tr(sigma)/3.
+                A null value means the quantity is not available or not recorded.
 
             * **[source ID](v0.1/properties/core/source_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/source_id`](https://schemas.httk.org/defs/v0.1/properties/core/source_id.md)
                 
                 The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.
 
+            * **[Stress tensor](v0.1/properties/core/stress_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/stress_tensor`](https://schemas.httk.org/defs/v0.1/properties/core/stress_tensor.md)
+                
+                The stress tensor of a system in Voigt notation, in gigapascal (GPa). Pressure is positive in compression; stress is tensile-positive. Voigt order [xx, yy, zz, yz, xz, xy].
+                A null value means the quantity is not available or not recorded.
+
             * **[String markups](v0.1/properties/core/string_markups.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/string_markups`](https://schemas.httk.org/defs/v0.1/properties/core/string_markups.md)
                 
                 Strings with alternate markup and/or encoding for display rendering.
+
+            * **[Temperature](v0.1/properties/core/temperature.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/temperature`](https://schemas.httk.org/defs/v0.1/properties/core/temperature.md)
+                
+                The temperature of a system, in kelvin.
+                A null value means the quantity is not available or not recorded.
 
             * **[Total energy](v0.1/properties/core/total_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/total_energy`](https://schemas.httk.org/defs/v0.1/properties/core/total_energy.md)
                 
                 The total energy of a computed system as produced by a calculation, in electronvolt.
                 The reference/zero of the total energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+
+            * **[Volume](v0.1/properties/core/volume.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/volume`](https://schemas.httk.org/defs/v0.1/properties/core/volume.md)
+                
+                The volume of the simulation cell, in cubic angstrom. Extensive: refers to the whole simulated cell, not per atom.
+                A null value means the quantity is not available or not recorded.
 
             * **[Workflow declaration URI](v0.1/properties/core/workflow_declaration_uri.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/workflow_declaration_uri`](https://schemas.httk.org/defs/v0.1/properties/core/workflow_declaration_uri.md)
                 
@@ -104,9 +177,36 @@
                 Null is expected when the executed code is unknown, e.g., for legacy data.
 
         * **electronic**
+            * **[Band gap](v0.1/properties/electronic/band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/band_gap.md)
+                
+                The fundamental band gap in electronvolt: CBM - VBM over the sampled k-points, determined from occupations; indirect gaps are allowed. A metal is represented by the value 0.
+                A null value means the quantity is not available or not recorded.
+
             * **[DFT band gap](v0.1/properties/electronic/dft_band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap.md)
                 
                 The Kohn-Sham band gap of a material from a density-functional-theory (DFT) calculation, given in electronvolts. Its value depends on the computational method and exchange-correlation functional used.
+
+            * **[Direct band gap](v0.1/properties/electronic/direct_band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap.md)
+                
+                The direct band gap in electronvolt: the minimum over the sampled k-points of the CBM - VBM separation at the same k-point, determined from occupations. A metal is represented by the value 0.
+                A null value means the quantity is not available or not recorded.
+
+        * **energetics**
+            * **[Energy above hull per atom](v0.1/properties/energetics/energy_above_hull_per_atom.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/energy_above_hull_per_atom`](https://schemas.httk.org/defs/v0.1/properties/energetics/energy_above_hull_per_atom.md)
+                
+                The nonnegative per-atom energy distance, in electronvolt, of a phase to the lower convex hull of the competing phases considered; zero for a phase on the hull. The set of competing phases is part of the producing analysis.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Formation energy per atom](v0.1/properties/energetics/formation_energy_per_atom.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/formation_energy_per_atom`](https://schemas.httk.org/defs/v0.1/properties/energetics/formation_energy_per_atom.md)
+                
+                The formation energy per atom, (E - sum_i n_i mu_i)/N in electronvolt, with E the total energy of the cell, n_i the number of atoms of element i, mu_i the elemental reservoir chemical potential per atom and N the total number of atoms. The references mu_i are part of the producing analysis and recorded alongside.
+                The reference/zero of the energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Reaction energy](v0.1/properties/energetics/reaction_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/reaction_energy`](https://schemas.httk.org/defs/v0.1/properties/energetics/reaction_energy.md)
+                
+                The energy of a reaction in electronvolt, products minus reactants for the balanced reaction as written, weighted by the stoichiometric coefficients of that reaction. Extensive in those coefficients: it refers to the reaction as written, not per atom.
+                A null value means the quantity is not available or not recorded.
 
         * **magnetism**
             * **[MAGNDATA identifiers](v0.1/properties/magnetism/magndata_ids.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/magnetism/magndata_ids`](https://schemas.httk.org/defs/v0.1/properties/magnetism/magndata_ids.md)
@@ -120,6 +220,74 @@
             * **[Site magnetic moments](v0.1/properties/magnetism/site_moments.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments`](https://schemas.httk.org/defs/v0.1/properties/magnetism/site_moments.md)
                 
                 The magnetic moment vector of each site, in Cartesian coordinates and Bohr magnetons.
+
+        * **mechanics**
+            * **[Bulk modulus](v0.1/properties/mechanics/bulk_modulus.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus`](https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus.md)
+                
+                The bulk modulus B = -V dP/dV at the reference state, in gigapascal. The protocol that produced the value (static equation-of-state fit, quasi-harmonic at temperature T, elastic-tensor average) is identified by how it was produced and recorded alongside, not by this definition.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Bulk modulus (Hill)](v0.1/properties/mechanics/bulk_modulus_hill.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_hill`](https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_hill.md)
+                
+                The Hill polycrystalline-average bulk modulus from the elastic tensor, in gigapascal: K_H = (K_V + K_R)/2. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Bulk modulus pressure derivative](v0.1/properties/mechanics/bulk_modulus_pressure_derivative.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_pressure_derivative`](https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_pressure_derivative.md)
+                
+                The pressure derivative of the bulk modulus, B' = dB/dP at the reference state (dimensionless).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Bulk modulus (Reuss)](v0.1/properties/mechanics/bulk_modulus_reuss.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_reuss`](https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_reuss.md)
+                
+                The Reuss polycrystalline-average bulk modulus from the elastic tensor, in gigapascal: K_R = 1/[(S11+S22+S33) + 2(S12+S13+S23)], with S the compliance tensor. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Bulk modulus (Voigt)](v0.1/properties/mechanics/bulk_modulus_voigt.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_voigt`](https://schemas.httk.org/defs/v0.1/properties/mechanics/bulk_modulus_voigt.md)
+                
+                The Voigt polycrystalline-average bulk modulus from the elastic tensor, in gigapascal: K_V = [(C11+C22+C33) + 2(C12+C13+C23)]/9, with C the elastic tensor. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Compliance tensor](v0.1/properties/mechanics/compliance_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/compliance_tensor`](https://schemas.httk.org/defs/v0.1/properties/mechanics/compliance_tensor.md)
+                
+                The 6x6 elastic compliance tensor S = C^-1 in Voigt notation, in inverse gigapascal; symmetric. Rows and columns follow Voigt order [xx, yy, zz, yz, xz, xy]. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Elastic tensor](v0.1/properties/mechanics/elastic_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/elastic_tensor`](https://schemas.httk.org/defs/v0.1/properties/mechanics/elastic_tensor.md)
+                
+                The 6x6 elastic stiffness tensor C in Voigt notation, in gigapascal; symmetric. Rows and columns follow Voigt order [xx, yy, zz, yz, xz, xy]. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                At finite pressure this is the stress-strain coefficient tensor (Wallace's B), and stability tests on it use positive definiteness directly.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Equilibrium energy](v0.1/properties/mechanics/equilibrium_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_energy`](https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_energy.md)
+                
+                The minimum of the fitted energy, in electronvolt. Extensive: refers to the whole simulated cell, not per atom.
+                The reference/zero of the energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Equilibrium volume](v0.1/properties/mechanics/equilibrium_volume.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_volume`](https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_volume.md)
+                
+                The volume that minimizes the fitted energy or free energy, in cubic angstrom. Extensive: refers to the whole simulated cell, not per atom.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Shear modulus (Hill)](v0.1/properties/mechanics/shear_modulus_hill.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill`](https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill.md)
+                
+                The Hill polycrystalline-average shear modulus from the elastic tensor, in gigapascal: G_H = (G_V + G_R)/2. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Shear modulus (Reuss)](v0.1/properties/mechanics/shear_modulus_reuss.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_reuss`](https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_reuss.md)
+                
+                The Reuss polycrystalline-average shear modulus from the elastic tensor, in gigapascal: G_R = 15/[4(S11+S22+S33) - 4(S12+S13+S23) + 3(S44+S55+S66)], with S the compliance tensor. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Shear modulus (Voigt)](v0.1/properties/mechanics/shear_modulus_voigt.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_voigt`](https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_voigt.md)
+                
+                The Voigt polycrystalline-average shear modulus from the elastic tensor, in gigapascal: G_V = [(C11+C22+C33) - (C12+C13+C23) + 3(C44+C55+C66)]/15, with C the elastic tensor. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Universal anisotropy index](v0.1/properties/mechanics/universal_anisotropy_index.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/universal_anisotropy_index`](https://schemas.httk.org/defs/v0.1/properties/mechanics/universal_anisotropy_index.md)
+                
+                The universal elastic anisotropy index A^U = 5 G_V/G_R + K_V/K_R - 6 (dimensionless); zero for an elastically isotropic crystal.
+                A null value means the quantity is not available or not recorded.
 
         * **pointgroups**
             * **[Complex character table](v0.1/properties/pointgroups/character_table_complex.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex`](https://schemas.httk.org/defs/v0.1/properties/pointgroups/character_table_complex.md)
@@ -487,6 +655,62 @@
                 
                 Information related to a Wyckoff position in a space-group setting.
 
+        * **thermodynamics**
+            * **[Heat capacity at constant pressure](v0.1/properties/thermodynamics/heat_capacity_constant_pressure.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/heat_capacity_constant_pressure`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/heat_capacity_constant_pressure.md)
+                
+                The heat capacity at constant pressure C_P, in electronvolt per kelvin (eV K^-1).
+                Extensive quantity of the whole simulated cell. It may be obtained, e.g., from enthalpy fluctuations in the isothermal-isobaric ensemble as Var(H) / (kB T^2), at the temperature recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Heat capacity at constant volume](v0.1/properties/thermodynamics/heat_capacity_constant_volume.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/heat_capacity_constant_volume`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/heat_capacity_constant_volume.md)
+                
+                The heat capacity at constant volume C_V, in electronvolt per kelvin (eV K^-1).
+                Extensive quantity of the whole simulated cell. It may be obtained, e.g., from canonical-ensemble energy fluctuations as Var(E) / (kB T^2), at the temperature recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Helmholtz free energy](v0.1/properties/thermodynamics/helmholtz_free_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/helmholtz_free_energy`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/helmholtz_free_energy.md)
+                
+                The Helmholtz free energy F = U - T S, in electronvolt (eV), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
+                Extensive quantity of the whole simulated cell. For harmonic phonons F = sum over modes of [h nu / 2 + kB T ln(1 - exp(-h nu / (kB T)))].
+                The energy zero is the static (potential) energy of the referenced cell, which is not included.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Isothermal compressibility](v0.1/properties/thermodynamics/isothermal_compressibility.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/isothermal_compressibility`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/isothermal_compressibility.md)
+                
+                The isothermal compressibility kappa_T = -(1/V) (dV/dP)_T, in inverse gigapascal (GPa^-1; 1 GPa = 10^9 Pa).
+                It is an intensive quantity of the referenced cell, at the temperature and pressure recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Vibrational entropy](v0.1/properties/thermodynamics/vibrational_entropy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_entropy`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_entropy.md)
+                
+                The vibrational entropy, in electronvolt per kelvin (eV K^-1), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
+                Extensive quantity of the whole simulated cell.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Vibrational heat capacity](v0.1/properties/thermodynamics/vibrational_heat_capacity.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_heat_capacity`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_heat_capacity.md)
+                
+                The harmonic constant-volume heat capacity, in electronvolt per kelvin (eV K^-1), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
+                Extensive quantity of the whole simulated cell.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Vibrational internal energy](v0.1/properties/thermodynamics/vibrational_internal_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_internal_energy`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/vibrational_internal_energy.md)
+                
+                The vibrational internal energy, in electronvolt (eV), for the vibrational modes of the referenced cell, at the temperature recorded alongside.
+                Extensive quantity of the whole simulated cell. It includes the zero-point energy.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Volumetric thermal expansion](v0.1/properties/thermodynamics/volumetric_thermal_expansion.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/volumetric_thermal_expansion`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/volumetric_thermal_expansion.md)
+                
+                The volumetric thermal expansion coefficient alpha_V = (1/V) (dV/dT)_P, in inverse kelvin (K^-1).
+                It is the volumetric (not linear) coefficient, an intensive quantity of the referenced cell, at the pressure recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Zero-point energy](v0.1/properties/thermodynamics/zero_point_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/zero_point_energy`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/zero_point_energy.md)
+                
+                The zero-point energy, sum over modes of h nu / 2, in electronvolt (eV), for the vibrational modes of the referenced cell.
+                Extensive quantity of the whole simulated cell. Temperature independent.
+                A null value means the quantity is not available or not recorded.
+
         * **trajectories**
             * **[Frame stresses](v0.1/properties/trajectories/frame_stresses.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_stresses`](https://schemas.httk.org/defs/v0.1/properties/trajectories/frame_stresses.md)
                 
@@ -623,6 +847,38 @@
             * **[Wyckoff splitting](v0.1/properties/transformations/wyckoff_splitting.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transformations/wyckoff_splitting`](https://schemas.httk.org/defs/v0.1/properties/transformations/wyckoff_splitting.md)
                 
                 Wyckoff-position splitting data associated with a subgroup or same-space-group transform.
+
+        * **transport**
+            * **[Diffusion coefficient](v0.1/properties/transport/diffusion_coefficient.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_coefficient`](https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_coefficient.md)
+                
+                The isotropic self-diffusion coefficient D = tr(D_ij) / 3, in square metre per second (m^2 s^-1).
+                Obtained from Green-Kubo or Einstein relations. For example, from the slope of the mean-squared displacement divided by 2d (Einstein), or the time integral of the velocity autocorrelation function (Green-Kubo).
+                The species or selection it refers to is recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Diffusion tensor](v0.1/properties/transport/diffusion_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_tensor`](https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_tensor.md)
+                
+                The self-diffusion tensor D_ij, in square metre per second (m^2 s^-1), a 3x3 Cartesian tensor with both indices over `dim_spatial` in the Cartesian frame of the referenced cell.
+                Obtained from Green-Kubo or Einstein relations. The tensor is not assumed to be symmetric. The species or selection it refers to is recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Shear viscosity](v0.1/properties/transport/shear_viscosity.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity`](https://schemas.httk.org/defs/v0.1/properties/transport/shear_viscosity.md)
+                
+                The shear viscosity, in pascal second (Pa s).
+                Obtained from Green-Kubo or Einstein relations. By the Green-Kubo relation eta = V / (kB T) times the time integral of <sigma_xy(0) sigma_xy(t)>, averaged over the independent off-diagonal stress components.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Thermal conductivity](v0.1/properties/transport/thermal_conductivity.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity`](https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity.md)
+                
+                The isotropic thermal conductivity, the mean of the diagonal of the thermal conductivity tensor, in watt per metre per kelvin (W m^-1 K^-1).
+                Obtained from Green-Kubo or Einstein relations.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Thermal conductivity tensor](v0.1/properties/transport/thermal_conductivity_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_tensor`](https://schemas.httk.org/defs/v0.1/properties/transport/thermal_conductivity_tensor.md)
+                
+                The thermal conductivity tensor kappa_ij, in watt per metre per kelvin (W m^-1 K^-1), a 3x3 Cartesian tensor with both indices over `dim_spatial` in the Cartesian frame of the referenced cell.
+                Obtained from Green-Kubo or Einstein relations. By the Green-Kubo relation kappa_ij = 1 / (V kB T^2) times the time integral of <J_i(0) J_j(t)>, where J is the extensive heat current. The tensor is not assumed to be symmetric.
+                A null value means the quantity is not available or not recorded.
 
     * **standards**
         * **[httk definition provider standard](v0.1/standards/httk.md)** (standard) - [`https://schemas.httk.org/defs/v0.1/standards/httk`](https://schemas.httk.org/defs/v0.1/standards/httk.md)

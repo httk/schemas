@@ -1,0 +1,20 @@
+Standard deviation
+------------------
+
+
+``` json
+{
+    "$id": "https://schemas.httk.org/defs/v0.1/derivations/standard_deviation",
+    "title": "Standard deviation",
+    "description": "The sample standard deviation of estimates of the base property, with the degrees-of-freedom correction (ddof) as recorded by the producer.\nThe derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.",
+    "x-httk-definition": {
+        "kind": "derivation",
+        "format": "0.1",
+        "version": "0.1.0",
+        "name": "standard_deviation",
+        "label": "standard_deviation_derivation_httk"
+    },
+    "unit-rule": "same-as-base",
+    "shape-rule": "same-as-base"
+}
+```
