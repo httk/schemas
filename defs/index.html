@@ -209,6 +209,12 @@ Provenance edges (inputs, artifacts, outputs) are expressed as relationships, no
 <p><strong>core</strong></p>
 <ul>
 <li>
+<p><strong><a href="v0.1/properties/core/atomic_force">Atomic force</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/atomic_force"><code>https://schemas.httk.org/defs/v0.1/properties/core/atomic_force</code></a></p>
+<p>The force on one atom (the negative gradient of the energy with respect to the position of the atom), in electronvolt per angstrom, as a vector over <code>dim_spatial</code> in the Cartesian frame of the structure it belongs to.
+This property is the base of force statistics: a statistic of it (such as an error or a bias over a population of atoms) has the same shape, one value per Cartesian component.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/core/average_total_energy">Average total energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy"><code>https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy</code></a></p>
 <p>The total energy of a simulated system averaged over the time evolution of a molecular dynamics run, in electronvolt.
 It is the average the simulation code reports for the run where the code prints one (for example the averages table of a GROMACS md.log); otherwise it is the arithmetic mean of the total energies the code printed over the run's sampled steps.
@@ -327,6 +333,31 @@ A null value means the quantity is not available or not recorded.</p>
 </ul>
 </li>
 <li>
+<p><strong>dynamics</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/dynamics/distinct_van_hove_function">Distinct van Hove function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/dynamics/distinct_van_hove_function"><code>https://schemas.httk.org/defs/v0.1/properties/dynamics/distinct_van_hove_function</code></a></p>
+<p>Distinct van Hove function G_d(r,t) at one lag: the density per volume of distinct atoms j at displacement r from the position of atom i at time origin t0 to that of j at t0 + t, with i != j, using minimum images in a fixed fully periodic cell.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/dynamics/intermediate_scattering_function">Intermediate scattering function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/dynamics/intermediate_scattering_function"><code>https://schemas.httk.org/defs/v0.1/properties/dynamics/intermediate_scattering_function</code></a></p>
+<p>Coherent intermediate scattering function F(q,t) = <conj(rho_q(t0)) rho_q(t0 + t)> / N with rho_q = sum_j exp(i q . r_j) over the N atoms (a phase exp(+i q . r) per atom, the complex conjugate taken on the earlier time), averaged over time origins t0; F(q,0) = S(q), the static structure factor including the forward peak at q = 0.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/dynamics/self_intermediate_scattering_function">Self intermediate scattering function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/dynamics/self_intermediate_scattering_function"><code>https://schemas.httk.org/defs/v0.1/properties/dynamics/self_intermediate_scattering_function</code></a></p>
+<p>Self intermediate scattering function F_s(q,t) = mean over atoms and time origins t0 of exp(i q . [r(t0 + t) - r(t0)]), with q the Cartesian wavevector (2 pi included) and r the unwrapped position of an atom; F_s(q,0) = 1.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/dynamics/self_van_hove_function">Self van Hove function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/dynamics/self_van_hove_function"><code>https://schemas.httk.org/defs/v0.1/properties/dynamics/self_van_hove_function</code></a></p>
+<p>Self van Hove function G_s(r,t) at one lag: the probability density per volume of the displacement of a single atom over the lag, binned in the displacement length r (spherical shells).</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/dynamics/velocity_power_spectrum">Velocity power spectrum</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/dynamics/velocity_power_spectrum"><code>https://schemas.httk.org/defs/v0.1/properties/dynamics/velocity_power_spectrum</code></a></p>
+<p>Velocity power spectrum of a trajectory: a one-sided periodogram of the atomic velocities, not a normalized phonon density of states.</p>
+</li>
+</ul>
+</li>
+<li>
 <p><strong>electronic</strong></p>
 <ul>
 <li>
@@ -404,6 +435,11 @@ A null value means the quantity is not available or not recorded.</p>
 <li>
 <p><strong><a href="v0.1/properties/kinetics/activation_energy">Activation energy</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy"><code>https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy</code></a></p>
 <p>The Arrhenius activation energy E_a, in electronvolt, obtained from the slope of ln k against 1/T (k = A exp(-E_a / (k_B T))).
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/kinetics/arrhenius_prefactor">Arrhenius prefactor</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/kinetics/arrhenius_prefactor"><code>https://schemas.httk.org/defs/v0.1/properties/kinetics/arrhenius_prefactor</code></a></p>
+<p>The Arrhenius prefactor A, in inverse seconds, of a first-order rate constant k = A exp(-E_a / (k_B T)), for example a jump frequency; E_a is the <code>activation_energy</code>.
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
@@ -869,6 +905,10 @@ Identity is omitted, so the P1 list is empty.</p>
 <p><strong><a href="v0.1/properties/structure/radial_distribution_function">Radial distribution function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function"><code>https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function</code></a></p>
 <p>Radial distribution function g(r) of a structure or trajectory, binned in distance.</p>
 </li>
+<li>
+<p><strong><a href="v0.1/properties/structure/steinhardt_bond_order">Steinhardt bond order</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/steinhardt_bond_order"><code>https://schemas.httk.org/defs/v0.1/properties/structure/steinhardt_bond_order</code></a></p>
+<p>Steinhardt bond-orientational order of a set of atoms, from spherical harmonics Y_lm of the directions of directed neighbour bonds within a cutoff. No neighbour-of-neighbour averaging and no crystalline/liquid classification is implied.</p>
+</li>
 </ul>
 </li>
 <li>
@@ -1121,6 +1161,11 @@ This is not the number of all linear matrices tested: candidates whose affine no
 <p>The isotropic self-diffusion coefficient D = tr(D_ij) / 3, in square metre per second (m^2 s^-1).
 Obtained from Green-Kubo or Einstein relations. For example, from the slope of the mean-squared displacement divided by 2d (Einstein), or the time integral of the velocity autocorrelation function (Green-Kubo).
 The species or selection it refers to is recorded alongside.
+A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/transport/diffusion_prefactor">Diffusion prefactor</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_prefactor"><code>https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_prefactor</code></a></p>
+<p>The diffusion prefactor D_0, in square metres per second, of an Arrhenius diffusion coefficient D = D_0 exp(-E_a / (k_B T)); E_a is the <code>activation_energy</code>.
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>

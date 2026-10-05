@@ -94,6 +94,12 @@
                 The explicitly assigned net charge of the whole structure, as a dimensionless charge number, i.e., the charge in units of the elementary charge.
 
         * **core**
+            * **[Atomic force](v0.1/properties/core/atomic_force.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/atomic_force`](https://schemas.httk.org/defs/v0.1/properties/core/atomic_force.md)
+                
+                The force on one atom (the negative gradient of the energy with respect to the position of the atom), in electronvolt per angstrom, as a vector over `dim_spatial` in the Cartesian frame of the structure it belongs to.
+                This property is the base of force statistics: a statistic of it (such as an error or a bias over a population of atoms) has the same shape, one value per Cartesian component.
+                A null value means the quantity is not available or not recorded.
+
             * **[Average total energy](v0.1/properties/core/average_total_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy`](https://schemas.httk.org/defs/v0.1/properties/core/average_total_energy.md)
                 
                 The total energy of a simulated system averaged over the time evolution of a molecular dynamics run, in electronvolt.
@@ -206,6 +212,27 @@
                 A_total is the total exposed area: both faces of a symmetric slab are counted.
                 A null value means the quantity is not available or not recorded.
 
+        * **dynamics**
+            * **[Distinct van Hove function](v0.1/properties/dynamics/distinct_van_hove_function.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/dynamics/distinct_van_hove_function`](https://schemas.httk.org/defs/v0.1/properties/dynamics/distinct_van_hove_function.md)
+                
+                Distinct van Hove function G_d(r,t) at one lag: the density per volume of distinct atoms j at displacement r from the position of atom i at time origin t0 to that of j at t0 + t, with i != j, using minimum images in a fixed fully periodic cell.
+
+            * **[Intermediate scattering function](v0.1/properties/dynamics/intermediate_scattering_function.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/dynamics/intermediate_scattering_function`](https://schemas.httk.org/defs/v0.1/properties/dynamics/intermediate_scattering_function.md)
+                
+                Coherent intermediate scattering function F(q,t) = <conj(rho_q(t0)) rho_q(t0 + t)> / N with rho_q = sum_j exp(i q . r_j) over the N atoms (a phase exp(+i q . r) per atom, the complex conjugate taken on the earlier time), averaged over time origins t0; F(q,0) = S(q), the static structure factor including the forward peak at q = 0.
+
+            * **[Self intermediate scattering function](v0.1/properties/dynamics/self_intermediate_scattering_function.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/dynamics/self_intermediate_scattering_function`](https://schemas.httk.org/defs/v0.1/properties/dynamics/self_intermediate_scattering_function.md)
+                
+                Self intermediate scattering function F_s(q,t) = mean over atoms and time origins t0 of exp(i q . [r(t0 + t) - r(t0)]), with q the Cartesian wavevector (2 pi included) and r the unwrapped position of an atom; F_s(q,0) = 1.
+
+            * **[Self van Hove function](v0.1/properties/dynamics/self_van_hove_function.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/dynamics/self_van_hove_function`](https://schemas.httk.org/defs/v0.1/properties/dynamics/self_van_hove_function.md)
+                
+                Self van Hove function G_s(r,t) at one lag: the probability density per volume of the displacement of a single atom over the lag, binned in the displacement length r (spherical shells).
+
+            * **[Velocity power spectrum](v0.1/properties/dynamics/velocity_power_spectrum.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/dynamics/velocity_power_spectrum`](https://schemas.httk.org/defs/v0.1/properties/dynamics/velocity_power_spectrum.md)
+                
+                Velocity power spectrum of a trajectory: a one-sided periodogram of the atomic velocities, not a normalized phonon density of states.
+
         * **electronic**
             * **[Band gap](v0.1/properties/electronic/band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/band_gap.md)
                 
@@ -274,6 +301,11 @@
             * **[Activation energy](v0.1/properties/kinetics/activation_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy`](https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy.md)
                 
                 The Arrhenius activation energy E_a, in electronvolt, obtained from the slope of ln k against 1/T (k = A exp(-E_a / (k_B T))).
+                A null value means the quantity is not available or not recorded.
+
+            * **[Arrhenius prefactor](v0.1/properties/kinetics/arrhenius_prefactor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/kinetics/arrhenius_prefactor`](https://schemas.httk.org/defs/v0.1/properties/kinetics/arrhenius_prefactor.md)
+                
+                The Arrhenius prefactor A, in inverse seconds, of a first-order rate constant k = A exp(-E_a / (k_B T)), for example a jump frequency; E_a is the `activation_energy`.
                 A null value means the quantity is not available or not recorded.
 
             * **[Forward migration barrier](v0.1/properties/kinetics/migration_barrier_forward.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_forward`](https://schemas.httk.org/defs/v0.1/properties/kinetics/migration_barrier_forward.md)
@@ -719,6 +751,10 @@
                 
                 Radial distribution function g(r) of a structure or trajectory, binned in distance.
 
+            * **[Steinhardt bond order](v0.1/properties/structure/steinhardt_bond_order.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/structure/steinhardt_bond_order`](https://schemas.httk.org/defs/v0.1/properties/structure/steinhardt_bond_order.md)
+                
+                Steinhardt bond-orientational order of a set of atoms, from spherical harmonics Y_lm of the directions of directed neighbour bonds within a cutoff. No neighbour-of-neighbour averaging and no crystalline/liquid classification is implied.
+
         * **symmetry**
             * **[Affine transformation](v0.1/properties/symmetry/affine_transformation.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation`](https://schemas.httk.org/defs/v0.1/properties/symmetry/affine_transformation.md)
                 
@@ -951,6 +987,11 @@
                 The isotropic self-diffusion coefficient D = tr(D_ij) / 3, in square metre per second (m^2 s^-1).
                 Obtained from Green-Kubo or Einstein relations. For example, from the slope of the mean-squared displacement divided by 2d (Einstein), or the time integral of the velocity autocorrelation function (Green-Kubo).
                 The species or selection it refers to is recorded alongside.
+                A null value means the quantity is not available or not recorded.
+
+            * **[Diffusion prefactor](v0.1/properties/transport/diffusion_prefactor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_prefactor`](https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_prefactor.md)
+                
+                The diffusion prefactor D_0, in square metres per second, of an Arrhenius diffusion coefficient D = D_0 exp(-E_a / (k_B T)); E_a is the `activation_energy`.
                 A null value means the quantity is not available or not recorded.
 
             * **[Diffusion running integral](v0.1/properties/transport/diffusion_running_integral.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_running_integral`](https://schemas.httk.org/defs/v0.1/properties/transport/diffusion_running_integral.md)
