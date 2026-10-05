@@ -269,12 +269,24 @@
                 The tensor is signed: negative values correspond to hole-like (downward) curvature, and mixed-sign eigenvalues occur at saddle points. Where the curvature matrix is singular the effective mass is undefined and the value is null.
                 A null value means the quantity is not available or not recorded.
 
+            * **[Spin-channel electronic density of states](v0.1/properties/electronic/spin_channel_electronic_density_of_states.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/spin_channel_electronic_density_of_states`](https://schemas.httk.org/defs/v0.1/properties/electronic/spin_channel_electronic_density_of_states.md)
+                
+                Electronic density of states of a simulation cell in one collinear spin channel.
+
             * **[Static relative permittivity](v0.1/properties/electronic/static_relative_permittivity.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/static_relative_permittivity`](https://schemas.httk.org/defs/v0.1/properties/electronic/static_relative_permittivity.md)
                 
                 The static relative permittivity (dielectric constant), dimensionless, as the isotropic mean (trace/3) of the static relative-permittivity tensor, which includes both the ionic and the electronic contributions.
                 A null value means the quantity is not available or not recorded.
 
         * **energetics**
+            * **[Chemical potential region](v0.1/properties/energetics/chemical_potential_region.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/chemical_potential_region`](https://schemas.httk.org/defs/v0.1/properties/energetics/chemical_potential_region.md)
+                
+                Linear constraints defining the allowed region of absolute per-atom chemical potentials mu_i of a host compound against competing phases.
+
+            * **[Convex-hull phase diagram](v0.1/properties/energetics/convex_hull_phase_diagram.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/convex_hull_phase_diagram`](https://schemas.httk.org/defs/v0.1/properties/energetics/convex_hull_phase_diagram.md)
+                
+                A convex-hull phase diagram over a set of phases with known energies.
+
             * **[Energy above hull per atom](v0.1/properties/energetics/energy_above_hull_per_atom.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/energetics/energy_above_hull_per_atom`](https://schemas.httk.org/defs/v0.1/properties/energetics/energy_above_hull_per_atom.md)
                 
                 The nonnegative per-atom energy distance, in electronvolt, of a phase to the lower convex hull of the competing phases considered; zero for a phase on the hull. The set of competing phases is part of the producing analysis.
@@ -806,6 +818,10 @@
                 It is an intensive quantity of the referenced cell, at the temperature and pressure recorded alongside.
                 A null value means the quantity is not available or not recorded.
 
+            * **[Mode Grueneisen parameters](v0.1/properties/thermodynamics/mode_gruneisen_parameters.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters.md)
+                
+                Mode Grueneisen parameters from a local polynomial fit of the natural logarithm of caller-matched mode frequencies against the natural logarithm of the volume.
+
             * **[Quasiharmonic thermodynamics](v0.1/properties/thermodynamics/quasiharmonic_thermodynamics.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics.md)
                 
                 Quasiharmonic equilibrium properties as a function of temperature at zero pressure.
@@ -1037,6 +1053,23 @@
             * **[Velocity autocorrelation](v0.1/properties/transport/velocity_autocorrelation.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/transport/velocity_autocorrelation`](https://schemas.httk.org/defs/v0.1/properties/transport/velocity_autocorrelation.md)
                 
                 Velocity autocorrelation tensor as a function of lag time.
+
+        * **validation**
+            * **[Energy prediction errors](v0.1/properties/validation/energy_prediction_errors.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/validation/energy_prediction_errors`](https://schemas.httk.org/defs/v0.1/properties/validation/energy_prediction_errors.md)
+                
+                Per-atom total-energy prediction errors of a model against reference energies over a set of configurations.
+
+            * **[Force prediction errors](v0.1/properties/validation/force_prediction_errors.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/validation/force_prediction_errors`](https://schemas.httk.org/defs/v0.1/properties/validation/force_prediction_errors.md)
+                
+                Force prediction errors of a model against reference forces over a set of configurations; atoms are matched in order between reference and prediction.
+
+            * **[NVE energy drift](v0.1/properties/validation/nve_energy_drift.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/validation/nve_energy_drift`](https://schemas.httk.org/defs/v0.1/properties/validation/nve_energy_drift.md)
+                
+                Linear drift of the conserved total energy (kinetic plus potential) per atom along a selected interval of a trajectory in the NVE ensemble.
+
+            * **[Stress prediction errors](v0.1/properties/validation/stress_prediction_errors.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/validation/stress_prediction_errors`](https://schemas.httk.org/defs/v0.1/properties/validation/stress_prediction_errors.md)
+                
+                Stress prediction errors of a model against reference stress tensors over a set of configurations.
 
     * **standards**
         * **[httk definition provider standard](v0.1/standards/httk.md)** (standard) - [`https://schemas.httk.org/defs/v0.1/standards/httk`](https://schemas.httk.org/defs/v0.1/standards/httk.md)
