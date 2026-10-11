@@ -1088,6 +1088,12 @@
                     A unit of pressure and stress equal to 10^9 pascals.
 
     * **workflows**
+        * **[VASP general calculation](v0.1/workflows/vasp-general.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/workflows/vasp-general`](https://schemas.httk.org/defs/v0.1/workflows/vasp-general.md)
+            
+            This workflow declaration defines the httk vasp-general workflow: it runs any VASP calculation whose input files the job supplies, all of them except the POTCAR, which may also be assembled from a pseudopotential library.
+            It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure the calculation starts from.
+            Output role final_structure is a structures entry containing the structure the calculation ended with, and output role total_energy is a records entry containing the final total energy of the calculation.
+
         * **[VASP structure relaxation](v0.1/workflows/vasp-relax.md)** (*[unknown]*) - [`https://schemas.httk.org/defs/v0.1/workflows/vasp-relax`](https://schemas.httk.org/defs/v0.1/workflows/vasp-relax.md)
             
             This workflow declaration defines the httk vasp-relax workflow: it relaxes the geometry of a crystal structure with VASP.

@@ -1287,6 +1287,12 @@ A null value means the quantity is not available or not recorded.</p>
 <p><strong>workflows</strong></p>
 <ul>
 <li>
+<p><strong><a href="v0.1/workflows/vasp-general">VASP general calculation</a></strong> (<em>[unknown]</em>) - <a href="https://schemas.httk.org/defs/v0.1/workflows/vasp-general"><code>https://schemas.httk.org/defs/v0.1/workflows/vasp-general</code></a></p>
+<p>This workflow declaration defines the httk vasp-general workflow: it runs any VASP calculation whose input files the job supplies, all of them except the POTCAR, which may also be assembled from a pseudopotential library.
+It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure the calculation starts from.
+Output role final_structure is a structures entry containing the structure the calculation ended with, and output role total_energy is a records entry containing the final total energy of the calculation.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/workflows/vasp-relax">VASP structure relaxation</a></strong> (<em>[unknown]</em>) - <a href="https://schemas.httk.org/defs/v0.1/workflows/vasp-relax"><code>https://schemas.httk.org/defs/v0.1/workflows/vasp-relax</code></a></p>
 <p>This workflow declaration defines the httk vasp-relax workflow: it relaxes the geometry of a crystal structure with VASP.
 It defines the meaning of its roles: input role initial_structure is a structures entry containing the structure to relax.
