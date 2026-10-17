@@ -239,6 +239,10 @@
                 The fundamental band gap in electronvolt: CBM - VBM over the sampled k-points, determined from occupations; indirect gaps are allowed. A metal is represented by the value 0.
                 A null value means the quantity is not available or not recorded.
 
+            * **[Born effective charges](v0.1/properties/electronic/born_effective_charges.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/born_effective_charges`](https://schemas.httk.org/defs/v0.1/properties/electronic/born_effective_charges.md)
+                
+                The Born effective charge tensors of the sites of the referenced structure, in units of the elementary charge e.
+
             * **[DFT band gap](v0.1/properties/electronic/dft_band_gap.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap`](https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap.md)
                 
                 The Kohn-Sham band gap of a material from a density-functional-theory (DFT) calculation, given in electronvolts. Its value depends on the computational method and exchange-correlation functional used.
@@ -247,6 +251,10 @@
                 
                 The direct band gap in electronvolt: the minimum over the sampled k-points of the CBM - VBM separation at the same k-point, determined from occupations. A metal is represented by the value 0.
                 A null value means the quantity is not available or not recorded.
+
+            * **[Electronic band structure](v0.1/properties/electronic/electronic_band_structure.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_band_structure`](https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_band_structure.md)
+                
+                Electronic band energies of the referenced structure along a path of k-points through the Brillouin zone (a line-mode band structure).
 
             * **[Electronic density of states](v0.1/properties/electronic/electronic_density_of_states.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states`](https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states.md)
                 
@@ -396,6 +404,10 @@
                 
                 The volume that minimizes the fitted energy or free energy, in cubic angstrom. Extensive: refers to the whole simulated cell, not per atom.
                 A null value means the quantity is not available or not recorded.
+
+            * **[Piezoelectric tensor](v0.1/properties/mechanics/piezoelectric_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/piezoelectric_tensor`](https://schemas.httk.org/defs/v0.1/properties/mechanics/piezoelectric_tensor.md)
+                
+                The piezoelectric stress tensor e of the referenced structure in Voigt notation, in coulomb per square metre.
 
             * **[Shear modulus (Hill)](v0.1/properties/mechanics/shear_modulus_hill.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill`](https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill.md)
                 
@@ -821,6 +833,14 @@
             * **[Mode Grueneisen parameters](v0.1/properties/thermodynamics/mode_gruneisen_parameters.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters.md)
                 
                 Mode Grueneisen parameters from a local polynomial fit of the natural logarithm of caller-matched mode frequencies against the natural logarithm of the volume.
+
+            * **[Phonon band structure](v0.1/properties/thermodynamics/phonon_band_structure.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_band_structure`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_band_structure.md)
+                
+                Harmonic phonon frequencies of the referenced structure along a path of q-points through the Brillouin zone (a phonon dispersion).
+
+            * **[Phonon density of states](v0.1/properties/thermodynamics/phonon_density_of_states.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_density_of_states`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_density_of_states.md)
+                
+                Harmonic phonon density of states of the referenced structure as a function of frequency.
 
             * **[Quasiharmonic thermodynamics](v0.1/properties/thermodynamics/quasiharmonic_thermodynamics.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics`](https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics.md)
                 

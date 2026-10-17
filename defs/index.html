@@ -366,6 +366,10 @@ A null value means the quantity is not available or not recorded.</p>
 A null value means the quantity is not available or not recorded.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/properties/electronic/born_effective_charges">Born effective charges</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/born_effective_charges"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/born_effective_charges</code></a></p>
+<p>The Born effective charge tensors of the sites of the referenced structure, in units of the elementary charge e.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/electronic/dft_band_gap">DFT band gap</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/dft_band_gap</code></a></p>
 <p>The Kohn-Sham band gap of a material from a density-functional-theory (DFT) calculation, given in electronvolts. Its value depends on the computational method and exchange-correlation functional used.</p>
 </li>
@@ -373,6 +377,10 @@ A null value means the quantity is not available or not recorded.</p>
 <p><strong><a href="v0.1/properties/electronic/direct_band_gap">Direct band gap</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/direct_band_gap</code></a></p>
 <p>The direct band gap in electronvolt: the minimum over the sampled k-points of the CBM - VBM separation at the same k-point, determined from occupations. A metal is represented by the value 0.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/electronic/electronic_band_structure">Electronic band structure</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_band_structure"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_band_structure</code></a></p>
+<p>Electronic band energies of the referenced structure along a path of k-points through the Brillouin zone (a line-mode band structure).</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/electronic/electronic_density_of_states">Electronic density of states</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states"><code>https://schemas.httk.org/defs/v0.1/properties/electronic/electronic_density_of_states</code></a></p>
@@ -538,6 +546,10 @@ A null value means the quantity is not available or not recorded.</p>
 <p><strong><a href="v0.1/properties/mechanics/equilibrium_volume">Equilibrium volume</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_volume"><code>https://schemas.httk.org/defs/v0.1/properties/mechanics/equilibrium_volume</code></a></p>
 <p>The volume that minimizes the fitted energy or free energy, in cubic angstrom. Extensive: refers to the whole simulated cell, not per atom.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/mechanics/piezoelectric_tensor">Piezoelectric tensor</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/mechanics/piezoelectric_tensor"><code>https://schemas.httk.org/defs/v0.1/properties/mechanics/piezoelectric_tensor</code></a></p>
+<p>The piezoelectric stress tensor e of the referenced structure in Voigt notation, in coulomb per square metre.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/mechanics/shear_modulus_hill">Shear modulus (Hill)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill"><code>https://schemas.httk.org/defs/v0.1/properties/mechanics/shear_modulus_hill</code></a></p>
@@ -983,6 +995,14 @@ A null value means the quantity is not available or not recorded.</p>
 <li>
 <p><strong><a href="v0.1/properties/thermodynamics/mode_gruneisen_parameters">Mode Grueneisen parameters</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/mode_gruneisen_parameters</code></a></p>
 <p>Mode Grueneisen parameters from a local polynomial fit of the natural logarithm of caller-matched mode frequencies against the natural logarithm of the volume.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/thermodynamics/phonon_band_structure">Phonon band structure</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_band_structure"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_band_structure</code></a></p>
+<p>Harmonic phonon frequencies of the referenced structure along a path of q-points through the Brillouin zone (a phonon dispersion).</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/thermodynamics/phonon_density_of_states">Phonon density of states</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_density_of_states"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/phonon_density_of_states</code></a></p>
+<p>Harmonic phonon density of states of the referenced structure as a function of frequency.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/thermodynamics/quasiharmonic_thermodynamics">Quasiharmonic thermodynamics</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics"><code>https://schemas.httk.org/defs/v0.1/properties/thermodynamics/quasiharmonic_thermodynamics</code></a></p>
