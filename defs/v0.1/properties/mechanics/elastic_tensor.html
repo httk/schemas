@@ -96,6 +96,7 @@ overflow-wrap: break-word;
 <strong>Definition name:</strong> <code>elastic_tensor</code></p>
 <p><strong>Property name:</strong> Elastic tensor<br>
 <strong>Description:</strong> The 6x6 elastic stiffness tensor C in Voigt notation, in gigapascal; symmetric. Rows and columns follow Voigt order [xx, yy, zz, yz, xz, xy]. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).
+The components refer to the Cartesian frame of the referenced structure (the entry the record is a product of), that is the frame of its <code>lattice_vectors</code> and <code>cartesian_site_positions</code>; no IEEE standard orientation is applied.
 At finite pressure this is the stress-strain coefficient tensor (Wallace's B), and stability tests on it use positive definiteness directly.
 A null value means the quantity is not available or not recorded.<br>
 <strong>Type:</strong> list<br>
@@ -114,7 +115,7 @@ A null value means the quantity is not available or not recorded.<br>
 <span class="w">    </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.1"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"elastic_tensor"</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"elastic_tensor_mechanics_httk"</span>
@@ -246,7 +247,7 @@ A null value means the quantity is not available or not recorded.<br>
 <span class="w">            </span><span class="p">]</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The 6x6 elastic stiffness tensor C in Voigt notation, in gigapascal; symmetric. Rows and columns follow Voigt order [xx, yy, zz, yz, xz, xy]. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).\nAt finite pressure this is the stress-strain coefficient tensor (Wallace's B), and stability tests on it use positive definiteness directly.\nA null value means the quantity is not available or not recorded."</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The 6x6 elastic stiffness tensor C in Voigt notation, in gigapascal; symmetric. Rows and columns follow Voigt order [xx, yy, zz, yz, xz, xy]. Elastic stiffness relates tensor stress to ENGINEERING shear strain (gamma = 2 epsilon), so that sigma_i = C_ij e_j in Voigt form; compliance S = C^-1 in the same convention (S includes the factors 2 and 4 for shear components relative to the tensor compliance).\nThe components refer to the Cartesian frame of the referenced structure (the entry the record is a product of), that is the frame of its `lattice_vectors` and `cartesian_site_positions`; no IEEE standard orientation is applied.\nAt finite pressure this is the stress-strain coefficient tensor (Wallace's B), and stability tests on it use positive definiteness directly.\nA null value means the quantity is not available or not recorded."</span>
 <span class="p">}</span>
 </code></pre></div>
 </body>
