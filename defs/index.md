@@ -112,6 +112,10 @@
                 The reference/zero of the energy scale is method- and code-specific, so values are comparable only within one consistent computational setup.
                 A null value means the quantity is not available or not recorded.
 
+            * **[run finish time](v0.1/properties/core/finished_at.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/finished_at`](https://schemas.httk.org/defs/v0.1/properties/core/finished_at.md)
+                
+                When the run finished: for httk-workflow jobs, the end of the last attempt of the job, as a timezone-aware timestamp.
+
             * **[Fraction](v0.1/properties/core/fraction.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/fraction`](https://schemas.httk.org/defs/v0.1/properties/core/fraction.md)
                 
                 A numerical representation formed as the quotient of two numbers represented as a string.
@@ -129,6 +133,10 @@
                 
                 The absolute precision of a stated length, in ångström.
 
+            * **[name](v0.1/properties/core/name.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/name`](https://schemas.httk.org/defs/v0.1/properties/core/name.md)
+                
+                A human-readable name of the entry.
+
             * **[Potential energy](v0.1/properties/core/potential_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/potential_energy`](https://schemas.httk.org/defs/v0.1/properties/core/potential_energy.md)
                 
                 The potential energy of a computed system from the energy model, in electronvolt. Extensive: refers to the whole simulated cell, not per atom.
@@ -143,6 +151,10 @@
             * **[source ID](v0.1/properties/core/source_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/source_id`](https://schemas.httk.org/defs/v0.1/properties/core/source_id.md)
                 
                 The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct.
+
+            * **[run start time](v0.1/properties/core/started_at.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/started_at`](https://schemas.httk.org/defs/v0.1/properties/core/started_at.md)
+                
+                When the run started: for httk-workflow jobs, the start of the first attempt of the job, as a timezone-aware timestamp.
 
             * **[Stress tensor](v0.1/properties/core/stress_tensor.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/stress_tensor`](https://schemas.httk.org/defs/v0.1/properties/core/stress_tensor.md)
                 

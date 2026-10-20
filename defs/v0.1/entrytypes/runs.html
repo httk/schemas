@@ -183,6 +183,36 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 <li><strong>Response:</strong> MAY be included by default in the response.</li>
 </ul>
 </li>
+<li>
+<p><strong><a href="../properties/core/name">name</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/name"><code>https://schemas.httk.org/defs/v0.1/properties/core/name</code></a><br>
+  A human-readable name of the run. For httk-workflow jobs this is the job's name when one was given, otherwise its job key.</p>
+<p><strong>Requirements/Conventions:</strong>  </p>
+<ul>
+<li><strong>Support:</strong> OPTIONAL support in implementations, i.e., MAY be <code>null</code>.</li>
+<li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
+<li><strong>Response:</strong> MAY be included by default in the response.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="../properties/core/started_at">run start time (started_at)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/started_at"><code>https://schemas.httk.org/defs/v0.1/properties/core/started_at</code></a><br>
+  When the run started: for httk-workflow jobs, the start of the first attempt of the job, as a timezone-aware timestamp.</p>
+<p><strong>Requirements/Conventions:</strong>  </p>
+<ul>
+<li><strong>Support:</strong> OPTIONAL support in implementations, i.e., MAY be <code>null</code>.</li>
+<li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
+<li><strong>Response:</strong> MAY be included by default in the response.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="../properties/core/finished_at">run finish time (finished_at)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/core/finished_at"><code>https://schemas.httk.org/defs/v0.1/properties/core/finished_at</code></a><br>
+  When the run finished: for httk-workflow jobs, the end of the last attempt of the job, as a timezone-aware timestamp.</p>
+<p><strong>Requirements/Conventions:</strong>  </p>
+<ul>
+<li><strong>Support:</strong> OPTIONAL support in implementations, i.e., MAY be <code>null</code>.</li>
+<li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
+<li><strong>Response:</strong> MAY be included by default in the response.</li>
+</ul>
+</li>
 </ul>
 <p><strong>JSON definition:</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -397,6 +427,86 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 <span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
 <span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form &lt;workspace_id&gt;:&lt;job_id&gt;. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct."</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/name"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A human-readable name of the run. For httk-workflow jobs this is the job's name when one was given, otherwise its job key."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name_property_httk"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"started_at"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/started_at"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run start time"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"started_at"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"started_at_property_httk"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date-time"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"When the run started: for httk-workflow jobs, the start of the first attempt of the job, as a timezone-aware timestamp."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"2007-04-05T14:30:20Z"</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"finished_at"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/core/finished_at"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"may"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run finish time"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"timestamp"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"finished_at"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"finished_at_property_httk"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date-time"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"When the run finished: for httk-workflow jobs, the end of the last attempt of the job, as a timezone-aware timestamp."</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"examples"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"2007-04-05T14:30:20Z"</span>
+<span class="w">            </span><span class="p">]</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>

@@ -92,6 +92,33 @@ Null is expected when the executed code is unknown, e.g., for legacy data.
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MAY be included by default in the response.
 
+* **[name](../properties/core/name.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/name`](https://schemas.httk.org/defs/v0.1/properties/core/name.md)  
+  A human-readable name of the run. For httk-workflow jobs this is the job's name when one was given, otherwise its job key.
+
+    **Requirements/Conventions:**  
+
+    - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
+    - **Query:** MUST be a queryable property with support for all mandatory filter features.
+    - **Response:** MAY be included by default in the response.
+
+* **[run start time (started_at)](../properties/core/started_at.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/started_at`](https://schemas.httk.org/defs/v0.1/properties/core/started_at.md)  
+  When the run started: for httk-workflow jobs, the start of the first attempt of the job, as a timezone-aware timestamp.
+
+    **Requirements/Conventions:**  
+
+    - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
+    - **Query:** MUST be a queryable property with support for all mandatory filter features.
+    - **Response:** MAY be included by default in the response.
+
+* **[run finish time (finished_at)](../properties/core/finished_at.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/finished_at`](https://schemas.httk.org/defs/v0.1/properties/core/finished_at.md)  
+  When the run finished: for httk-workflow jobs, the end of the last attempt of the job, as a timezone-aware timestamp.
+
+    **Requirements/Conventions:**  
+
+    - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.
+    - **Query:** MUST be a queryable property with support for all mandatory filter features.
+    - **Response:** MAY be included by default in the response.
+
 
 **JSON definition:**
 
@@ -308,6 +335,86 @@ Null is expected when the executed code is unknown, e.g., for legacy data.
                 "null"
             ],
             "description": "The run's identifier in the system that executed it. For httk-workflow jobs, this is the workspace and job identity in the form <workspace_id>:<job_id>. This property participates in httk content identity so re-collecting the same job deduplicates while distinct jobs remain distinct."
+        },
+        "name": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/core/name",
+            "description": "A human-readable name of the run. For httk-workflow jobs this is the job's name when one was given, otherwise its job key.",
+            "x-optimade-requirements": {
+                "support": "may",
+                "sortable": true,
+                "query-support": "all mandatory",
+                "response-level": "may"
+            },
+            "title": "name",
+            "x-optimade-type": "string",
+            "x-optimade-definition": {
+                "kind": "property",
+                "version": "0.1.0",
+                "format": "1.3",
+                "name": "name",
+                "label": "name_property_httk"
+            },
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "started_at": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/core/started_at",
+            "x-optimade-requirements": {
+                "support": "may",
+                "sortable": true,
+                "query-support": "all mandatory",
+                "response-level": "may"
+            },
+            "title": "run start time",
+            "x-optimade-type": "timestamp",
+            "x-optimade-definition": {
+                "kind": "property",
+                "version": "0.1.0",
+                "format": "1.3",
+                "name": "started_at",
+                "label": "started_at_property_httk"
+            },
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time",
+            "description": "When the run started: for httk-workflow jobs, the start of the first attempt of the job, as a timezone-aware timestamp.",
+            "examples": [
+                "2007-04-05T14:30:20Z"
+            ]
+        },
+        "finished_at": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/core/finished_at",
+            "x-optimade-requirements": {
+                "support": "may",
+                "sortable": true,
+                "query-support": "all mandatory",
+                "response-level": "may"
+            },
+            "title": "run finish time",
+            "x-optimade-type": "timestamp",
+            "x-optimade-definition": {
+                "kind": "property",
+                "version": "0.1.0",
+                "format": "1.3",
+                "name": "finished_at",
+                "label": "finished_at_property_httk"
+            },
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string",
+                "null"
+            ],
+            "format": "date-time",
+            "description": "When the run finished: for httk-workflow jobs, the end of the last attempt of the job, as a timezone-aware timestamp.",
+            "examples": [
+                "2007-04-05T14:30:20Z"
+            ]
         }
     }
 }
