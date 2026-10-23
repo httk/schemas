@@ -106,6 +106,10 @@
                 It is the average the simulation code reports for the run where the code prints one (for example the averages table of a GROMACS md.log); otherwise it is the arithmetic mean of the total energies the code printed over the run's sampled steps.
                 The averaging window, the sampling interval and the ensemble are determined by the run, so values are comparable only between runs with the same protocol. The value is for the whole simulated system, kinetic plus potential energy. The reference/zero of the total energy scale is method-, force-field- and code-specific, so values are comparable only within one consistent computational setup.
 
+            * **[Cartesian site forces](v0.1/properties/core/cartesian_site_forces.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/cartesian_site_forces`](https://schemas.httk.org/defs/v0.1/properties/core/cartesian_site_forces.md)
+                
+                The force on every site of a structure (the negative gradient of the total energy with respect to the Cartesian position of each site), in electronvolt per angstrom.
+
             * **[Enthalpy](v0.1/properties/core/enthalpy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/core/enthalpy`](https://schemas.httk.org/defs/v0.1/properties/core/enthalpy.md)
                 
                 The enthalpy H = E_total + P V in electronvolt, with P the applied (external) pressure and V the cell volume. Extensive: refers to the whole simulated cell, not per atom.
