@@ -84,6 +84,10 @@ A null value means the quantity is not available or not recorded.
             }
         }
     ],
+    "x-httk-normalization": {
+        "per": "simulation cell",
+        "count": 1
+    },
     "x-optimade-requirements": {
         "support": "may",
         "sortable": false,
