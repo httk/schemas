@@ -943,6 +943,19 @@ Identity is omitted, so the P1 list is empty.</p>
 <p><strong>structure</strong></p>
 <ul>
 <li>
+<p><strong><a href="v0.1/properties/structure/natoms">Number of atoms</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/natoms"><code>https://schemas.httk.org/defs/v0.1/properties/structure/natoms</code></a></p>
+<p>The number of atoms in the cell spanned by <code>lattice_vectors</code> (the full cell, also when <code>site_coordinate_span</code> lists only an asymmetric unit or fundamental domain).
+Defined only for ordered structures, where every site is fully occupied by exactly one chemical species (no vacancies, mixed occupancy or implicit atoms); for such a structure with <code>site_coordinate_span</code> <code>unit_cell</code> it equals <code>nsites</code>.
+A null value means the structure is disordered or the count is not available.
+This is the reference count for properties whose <code>x-httk-normalization</code> names <code>_httk_natoms</code>.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/structure/nformula_units">Number of formula units</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/nformula_units"><code>https://schemas.httk.org/defs/v0.1/properties/structure/nformula_units</code></a></p>
+<p>The number of formula units in the cell the entry describes: <code>_httk_natoms</code> divided by the number of atoms in one formula unit of <code>chemical_formula_reduced</code>.
+This is not the crystallographic Z, which counts the formula as written per conventional cell.
+A null value whenever <code>_httk_natoms</code> is null.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/properties/structure/radial_distribution_function">Radial distribution function</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function"><code>https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function</code></a></p>
 <p>Radial distribution function g(r) of a structure or trajectory, binned in distance.</p>
 </li>

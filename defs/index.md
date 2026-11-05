@@ -788,6 +788,19 @@
                 Sets of Wyckoff letters related by normalizer operations.
 
         * **structure**
+            * **[Number of atoms](v0.1/properties/structure/natoms.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/structure/natoms`](https://schemas.httk.org/defs/v0.1/properties/structure/natoms.md)
+                
+                The number of atoms in the cell spanned by `lattice_vectors` (the full cell, also when `site_coordinate_span` lists only an asymmetric unit or fundamental domain).
+                Defined only for ordered structures, where every site is fully occupied by exactly one chemical species (no vacancies, mixed occupancy or implicit atoms); for such a structure with `site_coordinate_span` `unit_cell` it equals `nsites`.
+                A null value means the structure is disordered or the count is not available.
+                This is the reference count for properties whose `x-httk-normalization` names `_httk_natoms`.
+
+            * **[Number of formula units](v0.1/properties/structure/nformula_units.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/structure/nformula_units`](https://schemas.httk.org/defs/v0.1/properties/structure/nformula_units.md)
+                
+                The number of formula units in the cell the entry describes: `_httk_natoms` divided by the number of atoms in one formula unit of `chemical_formula_reduced`.
+                This is not the crystallographic Z, which counts the formula as written per conventional cell.
+                A null value whenever `_httk_natoms` is null.
+
             * **[Radial distribution function](v0.1/properties/structure/radial_distribution_function.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function`](https://schemas.httk.org/defs/v0.1/properties/structure/radial_distribution_function.md)
                 
                 Radial distribution function g(r) of a structure or trajectory, binned in distance.
