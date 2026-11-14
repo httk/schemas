@@ -77,6 +77,10 @@
 
     * **properties**
         * **chemistry**
+            * **[Bond network](v0.1/properties/chemistry/bonds.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds`](https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds.md)
+                
+                The bond network of a structure: which atoms are bonded to which, optionally the shape of the bonds around the atoms of each site, and who assigned them.
+
             * **[Species constituent charges](v0.1/properties/chemistry/species_charges.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges`](https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges.md)
                 
                 The explicitly assigned charge of each constituent of a species, as a dimensionless charge number, i.e., the charge in units of the elementary charge.
