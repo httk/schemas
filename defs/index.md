@@ -77,9 +77,10 @@
 
     * **properties**
         * **chemistry**
-            * **[Bond network](v0.1/properties/chemistry/bonds.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds`](https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds.md)
+            * **[Bond network and coordination polyhedra](v0.1/properties/chemistry/bonds.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds`](https://schemas.httk.org/defs/v0.1/properties/chemistry/bonds.md)
                 
-                The bond network of a structure: which atoms are bonded to which, optionally the shape of the bonds around the atoms of each site, and who assigned them.
+                The bond network of a structure and the coordination polyhedra of its sites: which atoms are bonded to which, and the shape of the bonds around the atoms of a site, which besides coordination polyhedra also covers linear, bent and planar arrangements; the default assignment of httk gives a shape to every site with two or more bonds.
+                The value also names who assigned the bonds and the shapes.
 
             * **[Species constituent charges](v0.1/properties/chemistry/species_charges.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges`](https://schemas.httk.org/defs/v0.1/properties/chemistry/species_charges.md)
                 
