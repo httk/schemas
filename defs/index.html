@@ -161,6 +161,15 @@ The derivation term applies to a base property definition identified alongside; 
 <p><strong>entrytypes</strong></p>
 <ul>
 <li>
+<p><strong><a href="v0.1/entrytypes/external_database_entries">httk external database entries entry type</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/external_database_entries"><code>https://schemas.httk.org/defs/v0.1/entrytypes/external_database_entries</code></a></p>
+<p>An external_database_entries entry identifies one entry of an external database that other entries link to.
+The reference describing the whole external database is linked to it through its references relationship.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/entrytypes/notes">httk notes entry type</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/notes"><code>https://schemas.httk.org/defs/v0.1/entrytypes/notes</code></a></p>
+<p>A notes entry is a dated remark made by some entity (a person, a group, or a program) about other entries, which link to it.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/entrytypes/pointgroups">httk point group symmetry fields</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups"><code>https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups</code></a></p>
 </li>
 <li>
@@ -175,6 +184,10 @@ Provenance edges (inputs, artifacts, outputs) are expressed as relationships, no
 </li>
 <li>
 <p><strong><a href="v0.1/entrytypes/spacegroups">httk space group symmetry fields</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups"><code>https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups</code></a></p>
+</li>
+<li>
+<p><strong><a href="v0.1/entrytypes/tags">httk tags entry type</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/tags"><code>https://schemas.httk.org/defs/v0.1/entrytypes/tags</code></a></p>
+<p>A tags entry is a key with an optional value that other entries link to, to aid searching.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/entrytypes/transformations">httk transformation fields</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/transformations"><code>https://schemas.httk.org/defs/v0.1/entrytypes/transformations</code></a></p>
@@ -316,6 +329,47 @@ Null is expected for ad-hoc scripts, interactive executions, and legacy data wit
 A typical value is a git URI pinned to a full commit hash, of the form <code>git+https://host/path@&lt;commit&gt;#&lt;subdir&gt;</code>.
 No particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.
 Null is expected when the executed code is unknown, e.g., for legacy data.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>curation</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/curation/author">note author</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/author"><code>https://schemas.httk.org/defs/v0.1/properties/curation/author</code></a></p>
+<p>The entity that made the note: a person, a group, or a program together with its version.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/database">external database</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a></p>
+<p>The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/date">note date</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/date"><code>https://schemas.httk.org/defs/v0.1/properties/curation/date</code></a></p>
+<p>When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/entry_id">external entry ID</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/entry_id"><code>https://schemas.httk.org/defs/v0.1/properties/curation/entry_id</code></a></p>
+<p>The identifier of the entry in the external database, as that database writes it.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/key">tag key</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/key"><code>https://schemas.httk.org/defs/v0.1/properties/curation/key</code></a></p>
+<p>The key of the tag.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/role">external entry role</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/role"><code>https://schemas.httk.org/defs/v0.1/properties/curation/role</code></a></p>
+<p>How the linking entry relates to the external entry: null for a general relation, and "origin" when the linking entry was obtained from the external entry.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/text">note text</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/text"><code>https://schemas.httk.org/defs/v0.1/properties/curation/text</code></a></p>
+<p>The note itself, as free text.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/url">external entry URL</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/url"><code>https://schemas.httk.org/defs/v0.1/properties/curation/url</code></a></p>
+<p>A URL of the entry in the external database, if available.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/value">tag value</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/value"><code>https://schemas.httk.org/defs/v0.1/properties/curation/value</code></a></p>
+<p>The optional value of the tag; null for a tag that only marks the presence of its key.</p>
 </li>
 </ul>
 </li>

@@ -56,6 +56,15 @@
             The derivation term applies to a base property definition identified alongside; the value has the base property's unit and shape.
 
     * **entrytypes**
+        * **[httk external database entries entry type](v0.1/entrytypes/external_database_entries.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/external_database_entries`](https://schemas.httk.org/defs/v0.1/entrytypes/external_database_entries.md)
+            
+            An external_database_entries entry identifies one entry of an external database that other entries link to.
+            The reference describing the whole external database is linked to it through its references relationship.
+
+        * **[httk notes entry type](v0.1/entrytypes/notes.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/notes`](https://schemas.httk.org/defs/v0.1/entrytypes/notes.md)
+            
+            A notes entry is a dated remark made by some entity (a person, a group, or a program) about other entries, which link to it.
+
         * **[httk point group symmetry fields](v0.1/entrytypes/pointgroups.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups`](https://schemas.httk.org/defs/v0.1/entrytypes/pointgroups.md)
             
 
@@ -71,6 +80,10 @@
 
         * **[httk space group symmetry fields](v0.1/entrytypes/spacegroups.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups`](https://schemas.httk.org/defs/v0.1/entrytypes/spacegroups.md)
             
+
+        * **[httk tags entry type](v0.1/entrytypes/tags.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/tags`](https://schemas.httk.org/defs/v0.1/entrytypes/tags.md)
+            
+            A tags entry is a key with an optional value that other entries link to, to aid searching.
 
         * **[httk transformation fields](v0.1/entrytypes/transformations.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/transformations`](https://schemas.httk.org/defs/v0.1/entrytypes/transformations.md)
             
@@ -202,6 +215,43 @@
                 A typical value is a git URI pinned to a full commit hash, of the form `git+https://host/path@<commit>#<subdir>`.
                 No particular URI scheme or resolvability is mandated, but providers SHOULD use a URI that pins the exact code revision.
                 Null is expected when the executed code is unknown, e.g., for legacy data.
+
+        * **curation**
+            * **[note author](v0.1/properties/curation/author.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/author`](https://schemas.httk.org/defs/v0.1/properties/curation/author.md)
+                
+                The entity that made the note: a person, a group, or a program together with its version.
+
+            * **[external database](v0.1/properties/curation/database.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database`](https://schemas.httk.org/defs/v0.1/properties/curation/database.md)
+                
+                The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.
+
+            * **[note date](v0.1/properties/curation/date.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/date`](https://schemas.httk.org/defs/v0.1/properties/curation/date.md)
+                
+                When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.
+
+            * **[external entry ID](v0.1/properties/curation/entry_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/entry_id`](https://schemas.httk.org/defs/v0.1/properties/curation/entry_id.md)
+                
+                The identifier of the entry in the external database, as that database writes it.
+
+            * **[tag key](v0.1/properties/curation/key.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/key`](https://schemas.httk.org/defs/v0.1/properties/curation/key.md)
+                
+                The key of the tag.
+
+            * **[external entry role](v0.1/properties/curation/role.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/role`](https://schemas.httk.org/defs/v0.1/properties/curation/role.md)
+                
+                How the linking entry relates to the external entry: null for a general relation, and "origin" when the linking entry was obtained from the external entry.
+
+            * **[note text](v0.1/properties/curation/text.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/text`](https://schemas.httk.org/defs/v0.1/properties/curation/text.md)
+                
+                The note itself, as free text.
+
+            * **[external entry URL](v0.1/properties/curation/url.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/url`](https://schemas.httk.org/defs/v0.1/properties/curation/url.md)
+                
+                A URL of the entry in the external database, if available.
+
+            * **[tag value](v0.1/properties/curation/value.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/value`](https://schemas.httk.org/defs/v0.1/properties/curation/value.md)
+                
+                The optional value of the tag; null for a tag that only marks the presence of its key.
 
         * **defects**
             * **[Adsorption energy](v0.1/properties/defects/adsorption_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/defects/adsorption_energy`](https://schemas.httk.org/defs/v0.1/properties/defects/adsorption_energy.md)
