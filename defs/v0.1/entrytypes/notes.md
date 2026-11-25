@@ -59,7 +59,7 @@ This entrytype defines the following properties:
     - **Response:** MUST be included by default in the response.
 
 * **[note date (date)](../properties/curation/date.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/date`](https://schemas.httk.org/defs/v0.1/properties/curation/date.md)  
-  When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.
+  When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.
 
     **Requirements/Conventions:**  
 
@@ -67,7 +67,7 @@ This entrytype defines the following properties:
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MUST be included by default in the response.
 
-* **[note author (author)](../properties/curation/author.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/author`](https://schemas.httk.org/defs/v0.1/properties/curation/author.md)  
+* **[note source (source)](../properties/curation/source.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/source`](https://schemas.httk.org/defs/v0.1/properties/curation/source.md)  
   The entity that made the note: a person, a group, or a program together with its version.
 
     **Requirements/Conventions:**  
@@ -238,27 +238,27 @@ This entrytype defines the following properties:
                 "null"
             ],
             "format": "date-time",
-            "description": "When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.",
+            "description": "When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.",
             "examples": [
                 "2007-04-05T14:30:20Z"
             ]
         },
-        "author": {
-            "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/author",
+        "source": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/source",
             "x-optimade-requirements": {
                 "support": "must",
                 "sortable": true,
                 "query-support": "all mandatory",
                 "response-level": "must"
             },
-            "title": "note author",
+            "title": "note source",
             "x-optimade-type": "string",
             "x-optimade-definition": {
                 "kind": "property",
                 "version": "0.1.0",
                 "format": "1.3",
-                "name": "author",
-                "label": "author_property_httk"
+                "name": "source",
+                "label": "source_property_httk"
             },
             "x-optimade-unit": "inapplicable",
             "type": [

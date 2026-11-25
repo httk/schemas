@@ -6,7 +6,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `date`
 
 **Property name:** note date  
-**Description:** When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.  
+**Description:** When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.  
 **Type:** timestamp  
 **Implementation requirements:**  
 - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.  
@@ -49,7 +49,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "null"
     ],
     "format": "date-time",
-    "description": "When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.",
+    "description": "When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.",
     "examples": [
         "2007-04-05T14:30:20Z"
     ]

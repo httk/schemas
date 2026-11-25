@@ -336,16 +336,12 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 <p><strong>curation</strong></p>
 <ul>
 <li>
-<p><strong><a href="v0.1/properties/curation/author">note author</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/author"><code>https://schemas.httk.org/defs/v0.1/properties/curation/author</code></a></p>
-<p>The entity that made the note: a person, a group, or a program together with its version.</p>
-</li>
-<li>
 <p><strong><a href="v0.1/properties/curation/database">external database</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a></p>
 <p>The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/curation/date">note date</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/date"><code>https://schemas.httk.org/defs/v0.1/properties/curation/date</code></a></p>
-<p>When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.</p>
+<p>When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/curation/entry_id">external entry ID</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/entry_id"><code>https://schemas.httk.org/defs/v0.1/properties/curation/entry_id</code></a></p>
@@ -358,6 +354,10 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 <li>
 <p><strong><a href="v0.1/properties/curation/role">external entry role</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/role"><code>https://schemas.httk.org/defs/v0.1/properties/curation/role</code></a></p>
 <p>How the linking entry relates to the external entry: null for a general relation, and "origin" when the linking entry was obtained from the external entry.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/source">note source</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/source"><code>https://schemas.httk.org/defs/v0.1/properties/curation/source</code></a></p>
+<p>The entity that made the note: a person, a group, or a program together with its version.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/curation/text">note text</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/text"><code>https://schemas.httk.org/defs/v0.1/properties/curation/text</code></a></p>

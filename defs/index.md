@@ -217,17 +217,13 @@
                 Null is expected when the executed code is unknown, e.g., for legacy data.
 
         * **curation**
-            * **[note author](v0.1/properties/curation/author.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/author`](https://schemas.httk.org/defs/v0.1/properties/curation/author.md)
-                
-                The entity that made the note: a person, a group, or a program together with its version.
-
             * **[external database](v0.1/properties/curation/database.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database`](https://schemas.httk.org/defs/v0.1/properties/curation/database.md)
                 
                 The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.
 
             * **[note date](v0.1/properties/curation/date.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/date`](https://schemas.httk.org/defs/v0.1/properties/curation/date.md)
                 
-                When the note was made, as a timezone-aware timestamp chosen by the note's author. This is not the time the note was stored.
+                When the note was made, as a timezone-aware timestamp chosen by the note's source. This is not the time the note was stored.
 
             * **[external entry ID](v0.1/properties/curation/entry_id.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/entry_id`](https://schemas.httk.org/defs/v0.1/properties/curation/entry_id.md)
                 
@@ -240,6 +236,10 @@
             * **[external entry role](v0.1/properties/curation/role.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/role`](https://schemas.httk.org/defs/v0.1/properties/curation/role.md)
                 
                 How the linking entry relates to the external entry: null for a general relation, and "origin" when the linking entry was obtained from the external entry.
+
+            * **[note source](v0.1/properties/curation/source.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/source`](https://schemas.httk.org/defs/v0.1/properties/curation/source.md)
+                
+                The entity that made the note: a person, a group, or a program together with its version.
 
             * **[note text](v0.1/properties/curation/text.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/text`](https://schemas.httk.org/defs/v0.1/properties/curation/text.md)
                 
