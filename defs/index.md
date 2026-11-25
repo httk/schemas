@@ -61,6 +61,11 @@
             An external_database_entries entry identifies one entry of an external database that other entries link to.
             The reference describing the whole external database is linked to it through its references relationship.
 
+        * **[httk imports entry type](v0.1/entrytypes/imports.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/imports`](https://schemas.httk.org/defs/v0.1/entrytypes/imports.md)
+            
+            An imports entry records everything that happened while importing one thing into a store: where it came from, which importer imported it, the outcome, and every warning, notice, and exception reported on the way.
+            A source holding several things gives one imports entry per thing.
+
         * **[httk notes entry type](v0.1/entrytypes/notes.md)** (entrytype) - [`https://schemas.httk.org/defs/v0.1/entrytypes/notes`](https://schemas.httk.org/defs/v0.1/entrytypes/notes.md)
             
             A notes entry is a dated remark made by some entity (a person, a group, or a program) about other entries, which link to it.
@@ -387,6 +392,39 @@
                 The total energy of the cell divided by the number of atoms in the cell, in electronvolt.
                 The reference/zero of the energy scale is method- and code-specific, as for the total energy, so values are comparable only within one consistent computational setup.
                 A null value means the quantity is not available or not recorded.
+
+        * **imports**
+            * **[import error](v0.1/properties/imports/error.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/error`](https://schemas.httk.org/defs/v0.1/properties/imports/error.md)
+                
+                The exception or exclusion text of a failed or excluded import; null when the thing was imported.
+
+            * **[import time](v0.1/properties/imports/imported_at.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/imported_at`](https://schemas.httk.org/defs/v0.1/properties/imports/imported_at.md)
+                
+                When the import was made, as a timezone-aware timestamp, if recorded.
+
+            * **[importer](v0.1/properties/imports/importer.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/importer`](https://schemas.httk.org/defs/v0.1/properties/imports/importer.md)
+                
+                The program that imported the thing, together with its version. A new importer version gives a new import record.
+
+            * **[import repaired](v0.1/properties/imports/repaired.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/repaired`](https://schemas.httk.org/defs/v0.1/properties/imports/repaired.md)
+                
+                Whether the importer had to repair the source to import it. Only an imported thing can have been repaired.
+
+            * **[import reports](v0.1/properties/imports/reports.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/reports`](https://schemas.httk.org/defs/v0.1/properties/imports/reports.md)
+                
+                The diagnostics (warnings, notices, and exceptions) reported while importing the thing, in emission order.
+
+            * **[import source item](v0.1/properties/imports/source_item.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/source_item`](https://schemas.httk.org/defs/v0.1/properties/imports/source_item.md)
+                
+                The item within the source when the source holds several, e.g. a CIF data block name; null when the source holds one item.
+
+            * **[import source URI](v0.1/properties/imports/source_uri.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/source_uri`](https://schemas.httk.org/defs/v0.1/properties/imports/source_uri.md)
+                
+                Where the imported thing was imported from, as chosen by the importer: a stable path, URL, or identifier, not a machine-specific absolute path.
+
+            * **[import status](v0.1/properties/imports/status.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/imports/status`](https://schemas.httk.org/defs/v0.1/properties/imports/status.md)
+                
+                The outcome of the import: "imported" when the thing was imported, "failed" when the import raised an error, and "excluded" when the importer deliberately did not import it.
 
         * **kinetics**
             * **[Activation energy](v0.1/properties/kinetics/activation_energy.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy`](https://schemas.httk.org/defs/v0.1/properties/kinetics/activation_energy.md)

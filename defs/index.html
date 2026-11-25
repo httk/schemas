@@ -166,6 +166,11 @@ The derivation term applies to a base property definition identified alongside; 
 The reference describing the whole external database is linked to it through its references relationship.</p>
 </li>
 <li>
+<p><strong><a href="v0.1/entrytypes/imports">httk imports entry type</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/imports"><code>https://schemas.httk.org/defs/v0.1/entrytypes/imports</code></a></p>
+<p>An imports entry records everything that happened while importing one thing into a store: where it came from, which importer imported it, the outcome, and every warning, notice, and exception reported on the way.
+A source holding several things gives one imports entry per thing.</p>
+</li>
+<li>
 <p><strong><a href="v0.1/entrytypes/notes">httk notes entry type</a></strong> (entrytype) - <a href="https://schemas.httk.org/defs/v0.1/entrytypes/notes"><code>https://schemas.httk.org/defs/v0.1/entrytypes/notes</code></a></p>
 <p>A notes entry is a dated remark made by some entity (a person, a group, or a program) about other entries, which link to it.</p>
 </li>
@@ -521,6 +526,43 @@ A null value means the quantity is not available or not recorded.</p>
 <p>The total energy of the cell divided by the number of atoms in the cell, in electronvolt.
 The reference/zero of the energy scale is method- and code-specific, as for the total energy, so values are comparable only within one consistent computational setup.
 A null value means the quantity is not available or not recorded.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>imports</strong></p>
+<ul>
+<li>
+<p><strong><a href="v0.1/properties/imports/error">import error</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/error"><code>https://schemas.httk.org/defs/v0.1/properties/imports/error</code></a></p>
+<p>The exception or exclusion text of a failed or excluded import; null when the thing was imported.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/imported_at">import time</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/imported_at"><code>https://schemas.httk.org/defs/v0.1/properties/imports/imported_at</code></a></p>
+<p>When the import was made, as a timezone-aware timestamp, if recorded.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/importer">importer</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/importer"><code>https://schemas.httk.org/defs/v0.1/properties/imports/importer</code></a></p>
+<p>The program that imported the thing, together with its version. A new importer version gives a new import record.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/repaired">import repaired</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/repaired"><code>https://schemas.httk.org/defs/v0.1/properties/imports/repaired</code></a></p>
+<p>Whether the importer had to repair the source to import it. Only an imported thing can have been repaired.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/reports">import reports</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/reports"><code>https://schemas.httk.org/defs/v0.1/properties/imports/reports</code></a></p>
+<p>The diagnostics (warnings, notices, and exceptions) reported while importing the thing, in emission order.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/source_item">import source item</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/source_item"><code>https://schemas.httk.org/defs/v0.1/properties/imports/source_item</code></a></p>
+<p>The item within the source when the source holds several, e.g. a CIF data block name; null when the source holds one item.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/source_uri">import source URI</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/source_uri"><code>https://schemas.httk.org/defs/v0.1/properties/imports/source_uri</code></a></p>
+<p>Where the imported thing was imported from, as chosen by the importer: a stable path, URL, or identifier, not a machine-specific absolute path.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/imports/status">import status</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/imports/status"><code>https://schemas.httk.org/defs/v0.1/properties/imports/status</code></a></p>
+<p>The outcome of the import: "imported" when the thing was imported, "failed" when the import raised an error, and "excluded" when the importer deliberately did not import it.</p>
 </li>
 </ul>
 </li>
