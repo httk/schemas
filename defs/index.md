@@ -224,7 +224,11 @@
         * **curation**
             * **[external database](v0.1/properties/curation/database.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database`](https://schemas.httk.org/defs/v0.1/properties/curation/database.md)
                 
-                The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.
+                The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.
+
+            * **[external database provider](v0.1/properties/curation/database_provider.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database_provider`](https://schemas.httk.org/defs/v0.1/properties/curation/database_provider.md)
+                
+                The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. "cod", "oqmd", or "mp", and an equivalent short lowercase name when no registered prefix exists.
 
             * **[note date](v0.1/properties/curation/date.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/date`](https://schemas.httk.org/defs/v0.1/properties/curation/date.md)
                 

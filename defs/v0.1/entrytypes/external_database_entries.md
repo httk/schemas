@@ -59,12 +59,21 @@ This entrytype defines the following properties:
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MUST be included by default in the response.
 
-* **[external database (database)](../properties/curation/database.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database`](https://schemas.httk.org/defs/v0.1/properties/curation/database.md)  
-  The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.
+* **[external database provider (database_provider)](../properties/curation/database_provider.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database_provider`](https://schemas.httk.org/defs/v0.1/properties/curation/database_provider.md)  
+  The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. "cod", "oqmd", or "mp", and an equivalent short lowercase name when no registered prefix exists.
 
     **Requirements/Conventions:**  
 
     - **Support:** MUST be supported by all implementations, MUST NOT be `null`.
+    - **Query:** MUST be a queryable property with support for all mandatory filter features.
+    - **Response:** MUST be included by default in the response.
+
+* **[external database (database)](../properties/curation/database.md)** (property) - [`https://schemas.httk.org/defs/v0.1/properties/curation/database`](https://schemas.httk.org/defs/v0.1/properties/curation/database.md)  
+  The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.
+
+    **Requirements/Conventions:**  
+
+    - **Support:** SHOULD be supported by all implementations, i.e., SHOULD NOT be `null`.
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MUST be included by default in the response.
 
@@ -82,7 +91,7 @@ This entrytype defines the following properties:
 
     **Requirements/Conventions:**  
 
-    - **Support:** MUST be supported by all implementations, MUST NOT be `null`.
+    - **Support:** SHOULD be supported by all implementations, i.e., SHOULD NOT be `null`.
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MUST be included by default in the response.
 
@@ -91,7 +100,7 @@ This entrytype defines the following properties:
 
     **Requirements/Conventions:**  
 
-    - **Support:** MUST be supported by all implementations, MUST NOT be `null`.
+    - **Support:** SHOULD be supported by all implementations, i.e., SHOULD NOT be `null`.
     - **Query:** MUST be a queryable property with support for all mandatory filter features.
     - **Response:** MUST be included by default in the response.
 
@@ -225,10 +234,34 @@ This entrytype defines the following properties:
             ],
             "x-optimade-unit": "inapplicable"
         },
+        "database_provider": {
+            "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/database_provider",
+            "x-optimade-requirements": {
+                "support": "must",
+                "sortable": true,
+                "query-support": "all mandatory",
+                "response-level": "must"
+            },
+            "title": "external database provider",
+            "x-optimade-type": "string",
+            "x-optimade-definition": {
+                "kind": "property",
+                "version": "0.1.0",
+                "format": "1.3",
+                "name": "database_provider",
+                "label": "database_provider_property_httk"
+            },
+            "x-optimade-unit": "inapplicable",
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. \"cod\", \"oqmd\", or \"mp\", and an equivalent short lowercase name when no registered prefix exists."
+        },
         "database": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/database",
             "x-optimade-requirements": {
-                "support": "must",
+                "support": "should",
                 "sortable": true,
                 "query-support": "all mandatory",
                 "response-level": "must"
@@ -247,7 +280,7 @@ This entrytype defines the following properties:
                 "string",
                 "null"
             ],
-            "description": "The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. \"cod\", \"oqmd\", or \"mp\"; \"<prefix>:<short database id>\" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists."
+            "description": "The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database."
         },
         "entry_id": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/entry_id",
@@ -276,7 +309,7 @@ This entrytype defines the following properties:
         "url": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/url",
             "x-optimade-requirements": {
-                "support": "must",
+                "support": "should",
                 "sortable": true,
                 "query-support": "all mandatory",
                 "response-level": "must"
@@ -300,7 +333,7 @@ This entrytype defines the following properties:
         "role": {
             "$id": "https://schemas.httk.org/defs/v0.1/properties/curation/role",
             "x-optimade-requirements": {
-                "support": "must",
+                "support": "should",
                 "sortable": true,
                 "query-support": "all mandatory",
                 "response-level": "must"

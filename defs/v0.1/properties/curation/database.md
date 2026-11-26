@@ -6,7 +6,7 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
 **Definition name:** `database`
 
 **Property name:** external database  
-**Description:** The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.  
+**Description:** The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.  
 **Type:** string  
 **Implementation requirements:**  
 - **Support:** OPTIONAL support in implementations, i.e., MAY be `null`.  
@@ -48,6 +48,6 @@ This page documents an [OPTIMADE](https://www.optimade.org/) [Property Definitio
         "string",
         "null"
     ],
-    "description": "The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. \"cod\", \"oqmd\", or \"mp\"; \"<prefix>:<short database id>\" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists."
+    "description": "The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database."
 }
 ```

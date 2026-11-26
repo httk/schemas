@@ -342,7 +342,11 @@ Null is expected when the executed code is unknown, e.g., for legacy data.</p>
 <ul>
 <li>
 <p><strong><a href="v0.1/properties/curation/database">external database</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a></p>
-<p>The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.</p>
+<p>The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.</p>
+</li>
+<li>
+<p><strong><a href="v0.1/properties/curation/database_provider">external database provider</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database_provider"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database_provider</code></a></p>
+<p>The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. "cod", "oqmd", or "mp", and an equivalent short lowercase name when no registered prefix exists.</p>
 </li>
 <li>
 <p><strong><a href="v0.1/properties/curation/date">note date</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/date"><code>https://schemas.httk.org/defs/v0.1/properties/curation/date</code></a></p>

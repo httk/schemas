@@ -95,7 +95,7 @@ overflow-wrap: break-word;
 <p><strong>ID: <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a></strong><br>
 <strong>Definition name:</strong> <code>database</code></p>
 <p><strong>Property name:</strong> external database<br>
-<strong>Description:</strong> The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.<br>
+<strong>Description:</strong> The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.<br>
 <strong>Type:</strong> string<br>
 <strong>Implementation requirements:</strong><br>
 - <strong>Support:</strong> OPTIONAL support in implementations, i.e., MAY be <code>null</code>.  </p>
@@ -129,7 +129,7 @@ overflow-wrap: break-word;
 <span class="w">        </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">        </span><span class="s2">"null"</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. \"cod\", \"oqmd\", or \"mp\"; \"&lt;prefix&gt;:&lt;short database id&gt;\" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists."</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database."</span>
 <span class="p">}</span>
 </code></pre></div>
 </body>

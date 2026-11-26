@@ -148,11 +148,21 @@ The reference describing the whole external database is linked to it through its
 </ul>
 </li>
 <li>
-<p><strong><a href="../properties/curation/database">external database (database)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a><br>
-  The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. "cod", "oqmd", or "mp"; "<prefix>:<short database id>" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists.</p>
+<p><strong><a href="../properties/curation/database_provider">external database provider (database_provider)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database_provider"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database_provider</code></a><br>
+  The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. "cod", "oqmd", or "mp", and an equivalent short lowercase name when no registered prefix exists.</p>
 <p><strong>Requirements/Conventions:</strong>  </p>
 <ul>
 <li><strong>Support:</strong> MUST be supported by all implementations, MUST NOT be <code>null</code>.</li>
+<li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
+<li><strong>Response:</strong> MUST be included by default in the response.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="../properties/curation/database">external database (database)</a></strong> (property) - <a href="https://schemas.httk.org/defs/v0.1/properties/curation/database"><code>https://schemas.httk.org/defs/v0.1/properties/curation/database</code></a><br>
+  The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database.</p>
+<p><strong>Requirements/Conventions:</strong>  </p>
+<ul>
+<li><strong>Support:</strong> SHOULD be supported by all implementations, i.e., SHOULD NOT be <code>null</code>.</li>
 <li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
 <li><strong>Response:</strong> MUST be included by default in the response.</li>
 </ul>
@@ -172,7 +182,7 @@ The reference describing the whole external database is linked to it through its
   A URL of the entry in the external database, if available.</p>
 <p><strong>Requirements/Conventions:</strong>  </p>
 <ul>
-<li><strong>Support:</strong> MUST be supported by all implementations, MUST NOT be <code>null</code>.</li>
+<li><strong>Support:</strong> SHOULD be supported by all implementations, i.e., SHOULD NOT be <code>null</code>.</li>
 <li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
 <li><strong>Response:</strong> MUST be included by default in the response.</li>
 </ul>
@@ -182,7 +192,7 @@ The reference describing the whole external database is linked to it through its
   How the linking entry relates to the external entry: null for a general relation, and "origin" when the linking entry was obtained from the external entry.</p>
 <p><strong>Requirements/Conventions:</strong>  </p>
 <ul>
-<li><strong>Support:</strong> MUST be supported by all implementations, MUST NOT be <code>null</code>.</li>
+<li><strong>Support:</strong> SHOULD be supported by all implementations, i.e., SHOULD NOT be <code>null</code>.</li>
 <li><strong>Query:</strong> MUST be a queryable property with support for all mandatory filter features.</li>
 <li><strong>Response:</strong> MUST be included by default in the response.</li>
 </ul>
@@ -315,10 +325,34 @@ The reference describing the whole external database is linked to it through its
 <span class="w">            </span><span class="p">],</span>
 <span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span>
 <span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"database_provider"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/curation/database_provider"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"external database provider"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"x-optimade-definition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"property"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.3"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"database_provider"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"database_provider_property_httk"</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"x-optimade-unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inapplicable"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
+<span class="w">                </span><span class="s2">"null"</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The provider of the external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, e.g. \"cod\", \"oqmd\", or \"mp\", and an equivalent short lowercase name when no registered prefix exists."</span>
+<span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">"database"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/curation/database"</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"should"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span>
@@ -337,7 +371,7 @@ The reference describing the whole external database is linked to it through its
 <span class="w">                </span><span class="s2">"string"</span><span class="p">,</span>
 <span class="w">                </span><span class="s2">"null"</span>
 <span class="w">            </span><span class="p">],</span>
-<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The external database. This is the OPTIMADE provider prefix, as registered in the OPTIMADE providers list, when that prefix is enough to distinguish entry ids, e.g. \"cod\", \"oqmd\", or \"mp\"; \"&lt;prefix&gt;:&lt;short database id&gt;\" when one provider has several databases; and an equivalent short lowercase name when no registered prefix exists."</span>
+<span class="w">            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The specific database, of the provider given by database_provider, that the entry belongs to, as a short identifier. Null means the provider's only or main database."</span>
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">"entry_id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/curation/entry_id"</span><span class="p">,</span>
@@ -366,7 +400,7 @@ The reference describing the whole external database is linked to it through its
 <span class="w">        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/curation/url"</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"should"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span>
@@ -390,7 +424,7 @@ The reference describing the whole external database is linked to it through its
 <span class="w">        </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://schemas.httk.org/defs/v0.1/properties/curation/role"</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">"x-optimade-requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"should"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"sortable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"query-support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all mandatory"</span><span class="p">,</span>
 <span class="w">                </span><span class="nt">"response-level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"must"</span>
